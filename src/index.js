@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './routes';
 
 const client = new ApolloClient({
 	uri: 'https://48p1r2roz4.sse.codesandbox.io',
 });
 
-ReactDOM.render(
-	<ApolloProvider client={client}>
-		<App />
-	</ApolloProvider>,
-	document.getElementById('root')
-);
+const App = () => {
+	return (
+		<ApolloProvider client={client}>
+			<Router>
+				<Routes />
+			</Router>
+		</ApolloProvider>
+	);
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(<App />, document.getElementById('root'));
