@@ -1,3 +1,3 @@
-import TobBar from './topbar/index';
+import Topbar from './topbar/index';
 
-export { TobBar };
+export { Topbar };
