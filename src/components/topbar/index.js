@@ -3,10 +3,11 @@ import React from 'react';
 import { Button, Label } from '../arui';
 import { NavLink } from 'react-router-dom';
 
+
 const TobBar = () => {
 	return (
-		<div>
-			<div>Icon</div>
+		<div className="topbar">
+			<div className="icon">Icon</div>
 			<div margin="20px">
 				<NavLink to="/signin" exact>
 					<Label size="m">Войти</Label>
