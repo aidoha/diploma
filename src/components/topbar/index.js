@@ -1,23 +1,45 @@
 import React from 'react';
 
-import { Button, Label } from '../arui';
-import { NavLink } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Grid } from '@material-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
 
-
-const TobBar = () => {
-	return (
-		<div className="topbar">
-			<div className="icon">Icon</div>
-			<div margin="20px">
-				<NavLink to="/signin" exact>
-					<Label size="m">Войти</Label>
-				</NavLink>
-				<NavLink to="/signup" exact>
-					<Button view="extra">Зарегистрироваться</Button>
-				</NavLink>
-			</div>
-		</div>
-	);
+const TopBar = () => {
+  const { pathname } = useLocation();
+  const { push } = useHistory();
+  return (
+    <>
+      {pathname === '/' && (
+        <AppBar position='static'>
+          <Grid container justify='flex-end'>
+            <Toolbar>
+              <Button color='inherit' onClick={() => push('/signin')}>
+                Войти
+              </Button>
+              <Button
+                color='default'
+                variant='contained'
+                onClick={() => push('/signup')}
+              >
+                Зарегистрироваться
+              </Button>
+            </Toolbar>
+          </Grid>
+        </AppBar>
+      )}
+      {pathname === '/signin' && (
+        <AppBar color='transparent'>
+          <Grid container justify='space-between' alignItems='center'>
+            <div>Icon</div>
+            <Toolbar>
+              <Button color='default' onClick={() => push('/signup')}>
+                Зарегистрироваться
+              </Button>
+            </Toolbar>
+          </Grid>
+        </AppBar>
+      )}
+    </>
+  );
 };
 
-export default TobBar;
+export default TopBar;

@@ -1,8 +1,11 @@
 import React from 'react';
-import { TobBar } from '../../components';
+
+import { Topbar } from '../../components';
+
+import './index.css';
 
 const Main = () => {
-	return <TobBar />;
+  return <Topbar />;
 };
 
 export default Main;

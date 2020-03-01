@@ -1,7 +1,8 @@
 import React from 'react';
+import { Topbar } from '../../components';
 
 const SignIn = () => {
-	return <div>SignIn</div>;
+  return <Topbar />;
 };
 
 export default SignIn;
