@@ -9,7 +9,7 @@ export const handleCompanyName = (companyName = '') => {
 
 export const handleBusinessCategory = (businessCategory = '') => {
   return {
-    type: UPDATE_COMPANY_NAME,
+    type: UPDATE_BUSINESS_CATEGORY,
     payload: businessCategory
   };
 };

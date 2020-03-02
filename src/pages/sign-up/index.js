@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Topbar } from '../../components';
 import {
   Container,
@@ -10,11 +10,14 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { BUSINESS_CATEGORIES } from '../../constants';
+import { handleCompanyName, handleBusinessCategory } from '../../redux';
 
 import './index.css';
 
 const SignUp = () => {
-  useSelector(state => console.log('stsate', state));
+  const signUpState = useSelector(state => state.signUp);
+  const dispatch = useDispatch();
+  const { companyName, businessCategory } = signUpState;
   return (
     <>
       <Topbar />
@@ -31,6 +34,8 @@ const SignUp = () => {
               id='company'
               label='Название компании'
               name='company'
+              value={companyName}
+              onChange={e => dispatch(handleCompanyName(e.target.value))}
             />
             <TextField
               fullWidth
@@ -40,9 +45,13 @@ const SignUp = () => {
               margin='normal'
               id='business-category'
               name='business-category'
+              value={businessCategory}
+              onChange={e => dispatch(handleBusinessCategory(e.target.value))}
             >
               {BUSINESS_CATEGORIES.map(option => (
-                <MenuItem key={option.value}>{option.label}</MenuItem>
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
               ))}
             </TextField>
             <Button
