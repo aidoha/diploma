@@ -1,50 +1,64 @@
 import React from 'react';
-
+import { useSelector } from 'react-redux';
 import { Topbar } from '../../components';
-import { Container, Grid, Typography, Button, TextField } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  TextField,
+  MenuItem
+} from '@material-ui/core';
+import { BUSINESS_CATEGORIES } from '../../constants';
 
 import './index.css';
 
 const SignUp = () => {
-	return (
-		<>
-			<Topbar />
-			<Container maxWidth="sm" className="auth__container">
-				<Typography component="h1" variant="h5">
-					Регистрация
-				</Typography>
-				<Grid container direction="row" justify="center" alignItems="center">
-					<form noValidate>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="Email Address"
-							name="email"
-							autoComplete="email"
-							autoFocus
-						/>
-						<TextField
-							variant="outlined"
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						/>
-						<Button type="submit" fullWidth variant="contained" color="primary">
-							Sign In
-						</Button>
-					</form>
-				</Grid>
-			</Container>
-		</>
-	);
+  useSelector(state => console.log('stsate', state));
+  return (
+    <>
+      <Topbar />
+      <Container maxWidth='xs' className='auth__container'>
+        <Typography component='h1' variant='h5'>
+          Регистрация
+        </Typography>
+        <Grid container alignItems='center'>
+          <form noValidate>
+            <TextField
+              variant='outlined'
+              margin='normal'
+              fullWidth
+              id='company'
+              label='Название компании'
+              name='company'
+            />
+            <TextField
+              fullWidth
+              select
+              label='Категория бизнеса'
+              variant='outlined'
+              margin='normal'
+              id='business-category'
+              name='business-category'
+            >
+              {BUSINESS_CATEGORIES.map(option => (
+                <MenuItem key={option.value}>{option.label}</MenuItem>
+              ))}
+            </TextField>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              size='large'
+            >
+              Продолжить
+            </Button>
+          </form>
+        </Grid>
+      </Container>
+    </>
+  );
 };
 
 export default SignUp;
