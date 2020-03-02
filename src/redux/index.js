@@ -1,1 +1,5 @@
-export { handleBusinessCategory, handleCompanyName } from './sign-up/actions';
+export {
+  handleBusinessCategory,
+  handleCompanyName,
+  handleFirstStep
+} from './sign-up/actions';

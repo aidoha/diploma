@@ -1,9 +1,13 @@
-import { UPDATE_COMPANY_NAME, UPDATE_BUSINESS_CATEGORY } from './types';
+import {
+  UPDATE_COMPANY_NAME,
+  UPDATE_BUSINESS_CATEGORY,
+  HIDE_FIRST_STEP
+} from './types';
 
 const initialState = {
+  firstStep: true,
   companyName: '',
   businessCategory: '',
-  disabled: true,
   customer: {
     name: '',
     email: '',
@@ -23,6 +27,11 @@ const signUpReducer = (state = initialState, action) => {
       return {
         ...state,
         businessCategory: action.payload
+      };
+    case HIDE_FIRST_STEP:
+      return {
+        ...state,
+        firstStep: false
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Topbar } from '../../components';
 import {
@@ -10,14 +10,25 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { BUSINESS_CATEGORIES } from '../../constants';
-import { handleCompanyName, handleBusinessCategory } from '../../redux';
+import {
+  handleCompanyName,
+  handleBusinessCategory,
+  handleFirstStep
+} from '../../redux';
 
 import './index.css';
 
 const SignUp = () => {
   const signUpState = useSelector(state => state.signUp);
   const dispatch = useDispatch();
-  const { companyName, businessCategory } = signUpState;
+  const { companyName, businessCategory, firstStep } = signUpState;
+
+  useEffect(() => {
+    if (companyName !== '' && businessCategory !== '') {
+      dispatch(handleFirstStep());
+    }
+  }, [companyName, businessCategory]);
+
   return (
     <>
       <Topbar />
@@ -60,6 +71,7 @@ const SignUp = () => {
               variant='contained'
               color='primary'
               size='large'
+              disabled={firstStep}
             >
               Продолжить
             </Button>
