@@ -1,7 +1,6 @@
 import {
 	UPDATE_COMPANY_NAME,
 	UPDATE_BUSINESS_CATEGORY,
-	BTN_CONTINUE,
 	HIDE_FIRST_STEP,
 	UPDATE_CUSTOMER_PHONE,
 	UPDATE_CUSTOMER_NAME,
@@ -21,11 +20,6 @@ export const handleBusinessCategory = (businessCategory = '') => {
 	return {
 		type: UPDATE_BUSINESS_CATEGORY,
 		payload: businessCategory,
-	};
-};
-export const handleBtnContinue = () => {
-	return {
-		type: BTN_CONTINUE,
 	};
 };
 export const handleSteps = () => {

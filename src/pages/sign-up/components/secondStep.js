@@ -12,7 +12,7 @@ import {
 const SecondStep = () => {
 	const signUpState = useSelector(state => state.signUp);
 	const dispatch = useDispatch();
-	const { name, email, password, showPassword } = signUpState;
+	const { name, email, password, showPassword, touched } = signUpState;
 
 	const onSubmit = event => {
 		event.preventDefault();
@@ -27,6 +27,8 @@ const SecondStep = () => {
 				label="Имя"
 				name="name"
 				value={name}
+				error={touched.name && name === ''}
+				onBlur={e => dispatch(handleCustomerName(e.target.value))}
 				onChange={e => dispatch(handleCustomerName(e.target.value))}
 			/>
 			<TextField
@@ -36,6 +38,8 @@ const SecondStep = () => {
 				label="E-mail"
 				name="email"
 				value={email}
+				error={touched.email && email === ''}
+				onBlur={e => dispatch(handleCustomerEmail(e.target.value))}
 				onChange={e => dispatch(handleCustomerEmail(e.target.value))}
 			/>
 			<TextField
@@ -44,8 +48,10 @@ const SecondStep = () => {
 				margin="normal"
 				fullWidth
 				label="Пароль"
-				name="passoword"
+				name="password"
 				value={password}
+				error={touched.password && password === ''}
+				onBlur={e => dispatch(handleCustomerPassword(e.target.value))}
 				onChange={e => dispatch(handleCustomerPassword(e.target.value))}
 				InputProps={{
 					endAdornment: (
@@ -57,7 +63,14 @@ const SecondStep = () => {
 					),
 				}}
 			/>
-			<Button type="submit" fullWidth variant="contained" color="primary" size="large">
+			<Button
+				type="submit"
+				fullWidth
+				variant="contained"
+				color="primary"
+				size="large"
+				disabled={name === '' || email === '' || password === ''}
+			>
 				Зарегистрироваться
 			</Button>
 		</form>

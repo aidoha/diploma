@@ -1,7 +1,6 @@
 import {
 	UPDATE_COMPANY_NAME,
 	UPDATE_BUSINESS_CATEGORY,
-	BTN_CONTINUE,
 	HIDE_FIRST_STEP,
 	UPDATE_CUSTOMER_NAME,
 	UPDATE_CUSTOMER_EMAIL,
@@ -11,9 +10,8 @@ import {
 } from './types';
 
 const initialState = {
-	firstStep: true,
+	firstStep: false,
 	secondStep: true,
-	btnContinue: false,
 	companyName: '',
 	businessCategory: '',
 	name: '',
@@ -21,6 +19,13 @@ const initialState = {
 	password: '',
 	showPassword: false,
 	phone: '',
+	touched: {
+		companyName: false,
+		businessCategory: false,
+		name: false,
+		email: false,
+		password: false,
+	},
 };
 
 const signUpReducer = (state = initialState, action) => {
@@ -29,16 +34,19 @@ const signUpReducer = (state = initialState, action) => {
 			return {
 				...state,
 				companyName: action.payload,
+				touched: {
+					...state.touched,
+					companyName: true,
+				},
 			};
 		case UPDATE_BUSINESS_CATEGORY:
 			return {
 				...state,
 				businessCategory: action.payload,
-			};
-		case BTN_CONTINUE:
-			return {
-				...state,
-				btnContinue: true,
+				touched: {
+					...state.touched,
+					businessCategory: true,
+				},
 			};
 		case HIDE_FIRST_STEP:
 			return {
@@ -50,21 +58,37 @@ const signUpReducer = (state = initialState, action) => {
 			return {
 				...state,
 				name: action.payload,
+				touched: {
+					...state.touched,
+					name: true,
+				},
 			};
 		case UPDATE_CUSTOMER_EMAIL:
 			return {
 				...state,
 				email: action.payload,
+				touched: {
+					...state.touched,
+					email: true,
+				},
 			};
 		case UPDATE_CUSTOMER_PASSWORD:
 			return {
 				...state,
 				password: action.payload,
+				touched: {
+					...state.touched,
+					password: true,
+				},
 			};
 		case UPDATE_CUSTOMER_PHONE:
 			return {
 				...state,
 				phone: action.payload,
+				touched: {
+					...state.touched,
+					phone: true,
+				},
 			};
 		case SHOW_PASSWORD:
 			return {

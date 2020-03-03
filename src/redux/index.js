@@ -1,7 +1,6 @@
 export {
 	handleBusinessCategory,
 	handleCompanyName,
-	handleBtnContinue,
 	handleSteps,
 	handleCustomerEmail,
 	handleCustomerName,
