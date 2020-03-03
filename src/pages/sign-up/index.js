@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Topbar } from '../../components';
 import { Container, Grid, Typography } from '@material-ui/core';
 import FirstStep from './components/firsStep';
+import SecondStep from './components/secondStep';
 
 import './index.css';
 
@@ -19,7 +20,8 @@ const SignUp = () => {
 					Регистрация
 				</Typography>
 				<Grid container alignItems="center">
-					{firstStep && <FirstStep />}
+					{/* {firstStep && <FirstStep />} */}
+					{secondStep && <SecondStep />}
 				</Grid>
 			</Container>
 		</>

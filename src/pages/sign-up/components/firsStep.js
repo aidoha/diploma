@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, TextField, MenuItem } from '@material-ui/core';
 import { BUSINESS_CATEGORIES } from '../../../constants';
-import { handleCompanyName, handleBusinessCategory, handleBtnContinue } from '../../../redux';
+import { handleCompanyName, handleBusinessCategory, handleBtnContinue, handleSteps } from '../../../redux';
 
 const FirstStep = () => {
 	const signUpState = useSelector(state => state.signUp);
@@ -11,6 +11,7 @@ const FirstStep = () => {
 
 	const onSubmit = e => {
 		e.preventDefault();
+		dispatch(handleSteps());
 	};
 
 	useEffect(() => {
