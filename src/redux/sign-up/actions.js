@@ -1,6 +1,7 @@
 import {
   UPDATE_COMPANY_NAME,
   UPDATE_BUSINESS_CATEGORY,
+  BTN_CONTINUE,
   HIDE_FIRST_STEP
 } from './types';
 
@@ -18,8 +19,14 @@ export const handleBusinessCategory = (businessCategory = '') => {
   };
 };
 
-export const handleFirstStep = () => {
+export const handleBtnContinue = () => {
   return {
-    type: HIDE_FIRST_STEP
+    type: BTN_CONTINUE
   };
 };
+
+export const handleSteps = () => {
+  return {
+    type: HIDE_FIRST_STEP
+  }
+}

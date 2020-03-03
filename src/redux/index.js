@@ -1,5 +1,6 @@
 export {
   handleBusinessCategory,
   handleCompanyName,
-  handleFirstStep
+  handleBtnContinue,
+  handleSteps
 } from './sign-up/actions';
