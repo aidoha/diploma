@@ -8,23 +8,23 @@ import SecondStep from './components/secondStep';
 import './index.css';
 
 const SignUp = () => {
-	const signUpState = useSelector(state => state.signUp);
-	const { firstStep, secondStep } = signUpState;
+  const signUpState = useSelector(state => state.signUp);
+  const { firstStep, secondStep } = signUpState;
 
-	return (
-		<>
-			<Topbar />
-			<Container maxWidth="xs" className="auth__container">
-				<Typography component="h1" variant="h5">
-					Регистрация
-				</Typography>
-				<Grid container alignItems="center">
-					{firstStep && <FirstStep />}
-					{secondStep && <SecondStep />}
-				</Grid>
-			</Container>
-		</>
-	);
+  return (
+    <>
+      <Topbar />
+      <Container maxWidth='xs' className='auth__container'>
+        <Typography component='h1' variant='h5'>
+          Регистрация
+        </Typography>
+        <Grid container alignItems='center'>
+          {firstStep && <FirstStep />}
+          {secondStep && <SecondStep />}
+        </Grid>
+      </Container>
+    </>
+  );
 };
 
 export default SignUp;
