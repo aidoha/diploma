@@ -6,8 +6,8 @@ import {
   handleCustomerEmail,
   handleCustomerPassword,
   handlePasswordVisibility
-} from '../../../redux';
-import { useStyles, CssTextField } from './style';
+} from '../../../../redux';
+import { useStyles, CssTextField } from '../../style';
 
 const AuthForm = () => {
   const classes = useStyles();
@@ -40,7 +40,6 @@ const AuthForm = () => {
         label='Пароль'
         name='password'
         value={password}
-        className={classes.input}
         error={touched.password && password === ''}
         onBlur={e => dispatch(handleCustomerPassword(e.target.value))}
         onChange={e => dispatch(handleCustomerPassword(e.target.value))}

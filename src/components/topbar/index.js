@@ -14,7 +14,7 @@ const TopBar = () => {
 
   useEffect(() => {
     document.title = title;
-  }, []);
+  }, [title]);
 
   return (
     <>

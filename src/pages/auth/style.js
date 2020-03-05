@@ -10,12 +10,6 @@ export const CssTextField = withStyles({
       borderBottomColor: '#7654ff'
     },
     '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#7654ff'
-      },
-      '&:hover fieldset': {
-        borderColor: '#7654ff'
-      },
       '&.Mui-focused fieldset': {
         borderColor: '#7654ff'
       }
@@ -30,5 +24,8 @@ export const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: '#7654ff'
     }
+  },
+  auth__container: {
+    marginTop: '50px'
   }
 });
