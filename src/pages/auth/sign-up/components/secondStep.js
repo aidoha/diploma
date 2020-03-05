@@ -1,4 +1,6 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -8,20 +10,36 @@ import {
   handleCustomerName,
   handlePasswordVisibility
 } from '../../../../redux';
-import { useStyles, CssTextField } from '../../style';
+import { useStyles, CssTextField, Spinner } from '../../style';
+
+const ADD_TODO = gql`
+  mutation AddTodo($type: String!) {
+    addTodo(type: $type) {
+      id
+      type
+    }
+  }
+`;
 
 const SecondStep = () => {
   const classes = useStyles();
   const signUpState = useSelector(state => state.signUp);
   const dispatch = useDispatch();
   const { name, email, password, showPassword, touched } = signUpState;
+  const [register, { loading, error }] = useMutation(ADD_TODO);
 
   const onSubmit = event => {
     event.preventDefault();
+    const id = 1;
+    register({ variables: { id, type: name } }).then(res =>
+      console.log('res', res)
+    );
   };
 
   return (
     <form noValidate onSubmit={onSubmit}>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error :( Please try again</p>}
       <CssTextField
         variant='outlined'
         margin='normal'
@@ -76,6 +94,7 @@ const SecondStep = () => {
         color='primary'
         size='large'
         className={classes.btn_auth}
+        startIcon={<Spinner width='20px' height='20px' />}
         disabled={name === '' || email === '' || password === ''}
       >
         Зарегистрироваться

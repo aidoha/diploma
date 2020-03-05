@@ -1,5 +1,6 @@
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
+import { TextField, CircularProgress } from '@material-ui/core';
 
 export const CssTextField = withStyles({
   root: {
@@ -16,6 +17,12 @@ export const CssTextField = withStyles({
     }
   }
 })(TextField);
+
+export const Spinner = styled(CircularProgress)(props => ({
+  color: 'white',
+  height: `${props.height} !important`,
+  width: `${props.width} !important`
+}));
 
 export const useStyles = makeStyles({
   btn_auth: {

@@ -18,8 +18,9 @@ const SignUp = () => {
           Регистрация
         </Typography>
         <Grid container alignItems='center'>
-          {firstStep && <FirstStep />}
-          {secondStep && <SecondStep />}
+          {/* {firstStep && <FirstStep />} */}
+          {/* {secondStep && <SecondStep />} */}
+          {firstStep && <SecondStep />}
         </Grid>
       </Container>
     </>
