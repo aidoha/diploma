@@ -6,7 +6,9 @@ import {
   UPDATE_CUSTOMER_NAME,
   UPDATE_CUSTOMER_EMAIL,
   UPDATE_CUSTOMER_PASSWORD,
-  SHOW_PASSWORD
+  SHOW_PASSWORD,
+  SET_AUTHORIZED,
+  LOGOUT
 } from './types';
 
 //FIRST STEP
@@ -57,5 +59,16 @@ export const handlePasswordVisibility = (show = false) => {
   return {
     type: SHOW_PASSWORD,
     payload: show
+  };
+};
+export const handleSetAuthorized = () => {
+  return {
+    type: SET_AUTHORIZED
+  };
+};
+
+export const handleLogout = () => {
+  return {
+    type: LOGOUT
   };
 };

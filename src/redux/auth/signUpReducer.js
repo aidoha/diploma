@@ -6,7 +6,8 @@ import {
   UPDATE_CUSTOMER_EMAIL,
   UPDATE_CUSTOMER_PHONE,
   UPDATE_CUSTOMER_PASSWORD,
-  SHOW_PASSWORD
+  SHOW_PASSWORD,
+  SET_AUTHORIZED
 } from './types';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   password: '',
   showPassword: false,
   phone: '',
+  isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || null,
   touched: {
     companyName: false,
     businessCategory: false,
@@ -94,6 +96,11 @@ const signUpReducer = (state = initialState, action) => {
       return {
         ...state,
         showPassword: action.payload
+      };
+    case SET_AUTHORIZED:
+      return {
+        ...state,
+        isLoggedIn: true
       };
     default:
       return state;
