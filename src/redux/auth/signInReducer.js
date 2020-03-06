@@ -1,13 +1,15 @@
 import {
   UPDATE_CUSTOMER_EMAIL,
   UPDATE_CUSTOMER_PASSWORD,
-  SHOW_PASSWORD
+  SHOW_PASSWORD,
+  SET_AUTHORIZED
 } from './types';
 
 const initialState = {
   email: '',
   password: '',
   showPassword: false,
+  isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || null,
   touched: {
     email: false,
     password: false
@@ -38,6 +40,11 @@ const signInReducer = (state = initialState, action) => {
       return {
         ...state,
         showPassword: action.payload
+      };
+    case SET_AUTHORIZED:
+      return {
+        ...state,
+        isLoggedIn: true
       };
     default:
       return state;

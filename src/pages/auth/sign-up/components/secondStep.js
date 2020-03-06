@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
@@ -15,19 +15,10 @@ import { useHistory } from 'react-router-dom';
 
 const SecondStep = () => {
   const classes = useStyles();
-  const { push } = useHistory();
   const signUpState = useSelector(state => state.signUp);
   const dispatch = useDispatch();
-  const {
-    name,
-    email,
-    password,
-    showPassword,
-    touched,
-    isLoggedIn
-  } = signUpState;
+  const { name, email, password, showPassword, touched } = signUpState;
   // const [register, { loading, error }] = useMutation();
-  console.log('signUpState', signUpState);
 
   const onSubmit = event => {
     event.preventDefault();
@@ -36,7 +27,7 @@ const SecondStep = () => {
     //   console.log('res', res)
     // );
     dispatch(handleSetAuthorized());
-    localStorage.setItem('isLoggedIn', isLoggedIn);
+    localStorage.setItem('isLoggedIn', true);
   };
 
   return (
