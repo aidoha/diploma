@@ -1,3 +1,3 @@
 import Topbar from './topbar/index';
-
-export { Topbar };
+import Steps from './steps/index';
+export { Topbar, Steps };

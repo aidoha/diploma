@@ -8,3 +8,5 @@ export {
   handleCustomerPhone,
   handlePasswordVisibility
 } from './auth/actions';
+
+export { handleBackStep, handleNextStep } from './intro/actions';

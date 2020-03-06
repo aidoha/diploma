@@ -12,3 +12,7 @@ export const BUSINESS_CATEGORIES = [
     label: 'Кафе, бары, рестораны'
   }
 ];
+
+export const getSteps = () => {
+  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+};

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { AppBar, Toolbar, Button, Grid } from '@material-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
+import { Steps } from '../index';
 import { useStyles } from './style';
 
 const TopBar = () => {
@@ -19,7 +20,7 @@ const TopBar = () => {
   return (
     <>
       {pathname === '/' && (
-        <AppBar position='static' className={classes.main}>
+        <AppBar position='static' className={classes.mainBar}>
           <Grid container justify='flex-end'>
             <Toolbar>
               <Button
@@ -42,7 +43,11 @@ const TopBar = () => {
         </AppBar>
       )}
       {(pathname === '/signin' || pathname === '/signup') && (
-        <AppBar color='transparent' position='static'>
+        <AppBar
+          color='transparent'
+          position='static'
+          className={classes.topbar}
+        >
           <Grid container justify='space-between' alignItems='center'>
             <div>Icon</div>
             <Toolbar>
@@ -53,6 +58,20 @@ const TopBar = () => {
               >
                 {btnText}
               </Button>
+            </Toolbar>
+          </Grid>
+        </AppBar>
+      )}
+      {pathname === '/intro' && (
+        <AppBar
+          color='transparent'
+          position='sticky'
+          className={classes.topbar}
+        >
+          <Grid container justify='flex-start' alignItems='center'>
+            <div>ICON</div>
+            <Toolbar>
+              <Steps />
             </Toolbar>
           </Grid>
         </AppBar>
