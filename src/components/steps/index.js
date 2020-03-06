@@ -1,9 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Stepper, Step, StepLabel } from '@material-ui/core';
+import { Stepper, Step, StepLabel, makeStyles } from '@material-ui/core';
 import { getSteps } from '../../constants';
 
+const useStyles = makeStyles({
+  step: {
+    '& .MuiStepIcon-active': {
+      color: '#52c41a'
+    },
+    '&  .MuiStepIcon-completed': {
+      color: '#52c41a'
+    }
+  }
+});
+
 const Steps = () => {
+  const classes = useStyles();
   const intro = useSelector(state => state.intro);
   const { activeStep } = intro;
   const steps = getSteps();
@@ -11,7 +23,7 @@ const Steps = () => {
     <Stepper activeStep={activeStep}>
       {steps.map(label => {
         return (
-          <Step key={label}>
+          <Step key={label} className={classes.step}>
             <StepLabel>{label}</StepLabel>
           </Step>
         );
