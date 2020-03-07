@@ -7,7 +7,8 @@ import {
   handleBusinessCategory,
   handleSteps
 } from '../../../../redux';
-import { CssTextField, useStyles } from '../../style';
+import { useStyles } from '../../style';
+import { CssTextField } from '../../../../globalStyle';
 
 const FirstStep = () => {
   const classes = useStyles();

@@ -1,28 +1,40 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Typography, Container } from '@material-ui/core';
+import { Button, Typography, Grid } from '@material-ui/core';
 import { Topbar } from '../../components';
 import { getSteps } from '../../constants';
+import IntroFrom from './components/introForm';
 import { handleBackStep, handleNextStep } from '../../redux';
 import { useStyles } from './style';
-import { Redirect } from 'react-router-dom';
 
 const Intro = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const intro = useSelector(state => state.intro);
-  const { activeStep } = intro;
+  const introState = useSelector(state => state.intro);
+  const { activeStep, service } = introState;
+  const { name } = service;
   const steps = getSteps();
 
   return (
     <>
       <Topbar />
-      <Container className={classes.container}>
+      <Grid
+        container
+        justify='flex-start'
+        direction='column'
+        className={classes.container}
+      >
         <Typography variant='h1' className={classes.heading}>
           Привет! Мы поможем настроить онлайн-запись для твоего бизнеса за
           несколько минут.
         </Typography>
+        <Typography paragraph className={classes.subheading}>
+          Добавьте первую услугу, на которую будут записываться ваши клиенты
+        </Typography>
+        <IntroFrom introState={introState} dispatch={dispatch} />
         {activeStep === steps.length ? (
+          //Redirected to Order page
           <Redirect to='/' />
         ) : (
           <div>
@@ -33,15 +45,15 @@ const Intro = () => {
             )}
             <Button
               variant='contained'
-              color='primary'
               onClick={() => dispatch(handleNextStep(activeStep))}
               className={classes.btn__next}
+              disabled={activeStep === 0 && name === ''}
             >
               Далее
             </Button>
           </div>
         )}
-      </Container>
+      </Grid>
     </>
   );
 };

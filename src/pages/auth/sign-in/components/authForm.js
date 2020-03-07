@@ -7,7 +7,8 @@ import {
   handleCustomerPassword,
   handlePasswordVisibility
 } from '../../../../redux';
-import { useStyles, CssTextField } from '../../style';
+import { useStyles } from '../../style';
+import { CssTextField } from '../../../../globalStyle';
 
 const AuthForm = () => {
   const classes = useStyles();

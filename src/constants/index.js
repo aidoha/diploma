@@ -14,5 +14,5 @@ export const BUSINESS_CATEGORIES = [
 ];
 
 export const getSteps = () => {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  return ['Добавление услуги', 'Настройка расписания'];
 };

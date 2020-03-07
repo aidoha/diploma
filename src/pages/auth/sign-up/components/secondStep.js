@@ -1,17 +1,18 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMutation } from '@apollo/react-hooks';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import {
   handleCustomerEmail,
   handleCustomerPassword,
   handleCustomerName,
-  handlePasswordVisibility
+  handlePasswordVisibility,
+  handleSetAuthorized
 } from '../../../../redux';
-import { useStyles, CssTextField, Spinner } from '../../style';
-import { handleSetAuthorized } from '../../../../redux/auth/actions';
-import { useHistory } from 'react-router-dom';
+import { useStyles, Spinner } from '../../style';
+import { CssTextField } from '../../../../globalStyle';
 
 const SecondStep = () => {
   const classes = useStyles();

@@ -63,13 +63,9 @@ const TopBar = () => {
         </AppBar>
       )}
       {pathname === '/intro' && (
-        <AppBar
-          color='transparent'
-          position='sticky'
-          className={classes.topbar}
-        >
+        <AppBar position='sticky' className={classes.topbar}>
           <Grid container justify='flex-start' alignItems='center'>
-            <div>ICON</div>
+            <div style={{ color: 'black' }}>ICON</div>
             <Toolbar>
               <Steps />
             </Toolbar>

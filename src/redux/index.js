@@ -6,7 +6,13 @@ export {
   handleCustomerName,
   handleCustomerPassword,
   handleCustomerPhone,
-  handlePasswordVisibility
+  handlePasswordVisibility,
+  handleSetAuthorized
 } from './auth/actions';
 
-export { handleBackStep, handleNextStep } from './intro/actions';
+export {
+  handleBackStep,
+  handleNextStep,
+  handleServiceName,
+  handleServiceAddress
+} from './intro/actions';

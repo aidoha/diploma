@@ -9,6 +9,7 @@ export const useStyles = makeStyles({
     textTransform: 'none'
   },
   topbar: {
-    padding: '0 20px'
+    padding: '0 20px',
+    background: '#fff'
   }
 });
