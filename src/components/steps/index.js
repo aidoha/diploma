@@ -16,8 +16,8 @@ const useStyles = makeStyles({
 
 const Steps = () => {
   const classes = useStyles();
-  const intro = useSelector(state => state.intro);
-  const { activeStep } = intro;
+  const introForm = useSelector(state => state.introForm);
+  const { activeStep } = introForm;
   const steps = getSteps();
   return (
     <Stepper activeStep={activeStep}>

@@ -16,3 +16,14 @@ export const BUSINESS_CATEGORIES = [
 export const getSteps = () => {
   return ['Добавление услуги', 'Настройка расписания'];
 };
+export const getWeekDays = () => {
+  return [
+    { day: 'Пн' },
+    { day: 'Вт' },
+    { day: 'Ср' },
+    { day: 'Чт' },
+    { day: 'Пт' },
+    { day: 'Сб' },
+    { day: 'Вс' }
+  ];
+};

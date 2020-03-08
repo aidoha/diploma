@@ -24,5 +24,11 @@ export const useStyles = makeStyles({
   },
   form__group: {
     margin: '20px 0'
+  },
+  timeTableContainer: {
+    width: '40%'
+  },
+  timeTableRow: {
+    margin: '20px 0'
   }
 });

@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Typography, Grid } from '@material-ui/core';
+import { Button, Grid, Slide } from '@material-ui/core';
 import { Topbar } from '../../components';
 import { getSteps } from '../../constants';
-import IntroFrom from './components/introForm';
+import IntroForm from './components/introForm';
+import Timetable from './components/timetable';
 import { handleBackStep, handleNextStep } from '../../redux';
 import { useStyles } from './style';
 
 const Intro = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const introState = useSelector(state => state.intro);
-  const { activeStep, service } = introState;
+  const introFormState = useSelector(state => state.introForm);
+  const { activeStep, service } = introFormState;
   const { name } = service;
   const steps = getSteps();
+
+  useEffect(() => {
+    document.title = `${name} | BookForm`;
+  }, []);
 
   return (
     <>
@@ -25,14 +30,20 @@ const Intro = () => {
         direction='column'
         className={classes.container}
       >
-        <Typography variant='h1' className={classes.heading}>
-          Привет! Мы поможем настроить онлайн-запись для твоего бизнеса за
-          несколько минут.
-        </Typography>
-        <Typography paragraph className={classes.subheading}>
-          Добавьте первую услугу, на которую будут записываться ваши клиенты
-        </Typography>
-        <IntroFrom introState={introState} dispatch={dispatch} />
+        {activeStep === 0 && (
+          <Slide direction='up' in={activeStep === 0}>
+            <div>
+              <IntroForm introFormState={introFormState} dispatch={dispatch} />
+            </div>
+          </Slide>
+        )}
+        {activeStep === 1 && (
+          <Slide direction='up' in={activeStep === 1}>
+            <div>
+              <Timetable />
+            </div>
+          </Slide>
+        )}
         {activeStep === steps.length ? (
           //Redirected to Order page
           <Redirect to='/' />
