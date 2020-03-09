@@ -34,15 +34,15 @@ export const handleServiceAddress = (address = '') => {
 };
 
 //Timetable (second step)
-export const handleStartTime = (time = '') => {
+export const handleStartTime = (day = '', startTime = '') => {
   return {
     type: UPDATE_START_TIME,
-    payload: time
+    payload: { day, startTime }
   };
 };
-export const handleFinishTime = (time = '') => {
+export const handleFinishTime = (day = '', finishTime = '') => {
   return {
     type: UPDATE_FINISH_TIME,
-    payload: time
+    payload: { day, finishTime }
   };
 };

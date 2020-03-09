@@ -1,9 +1,10 @@
-export const formateWeekArray = (weekDays, timetableState) => {
+export const formateWeekArray = weekDays => {
   return weekDays.map(item => {
     return {
       ...item,
       time: {
-        ...(item.time = timetableState.time)
+        start: '10:00',
+        finish: '19:00'
       }
     };
   });

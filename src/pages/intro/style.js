@@ -26,7 +26,8 @@ export const useStyles = makeStyles({
     margin: '20px 0'
   },
   timeTableContainer: {
-    width: '40%'
+    width: '40%',
+    margin: '20px 0'
   },
   timeTableRow: {
     margin: '20px 0'

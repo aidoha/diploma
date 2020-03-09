@@ -1,10 +1,12 @@
 import { UPDATE_START_TIME, UPDATE_FINISH_TIME } from './types';
+import { getWeekDays } from '../../constants/index';
+import { formateWeekArray } from '../../utils/index';
+
+const weekDays = getWeekDays();
+const initialWeek = formateWeekArray(weekDays);
 
 const intialState = {
-  time: {
-    start: '10:00',
-    finish: '19:00'
-  },
+  week: initialWeek,
   service: {
     duration: 60,
     price: 0
@@ -16,18 +18,38 @@ const timetableReducer = (state = intialState, action) => {
     case UPDATE_START_TIME:
       return {
         ...state,
-        time: {
-          ...state.time,
-          start: action.payload
-        }
+        week: [
+          ...state.week.map(item => {
+            if (item.day === action.payload.day) {
+              return {
+                ...item,
+                time: {
+                  ...item.time,
+                  start: action.payload.startTime
+                }
+              };
+            }
+            return item;
+          })
+        ]
       };
     case UPDATE_FINISH_TIME:
       return {
         ...state,
-        time: {
-          ...state.time,
-          finish: action.payload
-        }
+        week: [
+          ...state.week.map(item => {
+            if (item.day === action.payload.day) {
+              return {
+                ...item,
+                time: {
+                  ...item.time,
+                  start: action.payload.finishTime
+                }
+              };
+            }
+            return item;
+          })
+        ]
       };
     default:
       return state;

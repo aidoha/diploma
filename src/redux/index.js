@@ -14,5 +14,7 @@ export {
   handleBackStep,
   handleNextStep,
   handleServiceName,
-  handleServiceAddress
+  handleServiceAddress,
+  handleStartTime,
+  handleFinishTime
 } from './intro/actions';

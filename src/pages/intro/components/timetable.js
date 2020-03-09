@@ -1,20 +1,26 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Grid, TextField } from '@material-ui/core';
-import { getWeekDays } from '../../../constants/index';
-import { formateWeekArray } from '../../../utils/index';
+import { handleStartTime, handleFinishTime } from '../../../redux';
 import { useStyles } from '../style';
-
-const weekDays = getWeekDays();
 
 const Timetable = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const timetableState = useSelector(state => state.timetable);
-  const { time, service } = timetableState;
-  const { start, finish } = time;
+  const { week, service } = timetableState;
   const { duration, price } = service;
-  const week = formateWeekArray(weekDays, timetableState);
+
+  const onChangeStartTime = (day, value) => {
+    dispatch(handleStartTime(day, value));
+  };
+
+  const onChangeFinishTime = (day, value) => {
+    dispatch(handleFinishTime(day, value));
+  };
+
+  console.log(week);
 
   return (
     <div>
@@ -22,30 +28,38 @@ const Timetable = () => {
         Укажите, в какое время можно записаться на услугу и её стоимость
       </Typography>
       <div className={classes.timeTableContainer}>
-        {week.map((item, index) => (
-          <Grid
-            key={index}
-            container
-            justify='space-between'
-            alignItems='center'
-            className={classes.timeTableRow}
-          >
-            <div>{item.day}</div>
-            <TextField
-              variant='outlined'
-              type='time'
-              defaultValue={start}
-              className={classes.textField}
-            />
-            -
-            <TextField
-              variant='outlined'
-              type='time'
-              defaultValue={finish}
-              className={classes.textField}
-            />
-          </Grid>
-        ))}
+        {week.map(item => {
+          const { time, day } = item;
+          const { start, finish } = time;
+          return (
+            <Grid
+              key={day}
+              container
+              justify='space-between'
+              alignItems='center'
+              className={classes.timeTableRow}
+            >
+              <div>{day}</div>
+              <TextField
+                variant='outlined'
+                type='time'
+                className={classes.textField}
+                error={start === ''}
+                value={start}
+                onChange={e => onChangeStartTime(day, e.target.value)}
+              />
+              -
+              <TextField
+                variant='outlined'
+                type='time'
+                className={classes.textField}
+                error={finish === ''}
+                value={finish}
+                onChange={e => onChangeFinishTime(day, e.target.value)}
+              />
+            </Grid>
+          );
+        })}
       </div>
     </div>
   );
