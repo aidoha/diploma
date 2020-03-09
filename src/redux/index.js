@@ -16,5 +16,7 @@ export {
   handleServiceName,
   handleServiceAddress,
   handleStartTime,
-  handleFinishTime
+  handleFinishTime,
+  handleServiceDuration,
+  handleServicePrice
 } from './intro/actions';

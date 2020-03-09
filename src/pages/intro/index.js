@@ -5,7 +5,7 @@ import { Button, Grid, Slide } from '@material-ui/core';
 import { Topbar } from '../../components';
 import { getSteps } from '../../constants';
 import IntroForm from './components/introForm';
-import Timetable from './components/timetable';
+import Schedule from './components/schedule';
 import { handleBackStep, handleNextStep } from '../../redux';
 import { useStyles } from './style';
 
@@ -17,9 +17,17 @@ const Intro = () => {
   const { name } = service;
   const steps = getSteps();
 
+  const onClickNext = () => {
+    dispatch(handleNextStep(activeStep));
+  };
+
+  const onClickBack = () => {
+    dispatch(handleBackStep(activeStep));
+  };
+
   useEffect(() => {
     document.title = `${name} | BookForm`;
-  }, []);
+  }, [name]);
 
   return (
     <>
@@ -40,23 +48,19 @@ const Intro = () => {
         {activeStep === 1 && (
           <Slide direction='up' in={activeStep === 1}>
             <div>
-              <Timetable />
+              <Schedule />
             </div>
           </Slide>
         )}
-        {activeStep === steps.length ? (
-          //Redirected to Order page
-          <Redirect to='/' />
-        ) : (
+        {activeStep === steps.length && <Redirect to='/' />}
+        {activeStep !== steps.length && (
           <div>
-            {activeStep > 0 && (
-              <Button onClick={() => dispatch(handleBackStep(activeStep))}>
-                Назад
-              </Button>
-            )}
+            <Button onClick={onClickBack} disabled={!(activeStep > 0)}>
+              Назад
+            </Button>
             <Button
               variant='contained'
-              onClick={() => dispatch(handleNextStep(activeStep))}
+              onClick={onClickNext}
               className={classes.btn__next}
               disabled={activeStep === 0 && name === ''}
             >

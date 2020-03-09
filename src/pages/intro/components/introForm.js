@@ -41,8 +41,8 @@ const IntroForm = ({ introFormState, dispatch }) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  <IconButton>
-                    <Clear onClick={() => onChangeServiceName('')} />
+                  <IconButton onClick={() => onChangeServiceName('')}>
+                    <Clear />
                   </IconButton>
                 </InputAdornment>
               )

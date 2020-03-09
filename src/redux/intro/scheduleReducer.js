@@ -1,4 +1,9 @@
-import { UPDATE_START_TIME, UPDATE_FINISH_TIME } from './types';
+import {
+  UPDATE_START_TIME,
+  UPDATE_FINISH_TIME,
+  UPDATE_SERVICE_DURATION,
+  UPDATE_SERVICE_PRICE
+} from './types';
 import { getWeekDays } from '../../constants/index';
 import { formateWeekArray } from '../../utils/index';
 
@@ -10,10 +15,13 @@ const intialState = {
   service: {
     duration: 60,
     price: 0
+  },
+  touched: {
+    price: false
   }
 };
 
-const timetableReducer = (state = intialState, action) => {
+const scheduleReducer = (state = intialState, action) => {
   switch (action.type) {
     case UPDATE_START_TIME:
       return {
@@ -51,9 +59,29 @@ const timetableReducer = (state = intialState, action) => {
           })
         ]
       };
+    case UPDATE_SERVICE_DURATION:
+      return {
+        ...state,
+        service: {
+          ...state.service,
+          duration: action.payload
+        }
+      };
+    case UPDATE_SERVICE_PRICE:
+      return {
+        ...state,
+        service: {
+          ...state.service,
+          price: action.payload
+        },
+        touched: {
+          ...state.touched,
+          price: true
+        }
+      };
     default:
       return state;
   }
 };
 
-export default timetableReducer;
+export default scheduleReducer;

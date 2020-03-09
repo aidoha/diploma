@@ -25,11 +25,10 @@ export const useStyles = makeStyles({
   form__group: {
     margin: '20px 0'
   },
-  timeTableContainer: {
+  schedule__container: {
     width: '40%',
-    margin: '20px 0'
   },
-  timeTableRow: {
-    margin: '20px 0'
+  schedule__row: {
+    margin: '40px 0'
   }
 });
