@@ -1,17 +1,26 @@
 import React, { useEffect } from 'react';
 
-import { AppBar, Toolbar, Button, Grid } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Grid,
+  useMediaQuery
+} from '@material-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Steps } from '../index';
 import { useStyles } from './style';
 
 const TopBar = () => {
   const classes = useStyles();
+  const matches = useMediaQuery('(max-width:600px)');
   const { pathname } = useLocation();
   const { push } = useHistory();
   const btnText = pathname === '/signup' ? 'Вход' : 'Зарегистрироваться';
   const authLink = pathname === '/signup' ? '/signin' : '/signup';
   const title = pathname === '/signup' ? 'Регистрация' : 'Вход';
+
+  console.log(matches);
 
   useEffect(() => {
     document.title = title;
@@ -64,11 +73,19 @@ const TopBar = () => {
       )}
       {pathname === '/intro' && (
         <AppBar position='sticky' className={classes.topbar}>
-          <Grid container justify='flex-start' alignItems='center'>
+          <Grid
+            container
+            justify='flex-start'
+            alignItems='center'
+            xs={12}
+            sm={12}
+          >
             <div style={{ color: 'black' }}>ICON</div>
-            <Toolbar>
-              <Steps />
-            </Toolbar>
+            {!matches && (
+              <Toolbar>
+                <Steps />
+              </Toolbar>
+            )}
           </Grid>
         </AppBar>
       )}

@@ -6,7 +6,7 @@ import {
 } from './types';
 
 const initialState = {
-  activeStep: 0,
+  activeStep: 1,
   service: {
     name: 'Моя услуга',
     address: ''

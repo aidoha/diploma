@@ -26,7 +26,7 @@ const IntroForm = ({ introFormState, dispatch }) => {
       <Typography paragraph className={classes.subheading}>
         Добавьте первую услугу, на которую будут записываться ваши клиенты
       </Typography>
-      <form noValidate className={classes.introForm}>
+      <form noValidate className={classes.intro__form}>
         <div className={classes.form__group}>
           <Typography paragraph>Название услуги*</Typography>
           <CssTextField

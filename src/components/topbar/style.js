@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   mainBar: {
     background: '#8282ff',
     border: 0
@@ -12,4 +12,4 @@ export const useStyles = makeStyles({
     padding: '0 20px',
     background: '#fff'
   }
-});
+}));

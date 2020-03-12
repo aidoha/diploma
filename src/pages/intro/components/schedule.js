@@ -1,7 +1,13 @@
 import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Grid, TextField, InputAdornment } from '@material-ui/core';
+import {
+  Typography,
+  Grid,
+  TextField,
+  InputAdornment,
+  Divider
+} from '@material-ui/core';
 import {
   handleStartTime,
   handleFinishTime,
@@ -39,34 +45,36 @@ const Schedule = () => {
       <Typography variant='h1' className={classes.heading}>
         Укажите, в какое время можно записаться на услугу и её стоимость
       </Typography>
-      <div className={classes.schedule__container}>
+      <Grid container direction='column'>
         {week.map(item => {
           const { time, day } = item;
           const { start, finish } = time;
           return (
-            <Grid
-              key={day}
-              container
-              justify='space-between'
-              alignItems='center'
-              className={classes.schedule__row}
-            >
+            <Grid className={classes.schedule__row} lg={5} md={5}>
               <div>{day}</div>
-              <TextField
-                variant='outlined'
-                type='time'
-                error={start === ''}
-                value={start}
-                onChange={e => onChangeStartTime(day, e.target.value)}
-              />
-              -
-              <TextField
-                variant='outlined'
-                type='time'
-                error={finish === ''}
-                value={finish}
-                onChange={e => onChangeFinishTime(day, e.target.value)}
-              />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <TextField
+                  variant='outlined'
+                  type='time'
+                  error={start === ''}
+                  value={start}
+                  onChange={e => onChangeStartTime(day, e.target.value)}
+                />
+                -
+                <TextField
+                  variant='outlined'
+                  type='time'
+                  error={finish === ''}
+                  value={finish}
+                  onChange={e => onChangeFinishTime(day, e.target.value)}
+                />
+              </div>
             </Grid>
           );
         })}
@@ -102,7 +110,7 @@ const Schedule = () => {
             }}
           />
         </div>
-      </div>
+      </Grid>
     </>
   );
 };

@@ -34,40 +34,50 @@ const Intro = () => {
       <Topbar />
       <Grid
         container
-        justify='flex-start'
-        direction='column'
+        justify='center'
+        lg={12}
+        md={12}
+        xs={12}
+        sm={12}
         className={classes.container}
       >
-        {activeStep === 0 && (
-          <Slide direction='up' in={activeStep === 0}>
+        <Grid item lg={1} md={1}></Grid>
+        <Grid item lg={6} md={6} direction='column' xs={10} sm={10}>
+          {activeStep === 0 && (
+            <Slide direction='up' in={activeStep === 0}>
+              <div>
+                <IntroForm
+                  introFormState={introFormState}
+                  dispatch={dispatch}
+                />
+              </div>
+            </Slide>
+          )}
+          {activeStep === 1 && (
+            <Slide direction='up' in={activeStep === 1}>
+              <div>
+                <Schedule />
+              </div>
+            </Slide>
+          )}
+          {activeStep === steps.length && <Redirect to='/' />}
+          {activeStep !== steps.length && (
             <div>
-              <IntroForm introFormState={introFormState} dispatch={dispatch} />
+              <Button onClick={onClickBack} disabled={!(activeStep > 0)}>
+                Назад
+              </Button>
+              <Button
+                variant='contained'
+                onClick={onClickNext}
+                className={classes.btn__next}
+                disabled={activeStep === 0 && name === ''}
+              >
+                Далее
+              </Button>
             </div>
-          </Slide>
-        )}
-        {activeStep === 1 && (
-          <Slide direction='up' in={activeStep === 1}>
-            <div>
-              <Schedule />
-            </div>
-          </Slide>
-        )}
-        {activeStep === steps.length && <Redirect to='/' />}
-        {activeStep !== steps.length && (
-          <div>
-            <Button onClick={onClickBack} disabled={!(activeStep > 0)}>
-              Назад
-            </Button>
-            <Button
-              variant='contained'
-              onClick={onClickNext}
-              className={classes.btn__next}
-              disabled={activeStep === 0 && name === ''}
-            >
-              Далее
-            </Button>
-          </div>
-        )}
+          )}
+        </Grid>
+        <Grid item lg={5} md={5}></Grid>
       </Grid>
     </>
   );
