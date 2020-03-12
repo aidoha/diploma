@@ -27,7 +27,7 @@ const TopBar = () => {
   return (
     <>
       {pathname === '/' && (
-        <AppBar position='static' className={classes.mainBar}>
+        <AppBar position='static' className={classes.main_bar}>
           <Grid container justify='flex-end'>
             <Toolbar>
               <Button

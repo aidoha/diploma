@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { Typography, IconButton, InputAdornment } from '@material-ui/core';
+import {
+  Typography,
+  IconButton,
+  InputAdornment,
+  useMediaQuery
+} from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import { CssTextField } from '../../../globalStyle';
 import { useStyles } from '../style';
@@ -8,6 +13,7 @@ import { handleServiceName, handleServiceAddress } from '../../../redux';
 
 const IntroForm = ({ introFormState, dispatch }) => {
   const classes = useStyles();
+  const matches = useMediaQuery('(max-width:600px)');
   const { service, touched } = introFormState;
   const { name, address } = service;
   const onChangeServiceName = value => {
@@ -19,6 +25,7 @@ const IntroForm = ({ introFormState, dispatch }) => {
 
   return (
     <>
+      {matches && <div>dajsndjl</div>}
       <Typography variant='h1' className={classes.heading}>
         Привет! Мы поможем настроить онлайн-запись для твоего бизнеса за
         несколько минут.

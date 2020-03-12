@@ -19,6 +19,7 @@ const Steps = () => {
   const introForm = useSelector(state => state.introForm);
   const { activeStep } = introForm;
   const steps = getSteps();
+
   return (
     <Stepper activeStep={activeStep}>
       {steps.map(label => {
