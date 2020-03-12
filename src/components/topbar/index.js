@@ -20,8 +20,6 @@ const TopBar = () => {
   const authLink = pathname === '/signup' ? '/signin' : '/signup';
   const title = pathname === '/signup' ? 'Регистрация' : 'Вход';
 
-  console.log(matches);
-
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -73,13 +71,7 @@ const TopBar = () => {
       )}
       {pathname === '/intro' && (
         <AppBar position='sticky' className={classes.topbar}>
-          <Grid
-            container
-            justify='flex-start'
-            alignItems='center'
-            xs={12}
-            sm={12}
-          >
+          <Grid container justify='flex-start' alignItems='center'>
             <div style={{ color: 'black' }}>ICON</div>
             {!matches && (
               <Toolbar>

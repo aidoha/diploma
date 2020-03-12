@@ -51,7 +51,7 @@ const scheduleReducer = (state = intialState, action) => {
                 ...item,
                 time: {
                   ...item.time,
-                  start: action.payload.finishTime
+                  finish: action.payload.finishTime
                 }
               };
             }

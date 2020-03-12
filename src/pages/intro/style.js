@@ -6,7 +6,8 @@ export const useStyles = makeStyles({
   },
   heading: {
     fontSize: '32px',
-    fontWeight: '700'
+    fontWeight: '700',
+    textAlign: 'justify'
   },
   subheading: {
     marginTop: '30px'

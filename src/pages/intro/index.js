@@ -32,17 +32,9 @@ const Intro = () => {
   return (
     <>
       <Topbar />
-      <Grid
-        container
-        justify='center'
-        lg={12}
-        md={12}
-        xs={12}
-        sm={12}
-        className={classes.container}
-      >
+      <Grid container justify='center' className={classes.container}>
         <Grid item lg={1} md={1}></Grid>
-        <Grid item lg={6} md={6} direction='column' xs={10} sm={10}>
+        <Grid item lg={6} md={6} xs={10} sm={10}>
           {activeStep === 0 && (
             <Slide direction='up' in={activeStep === 0}>
               <div>

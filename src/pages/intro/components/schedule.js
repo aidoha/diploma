@@ -1,13 +1,7 @@
 import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  Typography,
-  Grid,
-  TextField,
-  InputAdornment,
-  Divider
-} from '@material-ui/core';
+import { Typography, Grid, TextField, InputAdornment } from '@material-ui/core';
 import {
   handleStartTime,
   handleFinishTime,
@@ -50,31 +44,31 @@ const Schedule = () => {
           const { time, day } = item;
           const { start, finish } = time;
           return (
-            <Grid className={classes.schedule__row} lg={5} md={5}>
+            <Grid
+              key={day}
+              item
+              className={classes.schedule__row}
+              lg={5}
+              md={5}
+            >
               <div>{day}</div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <TextField
-                  variant='outlined'
-                  type='time'
-                  error={start === ''}
-                  value={start}
-                  onChange={e => onChangeStartTime(day, e.target.value)}
-                />
-                -
-                <TextField
-                  variant='outlined'
-                  type='time'
-                  error={finish === ''}
-                  value={finish}
-                  onChange={e => onChangeFinishTime(day, e.target.value)}
-                />
-              </div>
+              <TextField
+                variant='outlined'
+                type='time'
+                error={start === ''}
+                value={start}
+                onChange={e => onChangeStartTime(day, e.target.value)}
+              />
+              -
+              <TextField
+                variant='outlined'
+                type='time'
+                error={finish === ''}
+                value={finish}
+                onChange={e => onChangeFinishTime(day, e.target.value)}
+              />
+              {/* <div>-</div>
+              <div>+</div> */}
             </Grid>
           );
         })}
