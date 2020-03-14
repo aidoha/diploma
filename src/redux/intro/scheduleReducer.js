@@ -2,7 +2,8 @@ import {
   UPDATE_START_TIME,
   UPDATE_FINISH_TIME,
   UPDATE_SERVICE_DURATION,
-  UPDATE_SERVICE_PRICE
+  UPDATE_SERVICE_PRICE,
+  ACTIVE_DAY
 } from './types';
 import { getWeekDays } from '../../constants/index';
 import { formateWeekArray } from '../../utils/index';
@@ -53,6 +54,21 @@ const scheduleReducer = (state = intialState, action) => {
                   ...item.time,
                   finish: action.payload.finishTime
                 }
+              };
+            }
+            return item;
+          })
+        ]
+      };
+    case ACTIVE_DAY:
+      return {
+        ...state,
+        week: [
+          ...state.week.map(item => {
+            if (item.day === action.payload.day) {
+              return {
+                ...item,
+                active: false
               };
             }
             return item;

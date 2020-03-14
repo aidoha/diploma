@@ -29,6 +29,24 @@ export const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: '40px 0'
+    margin: '20px 0'
+  },
+  addIcon: {
+    color: '#8282ff',
+    margin: '4px',
+    width: '30px',
+    height: '30px',
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  removeIcon: {
+    color: '#f5f5f5',
+    margin: '4px',
+    width: '30px',
+    height: '30px',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   }
 });

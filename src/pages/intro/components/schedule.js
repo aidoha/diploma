@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Grid, TextField, InputAdornment } from '@material-ui/core';
+import { AddCircle, RemoveCircle } from '@material-ui/icons';
 import {
   handleStartTime,
   handleFinishTime,
@@ -48,8 +49,8 @@ const Schedule = () => {
               key={day}
               item
               className={classes.schedule__row}
-              lg={5}
-              md={5}
+              lg={7}
+              md={7}
             >
               <div>{day}</div>
               <TextField
@@ -67,8 +68,10 @@ const Schedule = () => {
                 value={finish}
                 onChange={e => onChangeFinishTime(day, e.target.value)}
               />
-              {/* <div>-</div>
-              <div>+</div> */}
+              <div>
+                <RemoveCircle className={classes.removeIcon} />
+                <AddCircle className={classes.addIcon} />
+              </div>
             </Grid>
           );
         })}

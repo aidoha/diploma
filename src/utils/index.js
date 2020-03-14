@@ -5,7 +5,8 @@ export const formateWeekArray = weekDays => {
       time: {
         start: '10:00',
         finish: '19:00'
-      }
+      },
+      active: true
     };
   });
 };
