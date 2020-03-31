@@ -18,7 +18,10 @@ const TopBar = () => {
   const { push } = useHistory();
   const btnText = pathname === '/signup' ? 'Вход' : 'Зарегистрироваться';
   const authLink = pathname === '/signup' ? '/signin' : '/signup';
-  const title = pathname === '/signup' ? 'Регистрация' : 'Вход';
+  const title =
+    (pathname === '/signup' && 'Регистрация') ||
+    (pathname === '/signin' && 'Вход') ||
+    (pathname === '/' && 'BookForm');
 
   useEffect(() => {
     document.title = title;
