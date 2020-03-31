@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Grid, Typography } from '@material-ui/core';
 
 const HelloSection = ({ classes }) => {
+  const { push } = useHistory();
   return (
     <Grid item lg={4} md={4} container justify='center' alignItems='center'>
       <Typography component='h3' variant='h3' className={classes.heading}>
@@ -17,6 +19,7 @@ const HelloSection = ({ classes }) => {
         variant='contained'
         size='large'
         className={classes.btn_start}
+        onClick={() => push('/signup')}
       >
         Настроить за 15 минут
       </Button>

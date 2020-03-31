@@ -1,8 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles({
-  container: {
-    margin: '100px 0'
+  container_hello: {
+    padding: '100px 0'
+  },
+  container_category: {
+    backgroundColor: '#f3f6fa',
+    padding: '50px'
   },
   heading: {
     textAlign: 'center',
@@ -22,5 +26,23 @@ export const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: '#7654ff'
     }
+  },
+  category_box: {
+    backgroundColor: '#fff',
+    borderRadius: '4px',
+    padding: '20px',
+    margin: '10px',
+    height: '200px',
+    boxShadow: '0 30px 50px 0 rgba(6,6,6, .15)',
+    cursor: 'pointer'
+  },
+  category_name: {
+    fontSize: '18px',
+    fontWeight: 'bold'
+  },
+  subcategory_name: {
+    fontSize: '14px',
+    color: 'rgba(54,54,54,.4)',
+    marginTop: '10px'
   }
 });
