@@ -9,8 +9,10 @@ import {
   handleCustomerPassword,
   handleCustomerName,
   handlePasswordVisibility,
+  handleCustomerPhone,
   handleSetAuthorized
 } from '../../../../redux';
+import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
 
@@ -18,18 +20,30 @@ const SecondStep = () => {
   const classes = useStyles();
   const signUpState = useSelector(state => state.signUp);
   const dispatch = useDispatch();
-  const { name, email, password, showPassword, touched } = signUpState;
-  // const [register, { loading, error }] = useMutation();
+  const { name, email, password, phone, showPassword, touched } = signUpState;
+  const [register, { loading, error }] = useMutation(CREATE_BUSINESS_OWNER);
 
   const onSubmit = event => {
     event.preventDefault();
-    // const id = 1;
-    // register({ variables: { id, type: name } }).then(res =>
+    // const businessOwner = {
+    //   businessOwnerName: name,
+    //   businessCompanyID: 7,
+    //   businessOwnerEmail: email,
+    //   businessOwnerPassword: password,
+    //   businessOwnerPhoneNumber: phone,
+    //   businessOwnerPhoneNumberPrefix: '+7'
+    // };
+    // console.log(businessOwner);
+
+    // register({ variables: { input: businessOwner } }).then(res =>
     //   console.log('res', res)
     // );
     dispatch(handleSetAuthorized());
     localStorage.setItem('isLoggedIn', true);
   };
+
+  // console.log('error', error);
+  // console.log('loading', loading);
 
   return (
     <form noValidate onSubmit={onSubmit}>
@@ -45,6 +59,7 @@ const SecondStep = () => {
         onChange={e => dispatch(handleCustomerName(e.target.value))}
       />
       <CssTextField
+        type='email'
         variant='outlined'
         margin='normal'
         fullWidth
@@ -54,6 +69,17 @@ const SecondStep = () => {
         error={touched.email && email === ''}
         onBlur={e => dispatch(handleCustomerEmail(e.target.value))}
         onChange={e => dispatch(handleCustomerEmail(e.target.value))}
+      />
+      <CssTextField
+        variant='outlined'
+        margin='normal'
+        fullWidth
+        label='Номер телефона'
+        name='phone'
+        value={phone}
+        error={touched.phone && phone === ''}
+        onBlur={e => dispatch(handleCustomerPhone(e.target.value))}
+        onChange={e => dispatch(handleCustomerPhone(e.target.value))}
       />
       <CssTextField
         type={showPassword ? 'text' : 'password'}

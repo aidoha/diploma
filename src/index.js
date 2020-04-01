@@ -5,11 +5,22 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes';
 
+// const link = new HttpLink({
+
+//   credentials: 'same-origin'
+// });
+const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io'
+  uri: 'http://46.101.138.224:8080/query',
+  fetchOptions: {
+    mode: 'no-cors'
+  },
+  cache
 });
 
 const App = () => {
