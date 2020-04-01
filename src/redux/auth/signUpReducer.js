@@ -26,7 +26,8 @@ const initialState = {
     businessCategory: false,
     name: false,
     email: false,
-    password: false
+    password: false,
+    phone: false
   }
 };
 

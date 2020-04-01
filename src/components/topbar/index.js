@@ -21,7 +21,7 @@ const TopBar = () => {
   const title =
     (pathname === '/signup' && 'Регистрация') ||
     (pathname === '/signin' && 'Вход') ||
-    (pathname === '/' && 'BookForm');
+    (pathname === '/' && 'Cactus');
 
   useEffect(() => {
     document.title = title;
