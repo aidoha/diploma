@@ -25,25 +25,25 @@ const SecondStep = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    // const businessOwner = {
-    //   businessOwnerName: name,
-    //   businessCompanyID: 7,
-    //   businessOwnerEmail: email,
-    //   businessOwnerPassword: password,
-    //   businessOwnerPhoneNumber: phone,
-    //   businessOwnerPhoneNumberPrefix: '+7'
-    // };
-    // console.log(businessOwner);
-
-    // register({ variables: { input: businessOwner } }).then(res =>
-    //   console.log('res', res)
-    // );
-    dispatch(handleSetAuthorized());
-    localStorage.setItem('isLoggedIn', true);
+    const businessOwner = {
+      businessOwnerName: name,
+      businessCompanyID: 7,
+      businessOwnerEmail: email,
+      businessOwnerPassword: password,
+      businessOwnerPhoneNumber: phone,
+      businessOwnerPhoneNumberPrefix: '+7'
+    };
+    register({ variables: businessOwner }).then(res => {
+      if (res.data) {
+        dispatch(handleSetAuthorized());
+        localStorage.setItem('isLoggedIn', true);
+      }
+    });
   };
 
-  // console.log('error', error);
-  // console.log('loading', loading);
+  if (error) {
+    return <div />;
+  }
 
   return (
     <form noValidate onSubmit={onSubmit}>
@@ -113,7 +113,7 @@ const SecondStep = () => {
         color='primary'
         size='large'
         className={classes.btn_auth}
-        startIcon={false && <Spinner width='20px' height='20px' />}
+        startIcon={loading && <Spinner width='20px' height='20px' />}
         disabled={name === '' || email === '' || password === ''}
       >
         Зарегистрироваться
