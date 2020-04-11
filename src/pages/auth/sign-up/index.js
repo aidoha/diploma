@@ -8,13 +8,13 @@ import SecondStep from './components/secondStep';
 import { useStyles } from '../style';
 
 const SignUp = () => {
-  const signUpState = useSelector(state => state.signUp);
+  const signUpState = useSelector((state) => state.signUp);
   const { firstStep, secondStep, isLoggedIn } = signUpState;
   const classes = useStyles();
 
-  if (isLoggedIn) {
-    return <Redirect to='/intro' />;
-  }
+  // if (isLoggedIn) {
+  //   return <Redirect to='/intro' />;
+  // }
 
   return (
     <>

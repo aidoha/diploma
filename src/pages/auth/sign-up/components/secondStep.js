@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
@@ -10,7 +9,7 @@ import {
   handleCustomerName,
   handlePasswordVisibility,
   handleCustomerPhone,
-  handleSetAuthorized
+  handleSetAuthorized,
 } from '../../../../redux';
 import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
@@ -18,12 +17,12 @@ import { CssTextField } from '../../../../globalStyle';
 
 const SecondStep = () => {
   const classes = useStyles();
-  const signUpState = useSelector(state => state.signUp);
+  const signUpState = useSelector((state) => state.signUp);
   const dispatch = useDispatch();
   const { name, email, password, phone, showPassword, touched } = signUpState;
   const [register, { loading, error }] = useMutation(CREATE_BUSINESS_OWNER);
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const businessOwner = {
       businessOwnerName: name,
@@ -31,9 +30,9 @@ const SecondStep = () => {
       businessOwnerEmail: email,
       businessOwnerPassword: password,
       businessOwnerPhoneNumber: phone,
-      businessOwnerPhoneNumberPrefix: '+7'
+      businessOwnerPhoneNumberPrefix: '+7',
     };
-    register({ variables: businessOwner }).then(res => {
+    register({ variables: businessOwner }).then((res) => {
       if (res.data) {
         dispatch(handleSetAuthorized());
         localStorage.setItem('isLoggedIn', true);
@@ -55,8 +54,8 @@ const SecondStep = () => {
         name='name'
         value={name}
         error={touched.name && name === ''}
-        onBlur={e => dispatch(handleCustomerName(e.target.value))}
-        onChange={e => dispatch(handleCustomerName(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerName(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerName(e.target.value))}
       />
       <CssTextField
         type='email'
@@ -67,8 +66,8 @@ const SecondStep = () => {
         name='email'
         value={email}
         error={touched.email && email === ''}
-        onBlur={e => dispatch(handleCustomerEmail(e.target.value))}
-        onChange={e => dispatch(handleCustomerEmail(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerEmail(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerEmail(e.target.value))}
       />
       <CssTextField
         variant='outlined'
@@ -78,8 +77,8 @@ const SecondStep = () => {
         name='phone'
         value={phone}
         error={touched.phone && phone === ''}
-        onBlur={e => dispatch(handleCustomerPhone(e.target.value))}
-        onChange={e => dispatch(handleCustomerPhone(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerPhone(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerPhone(e.target.value))}
       />
       <CssTextField
         type={showPassword ? 'text' : 'password'}
@@ -90,8 +89,8 @@ const SecondStep = () => {
         name='password'
         value={password}
         error={touched.password && password === ''}
-        onBlur={e => dispatch(handleCustomerPassword(e.target.value))}
-        onChange={e => dispatch(handleCustomerPassword(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerPassword(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerPassword(e.target.value))}
         InputProps={{
           endAdornment: (
             <InputAdornment position='end'>
@@ -103,7 +102,7 @@ const SecondStep = () => {
                 {!showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
-          )
+          ),
         }}
       />
       <Button
