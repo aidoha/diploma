@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
-import { SignIn, Main, SignUp, Intro, Company } from './pages';
+import { SignIn, Main, SignUp, Intro, Company, Service } from './pages';
 import { useSelector } from 'react-redux';
 
 export default withRouter(() => {
@@ -24,6 +24,7 @@ export default withRouter(() => {
       <Route path='/signin' exact component={SignIn} />
       <Route path='/signup' exact component={SignUp} />
       <Route path='/company' exact component={Company} />
+      <Route path='/service/:slug' exact component={Service} />
       <PrivateRoute path='/intro' exact Component={Intro} />
     </Switch>
   );

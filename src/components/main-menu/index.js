@@ -37,13 +37,15 @@ const MainMenu = (props) => {
             selected={pathname === icon.pathname}
           >
             <ListItemIcon className={classes.icon}>
-              {icon.value === 'orders' && <TodayRounded fontSize='large' />}
-              {icon.value === 'services' && (
-                <BusinessCenterRounded fontSize='large' />
-              )}
-              {icon.value === 'profile' && (
-                <AccountCircleRounded fontSize='large' />
-              )}
+              <>
+                {icon.value === 'orders' && <TodayRounded fontSize='large' />}
+                {icon.value === 'services' && (
+                  <BusinessCenterRounded fontSize='large' />
+                )}
+                {icon.value === 'profile' && (
+                  <AccountCircleRounded fontSize='large' />
+                )}
+              </>
             </ListItemIcon>
           </ListItem>
         ))}

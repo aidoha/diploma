@@ -3,5 +3,6 @@ import SignUp from './auth/sign-up/index';
 import Main from './main/index';
 import Intro from './intro/index';
 import Company from './company/index';
+import Service from './service/index';
 
-export { SignIn, SignUp, Main, Intro, Company };
+export { SignIn, SignUp, Main, Intro, Company, Service };
