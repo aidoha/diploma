@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-
 import {
   AppBar,
   Toolbar,
   Button,
   Grid,
-  useMediaQuery
+  useMediaQuery,
 } from '@material-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Steps } from '../index';

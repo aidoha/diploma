@@ -5,6 +5,7 @@ export const useStyles = makeStyles({
     backgroundColor: '#8282ff',
     height: '100%',
     position: 'fixed',
+    zIndex: '10000',
   },
   item: {
     display: 'flex',
@@ -13,7 +14,7 @@ export const useStyles = makeStyles({
     flexDirection: 'column',
   },
   listItem: {
-    padding: '20px 5px',
+    padding: '10px 5px',
   },
   icon: {
     display: 'flex',
