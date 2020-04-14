@@ -1,25 +1,15 @@
 import gql from 'graphql-tag';
 
-export const GET_BUSINESS_SUBCATEGORIES = gql`
-  query createBusinessOwner(
-    $businessOwnerName: String!
-    $businessOwnerEmail: String!
-    $businessOwnerPassword: String!
-    $businessOwnerPhoneNumberPrefix: String!
-    $businessOwnerPhoneNumber: String!
-    $businessCompanyID: ID!
-  ) {
-    createBusinessOwner(
-      input: {
-        businessOwnerName: $businessOwnerName
-        businessCompanyID: $businessCompanyID
-        businessOwnerEmail: $businessOwnerEmail
-        businessOwnerPassword: $businessOwnerPassword
-        businessOwnerPhoneNumber: $businessOwnerPhoneNumber
-        businessOwnerPhoneNumberPrefix: $businessOwnerPhoneNumberPrefix
-      }
+export const GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY = gql`
+  query getBusinessSubCategoriesUnderCategory($businessCompanyID: ID!) {
+    getBusinessSubCategoriesUnderCategory(
+      input: { businessCategoryID: $businessCompanyID }
     ) {
-      businessOwnerID
+      businessSubCategories {
+        businessCategoryID
+        businessSubCategoryID
+        businessSubCategoryName
+      }
     }
   }
 `;

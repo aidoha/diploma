@@ -26,10 +26,9 @@ const ServiceTextField = ({
           placeholder={placeholder}
           multiline={multiline}
           rows={multiline ? '4' : '1'}
-          // value={name}
+          value={value}
           // error={touched.name && name === ''}
-          // onBlur={(e) => onChangeServiceName(e.target.value)}
-          // onChange={(e) => onChangeServiceName(e.target.value)}
+          onChange={(e) => onChange(e.target.name, e.target.value)}
           InputProps={{ endAdornment: inputProps }}
         />
       </FormControl>

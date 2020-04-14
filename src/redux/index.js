@@ -7,7 +7,7 @@ export {
   handleCustomerPassword,
   handleCustomerPhone,
   handlePasswordVisibility,
-  handleSetAuthorized
+  handleSetAuthorized,
 } from './auth/actions';
 
 export {
@@ -18,5 +18,14 @@ export {
   handleStartTime,
   handleFinishTime,
   handleServiceDuration,
-  handleServicePrice
+  handleServicePrice,
 } from './intro/actions';
+
+export {
+  handleServiceName as handleName,
+  handleDescription,
+  handleDuration,
+  handlePrice,
+  handleService,
+  handleSubcategory,
+} from './service/actions';

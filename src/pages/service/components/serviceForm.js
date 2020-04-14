@@ -1,14 +1,51 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, InputAdornment, Button, IconButton } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
+import {
+  handleName,
+  handleSubcategory,
+  handleService,
+  handleDescription,
+  handleDuration,
+  handlePrice,
+} from '../../../redux';
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
   const { slug } = useParams();
   const classes = useStyles();
+  const serviceState = useSelector((state) => state.service);
+  const {
+    name,
+    subcategory,
+    service,
+    description,
+    duration,
+    price,
+  } = serviceState;
+  const dispatch = useDispatch();
+  console.log(serviceState);
+  const onChangeTextField = (name, value) => {
+    switch (name) {
+      case 'service-name':
+        dispatch(handleName(value));
+        break;
+      case 'service-description':
+        dispatch(handleDescription(value));
+        break;
+      case 'service-duration':
+        dispatch(handleDuration(value));
+        break;
+      case 'service-price':
+        dispatch(handlePrice(value));
+        break;
+    }
+  };
+
   return (
     <form>
       <Box
@@ -29,6 +66,8 @@ const ServiceForm = () => {
             name='service-name'
             placeholder='Например, Моя компания'
             required
+            value={name}
+            onChange={onChangeTextField}
             inputProps={
               <InputAdornment position='end'>
                 <IconButton>
@@ -54,12 +93,16 @@ const ServiceForm = () => {
             name='service-description'
             placeholder='Добавьте важную и полезную информацию о вашей услуге'
             multiline
+            value={description}
+            onChange={onChangeTextField}
           />
           <ServiceTextField
             label='Продолжительность услуги*'
             name='service-duration'
             placeholder='Например, 50 мин'
             required
+            value={duration}
+            onChange={onChangeTextField}
             inputProps={<InputAdornment position='end'>мин</InputAdornment>}
           />
           <ServiceTextField
@@ -68,6 +111,8 @@ const ServiceForm = () => {
             name='service-price'
             placeholder='Например, 2000 ₸'
             required
+            value={price}
+            onChange={onChangeTextField}
             inputProps={<InputAdornment position='end'>₸</InputAdornment>}
           />
         </Box>
