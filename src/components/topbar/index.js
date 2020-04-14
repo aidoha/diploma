@@ -8,7 +8,10 @@ import {
 } from '@material-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Steps } from '../index';
+import { routes } from '../../constants';
 import { useStyles } from './style';
+
+const { main, signIn, signUp } = routes;
 
 const TopBar = () => {
   const classes = useStyles();
@@ -28,13 +31,13 @@ const TopBar = () => {
 
   return (
     <>
-      {pathname === '/' && (
+      {pathname === main && (
         <AppBar position='static' className={classes.main_bar}>
           <Grid container justify='flex-end'>
             <Toolbar>
               <Button
                 color='inherit'
-                onClick={() => push('/signin')}
+                onClick={() => push(signIn)}
                 className={classes.btn_auth}
               >
                 Войти
@@ -42,7 +45,7 @@ const TopBar = () => {
               <Button
                 color='default'
                 variant='contained'
-                onClick={() => push('/signup')}
+                onClick={() => push(signUp)}
                 className={classes.btn_auth}
               >
                 Зарегистрироваться
@@ -51,7 +54,7 @@ const TopBar = () => {
           </Grid>
         </AppBar>
       )}
-      {(pathname === '/signin' || pathname === '/signup') && (
+      {(pathname === signIn || pathname === signUp) && (
         <AppBar
           color='transparent'
           position='static'

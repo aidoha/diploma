@@ -11,16 +11,16 @@ import Sport from '../icons/sport';
 export const BUSINESS_CATEGORIES = [
   {
     value: 'auto',
-    label: 'Авто'
+    label: 'Авто',
   },
   {
     value: 'beauty',
-    label: 'Красота'
+    label: 'Красота',
   },
   {
     value: 'food',
-    label: 'Кафе, бары, рестораны'
-  }
+    label: 'Кафе, бары, рестораны',
+  },
 ];
 export const getSteps = () => {
   return ['Добавление услуги', 'Настройка расписания'];
@@ -33,8 +33,18 @@ export const getWeekDays = () => {
     { day: 'Чт' },
     { day: 'Пт' },
     { day: 'Сб' },
-    { day: 'Вс' }
+    { day: 'Вс' },
   ];
+};
+export const routes = {
+  main: '/',
+  signIn: '/signin',
+  signUp: '/signup',
+  company: '/company',
+  service: {
+    add: '/service/add',
+    edit: '/service/edit',
+  },
 };
 export const categoryBoxList = [
   {
@@ -43,8 +53,8 @@ export const categoryBoxList = [
     links: [
       { name: 'Салон красоты' },
       { name: 'Ногтевая студия' },
-      { name: 'Косметология' }
-    ]
+      { name: 'Косметология' },
+    ],
   },
   {
     icon: <Medicine />,
@@ -52,8 +62,8 @@ export const categoryBoxList = [
     links: [
       { name: 'Психотерапия' },
       { name: 'Медцентры и клиники' },
-      { name: 'Стоматология' }
-    ]
+      { name: 'Стоматология' },
+    ],
   },
   {
     icon: <Animal />,
@@ -61,8 +71,8 @@ export const categoryBoxList = [
     links: [
       { name: 'Ветеринарные центры' },
       { name: 'Зоосалоны' },
-      { name: 'Зоопарикмахерские' }
-    ]
+      { name: 'Зоопарикмахерские' },
+    ],
   },
   {
     icon: <Law />,
@@ -70,18 +80,18 @@ export const categoryBoxList = [
     links: [
       { name: 'Адвокаты' },
       { name: 'Нотариусы' },
-      { name: 'Миграционные услуги' }
-    ]
+      { name: 'Миграционные услуги' },
+    ],
   },
   {
     icon: <Food />,
     name: 'Еда',
-    links: [{ name: 'Кафе и рестораны' }]
+    links: [{ name: 'Кафе и рестораны' }],
   },
   {
     icon: <Entertainment />,
     name: 'Развлечения и досуг',
-    links: [{ name: 'Квесты' }, { name: 'Компьютерные клубы' }]
+    links: [{ name: 'Квесты' }, { name: 'Компьютерные клубы' }],
   },
   {
     icon: <Education />,
@@ -89,8 +99,8 @@ export const categoryBoxList = [
     links: [
       { name: 'Автошкола' },
       { name: 'Мастер-класс' },
-      { name: 'Детская секция' }
-    ]
+      { name: 'Детская секция' },
+    ],
   },
   {
     icon: <Sport />,
@@ -98,7 +108,7 @@ export const categoryBoxList = [
     links: [
       { name: 'Фитнес-клубы' },
       { name: 'Секции' },
-      { name: 'Cтудии йоги' }
-    ]
-  }
+      { name: 'Cтудии йоги' },
+    ],
+  },
 ];

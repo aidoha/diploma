@@ -1,6 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid, Typography } from '@material-ui/core';
+import { routes } from '../../../constants';
+
+const { signUp } = routes;
 
 const HelloSection = ({ classes }) => {
   const { push } = useHistory();
@@ -19,7 +22,7 @@ const HelloSection = ({ classes }) => {
         variant='contained'
         size='large'
         className={classes.btn_start}
-        onClick={() => push('/signup')}
+        onClick={() => push(signUp)}
       >
         Настроить за 15 минут
       </Button>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { MainMenu } from '../index';
-import CompanyHeader from '../headers/companyHeader';
+import { MainMenu, CompanyHeader } from '../index';
 
 const useStyles = makeStyles({
   root: {
@@ -15,7 +14,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   content: (props) => ({
-    padding: props.padding || '20px 100px',
+    padding: props.padding || '20px 0px',
     margin: props.margin,
   }),
 });

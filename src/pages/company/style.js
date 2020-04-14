@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles({
-  company_toolbar: {
-    background: '#fff',
-    color: '#33333e',
-    width: '100%',
-  },
   company_preview_container: {
     width: '100%',
     background: '#fff',

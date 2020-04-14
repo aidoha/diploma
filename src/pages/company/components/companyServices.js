@@ -1,13 +1,16 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import ServiceItem from './serviceItem';
+import { routes } from '../../../constants';
 import { useStyles } from '../style';
 
 const services = ['service 1', 'service 2', 'service 3'];
-
+const { service } = routes;
 const CompanyServices = () => {
   const classes = useStyles();
+  const { push } = useHistory();
   return (
     <Grid
       container
@@ -21,6 +24,7 @@ const CompanyServices = () => {
           </Box>
         </Typography>
       </Grid>
+
       <Grid
         item
         container
@@ -31,6 +35,7 @@ const CompanyServices = () => {
         xs={12}
         spacing={2}
         className={classes.company_services__add}
+        onClick={() => push(service.add)}
       >
         <Grid item>
           <AddCircle className={classes.add_icon} />
@@ -43,9 +48,10 @@ const CompanyServices = () => {
           </Typography>
         </Grid>
       </Grid>
+
       <Grid container justify='space-between' alignItems='center'>
-        {services.map((item) => (
-          <ServiceItem item={item} />
+        {services.map((item, index) => (
+          <ServiceItem key={index} item={item} />
         ))}
       </Grid>
     </Grid>

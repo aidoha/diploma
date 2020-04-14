@@ -7,18 +7,23 @@ import {
   BusinessCenterRounded,
   AccountCircleRounded,
 } from '@material-ui/icons';
+import { routes } from '../../constants';
 import { useStyles } from './style';
-
-const listItems = [
-  { value: 'orders', pathname: '/orders' },
-  { value: 'services', pathname: '/company' },
-  { value: 'profile', pathname: '/profile' },
-];
 
 const MainMenu = (props) => {
   const classes = useStyles(props);
-  const history = useHistory();
-  const { pathname } = history.location;
+  const { push, location } = useHistory();
+  const { pathname } = location;
+  const listItems = [
+    { value: 'orders', pathname: '/orders' },
+    {
+      value: 'company',
+      pathname:
+        pathname === routes.company ? routes.company : routes.service.add,
+    },
+    { value: 'profile', pathname: '/profile' },
+  ];
+
   return (
     <List className={classes.menu}>
       <div className={classes.item}>
@@ -39,8 +44,11 @@ const MainMenu = (props) => {
             <ListItemIcon className={classes.icon}>
               <>
                 {icon.value === 'orders' && <TodayRounded fontSize='large' />}
-                {icon.value === 'services' && (
-                  <BusinessCenterRounded fontSize='large' />
+                {icon.value === 'company' && (
+                  <BusinessCenterRounded
+                    fontSize='large'
+                    onClick={() => push(routes.company)}
+                  />
                 )}
                 {icon.value === 'profile' && (
                   <AccountCircleRounded fontSize='large' />
