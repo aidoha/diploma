@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export const GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY = gql`
-  query getBusinessSubCategoriesUnderCategory($businessCompanyID: ID!) {
+  query getBusinessSubCategoriesUnderCategory($businessCategoryID: ID!) {
     getBusinessSubCategoriesUnderCategory(
-      input: { businessCategoryID: $businessCompanyID }
+      input: { businessCategoryID: $businessCategoryID }
     ) {
       businessSubCategories {
         businessCategoryID

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/react-hooks';
 import { Box, InputAdornment, Button, IconButton } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import ServiceTextField from './serviceTextField';
@@ -13,6 +14,7 @@ import {
   handleDuration,
   handlePrice,
 } from '../../../redux';
+import { GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY } from '../queries';
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
@@ -28,7 +30,14 @@ const ServiceForm = () => {
     price,
   } = serviceState;
   const dispatch = useDispatch();
-  console.log(serviceState);
+  const {
+    loading: subcategoryLoading,
+    error: subcategoryError,
+    data: subcategoryData,
+  } = useQuery(GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY, {
+    variables: { businessCategoryID: 4 },
+  });
+  console.log(subcategoryError);
   const onChangeTextField = (name, value) => {
     switch (name) {
       case 'service-name':
@@ -43,6 +52,8 @@ const ServiceForm = () => {
       case 'service-price':
         dispatch(handlePrice(value));
         break;
+      default:
+        return null;
     }
   };
 
