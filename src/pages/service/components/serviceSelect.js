@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from '@material-ui/core';
+import { Box, FormControl, MenuItem, Select } from '@material-ui/core';
 
 const ServiceSelect = ({
   label = '',
   name = '',
-  placeholder = '',
+  options = [],
   value = '',
   error = '',
   onChange,
@@ -22,14 +16,28 @@ const ServiceSelect = ({
         {label}
       </Box>
       <FormControl variant='outlined' fullWidth>
-        <InputLabel>{placeholder}</InputLabel>
-        <Select name={name} required>
-          <MenuItem value=''>
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+        <Select name={name} required onChange={(e) => onChange(e)}>
+          {name === 'service-subcategory' &&
+            options.map((item) => {
+              const { businessSubCategoryName, businessSubCategoryID } = item;
+              return (
+                <MenuItem
+                  key={businessSubCategoryID}
+                  value={businessSubCategoryID}
+                >
+                  {businessSubCategoryName}
+                </MenuItem>
+              );
+            })}
+          {name === 'service' &&
+            options.map((item) => {
+              const { businessServiceID, businessServiceName } = item;
+              return (
+                <MenuItem key={businessServiceID} value={businessServiceID}>
+                  {businessServiceName}
+                </MenuItem>
+              );
+            })}
         </Select>
       </FormControl>
     </Box>

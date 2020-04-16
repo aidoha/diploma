@@ -27,7 +27,6 @@ const ServiceTextField = ({
           multiline={multiline}
           rows={multiline ? '4' : '1'}
           value={value}
-          // error={touched.name && name === ''}
           onChange={(e) => onChange(e.target.name, e.target.value)}
           InputProps={{ endAdornment: inputProps }}
         />

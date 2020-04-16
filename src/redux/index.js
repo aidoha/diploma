@@ -28,4 +28,6 @@ export {
   handlePrice,
   handleService,
   handleSubcategory,
+  handleServiceId,
+  handleSubcategoryId,
 } from './service/actions';

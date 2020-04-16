@@ -5,15 +5,21 @@ import {
   UPDATE_DESCRIPTION,
   UPDATE_DURATION,
   UPDATE_PRICE,
+  UPDATE_SUBCATEGORY_ID,
+  UPDATE_SERVICE_ID,
 } from './types';
 
 const intialState = {
   name: '',
-  subcategory: [],
-  service: [],
+  subcategories: [],
+  services: [],
   description: '',
   duration: '',
   price: 0,
+  ids: {
+    service: 0,
+    subcategory: 0,
+  },
 };
 
 const reducer = (state = intialState, action) => {
@@ -27,12 +33,12 @@ const reducer = (state = intialState, action) => {
     case UPDATE_SUBCATEGORY:
       return {
         ...state,
-        subcategory: payload,
+        subcategories: payload,
       };
     case UPDATE_SERVICE:
       return {
         ...state,
-        service: payload,
+        services: payload,
       };
     case UPDATE_DESCRIPTION:
       return {
@@ -48,6 +54,22 @@ const reducer = (state = intialState, action) => {
       return {
         ...state,
         price: payload,
+      };
+    case UPDATE_SUBCATEGORY_ID:
+      return {
+        ...state,
+        ids: {
+          ...state.ids,
+          subcategory: payload,
+        },
+      };
+    case UPDATE_SERVICE_ID:
+      return {
+        ...state,
+        ids: {
+          ...state.ids,
+          service: payload,
+        },
       };
     default:
       return state;

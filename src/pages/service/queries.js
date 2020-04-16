@@ -13,3 +13,17 @@ export const GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY = gql`
     }
   }
 `;
+
+export const GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY = gql`
+  query GetBusinessServicesUnderSubCategory($subCategoryID: Int!) {
+    getBusinessServicesUnderSubCategory(
+      input: { subCategoryID: $subCategoryID }
+    ) {
+      businessServices {
+        businessServiceID
+        businessServiceName
+        subCategories
+      }
+    }
+  }
+`;

@@ -5,6 +5,8 @@ import {
   UPDATE_DESCRIPTION,
   UPDATE_DURATION,
   UPDATE_PRICE,
+  UPDATE_SUBCATEGORY_ID,
+  UPDATE_SERVICE_ID,
 } from './types';
 
 export const handleServiceName = (serviceName = '') => {
@@ -13,16 +15,16 @@ export const handleServiceName = (serviceName = '') => {
     payload: serviceName,
   };
 };
-export const handleSubcategory = (subcateogry = []) => {
+export const handleSubcategory = (subcategories = []) => {
   return {
     type: UPDATE_SUBCATEGORY,
-    payload: subcateogry,
+    payload: subcategories,
   };
 };
-export const handleService = (service = []) => {
+export const handleService = (services = []) => {
   return {
     type: UPDATE_SERVICE,
-    payload: service,
+    payload: services,
   };
 };
 export const handleDescription = (description = '') => {
@@ -41,5 +43,17 @@ export const handlePrice = (price = '') => {
   return {
     type: UPDATE_PRICE,
     payload: price,
+  };
+};
+export const handleSubcategoryId = (id = 0) => {
+  return {
+    type: UPDATE_SUBCATEGORY_ID,
+    payload: id,
+  };
+};
+export const handleServiceId = (id = 0) => {
+  return {
+    type: UPDATE_SERVICE_ID,
+    payload: id,
   };
 };

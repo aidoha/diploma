@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
-import { Box, InputAdornment, Button, IconButton } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import {
+  Box,
+  InputAdornment,
+  Button,
+  IconButton,
+  CircularProgress,
+} from '@material-ui/core';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
 import {
@@ -13,8 +18,13 @@ import {
   handleDescription,
   handleDuration,
   handlePrice,
+  handleSubcategoryId,
+  handleServiceId,
 } from '../../../redux';
-import { GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY } from '../queries';
+import {
+  GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
+  GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY,
+} from '../queries';
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
@@ -23,11 +33,12 @@ const ServiceForm = () => {
   const serviceState = useSelector((state) => state.service);
   const {
     name,
-    subcategory,
-    service,
+    subcategories,
+    services,
     description,
     duration,
     price,
+    ids,
   } = serviceState;
   const dispatch = useDispatch();
   const {
@@ -37,7 +48,14 @@ const ServiceForm = () => {
   } = useQuery(GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY, {
     variables: { businessCategoryID: 4 },
   });
-  console.log(subcategoryError);
+  const {
+    loading: serviceLoading,
+    error: serviceError,
+    data: serviceData,
+  } = useQuery(GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY, {
+    variables: { subCategoryID: ids.subcategory },
+  });
+
   const onChangeTextField = (name, value) => {
     switch (name) {
       case 'service-name':
@@ -56,6 +74,35 @@ const ServiceForm = () => {
         return null;
     }
   };
+
+  const onChangeSubcategories = (e) => {
+    const { value } = e.target;
+    dispatch(handleSubcategoryId(value));
+  };
+
+  const onChangeServices = (e) => {
+    const { value } = e.target;
+    dispatch(handleServiceId(value));
+  };
+
+  useEffect(() => {
+    dispatch(
+      handleSubcategory(
+        subcategoryData?.getBusinessSubCategoriesUnderCategory
+          ?.businessSubCategories
+      )
+    );
+  }, [subcategoryData]);
+
+  useEffect(() => {
+    dispatch(
+      handleService(
+        serviceData?.getBusinessServicesUnderSubCategory?.businessServices
+      )
+    );
+  }, [serviceData, ids.subcategory]);
+
+  // console.log('services', serviceState);
 
   return (
     <form>
@@ -79,25 +126,20 @@ const ServiceForm = () => {
             required
             value={name}
             onChange={onChangeTextField}
-            inputProps={
-              <InputAdornment position='end'>
-                <IconButton>
-                  <Clear />
-                </IconButton>
-              </InputAdornment>
-            }
           />
           <ServiceSelect
             label='Категория услуги*'
             name='service-subcategory'
-            placeholder='Выберите категорию'
             required
+            options={subcategories}
+            onChange={onChangeSubcategories}
           />
           <ServiceSelect
             label='Услуга*'
             name='service'
-            placeholder='Выберите услугу'
             required
+            options={services}
+            onChange={onChangeServices}
           />
           <ServiceTextField
             label='Описание услуги'
