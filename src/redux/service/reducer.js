@@ -7,6 +7,8 @@ import {
   UPDATE_PRICE,
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SERVICE_ID,
+  SERVICE_ERROR,
+  SERVICE_SUCCESS,
 } from './types';
 
 const intialState = {
@@ -20,6 +22,8 @@ const intialState = {
     service: 0,
     subcategory: 0,
   },
+  error: false,
+  success: false,
 };
 
 const reducer = (state = intialState, action) => {
@@ -70,6 +74,16 @@ const reducer = (state = intialState, action) => {
           ...state.ids,
           service: payload,
         },
+      };
+    case SERVICE_ERROR:
+      return {
+        ...state,
+        error: payload,
+      };
+    case SERVICE_SUCCESS:
+      return {
+        ...state,
+        success: payload,
       };
     default:
       return state;

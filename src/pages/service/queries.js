@@ -27,3 +27,32 @@ export const GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY = gql`
     }
   }
 `;
+
+export const CREATE_COMPANY_SERVICE = gql`
+  mutation createCompanyService(
+    $companyServiceName: String!
+    $companyServiceDuration: Int!
+    $companyServicePrice: Float!
+    $businessServiceID: Int!
+    $businessCompanyID: Int!
+  ) {
+    createCompanyService(
+      input: {
+        companyServiceName: $companyServiceName
+        companyServiceDuration: $companyServiceDuration
+        companyServicePrice: $companyServicePrice
+        businessServiceID: $businessServiceID
+        businessCompanyID: $businessCompanyID
+      }
+    ) {
+      companyService {
+        companyServiceID
+        companyServiceName
+        companyServicePrice
+        companyServiceDuration
+        businessServiceID
+        businessCompanyID
+      }
+    }
+  }
+`;

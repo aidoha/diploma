@@ -16,7 +16,12 @@ const ServiceSelect = ({
         {label}
       </Box>
       <FormControl variant='outlined' fullWidth>
-        <Select name={name} required onChange={(e) => onChange(e)}>
+        <Select
+          name={name}
+          required
+          value={value}
+          onChange={(e) => onChange(e)}
+        >
           {name === 'service-subcategory' &&
             options.map((item) => {
               const { businessSubCategoryName, businessSubCategoryID } = item;

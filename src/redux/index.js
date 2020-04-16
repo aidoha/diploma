@@ -30,4 +30,6 @@ export {
   handleSubcategory,
   handleServiceId,
   handleSubcategoryId,
+  handleError as handleServiceError,
+  handleSuccess as handleServiceSuccess,
 } from './service/actions';

@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import {
-  Box,
-  InputAdornment,
-  Button,
-  IconButton,
-  CircularProgress,
-} from '@material-ui/core';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { Box, InputAdornment, Button } from '@material-ui/core';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
+
 import {
   handleName,
   handleSubcategory,
@@ -20,16 +15,20 @@ import {
   handlePrice,
   handleSubcategoryId,
   handleServiceId,
+  handleServiceError,
+  handleServiceSuccess,
 } from '../../../redux';
 import {
   GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
   GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY,
+  CREATE_COMPANY_SERVICE,
 } from '../queries';
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
   const { slug } = useParams();
   const classes = useStyles();
+  const { push } = useHistory();
   const serviceState = useSelector((state) => state.service);
   const {
     name,
@@ -55,6 +54,10 @@ const ServiceForm = () => {
   } = useQuery(GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY, {
     variables: { subCategoryID: ids.subcategory },
   });
+  const [
+    createCompanyService,
+    { error: createCompanyServiceError },
+  ] = useMutation(CREATE_COMPANY_SERVICE);
 
   const onChangeTextField = (name, value) => {
     switch (name) {
@@ -85,6 +88,31 @@ const ServiceForm = () => {
     dispatch(handleServiceId(value));
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const obj = {
+      companyServiceName: name,
+      companyServiceDuration: duration,
+      companyServicePrice: price,
+      businessServiceID: ids.service,
+      businessCompanyID: 5,
+    };
+    if (!name || !duration || !price || !ids.service) {
+      dispatch(handleServiceError(true));
+    } else {
+      createCompanyService({ variables: obj })
+        .then((res) => {
+          if (res.data) {
+            dispatch(handleServiceSuccess(true));
+            setTimeout(() => {
+              push('/company');
+            }, 1000);
+          }
+        })
+        .catch(() => dispatch(handleServiceError(true)));
+    }
+  };
+
   useEffect(() => {
     dispatch(
       handleSubcategory(
@@ -102,10 +130,10 @@ const ServiceForm = () => {
     );
   }, [serviceData, ids.subcategory]);
 
-  // console.log('services', serviceState);
+  // console.log('serviceState', serviceState);
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <Box
         marginTop='20px'
         border='1px solid #cbcbeb'
@@ -122,7 +150,7 @@ const ServiceForm = () => {
           <ServiceTextField
             label='Название услуги*'
             name='service-name'
-            placeholder='Например, Моя компания'
+            placeholder='Например, Моя услуга'
             required
             value={name}
             onChange={onChangeTextField}
@@ -132,6 +160,7 @@ const ServiceForm = () => {
             name='service-subcategory'
             required
             options={subcategories}
+            value={ids.subcategory}
             onChange={onChangeSubcategories}
           />
           <ServiceSelect
@@ -139,6 +168,7 @@ const ServiceForm = () => {
             name='service'
             required
             options={services}
+            value={ids.service}
             onChange={onChangeServices}
           />
           <ServiceTextField
@@ -172,6 +202,7 @@ const ServiceForm = () => {
         <Button
           variant='contained'
           size='large'
+          type='submit'
           className={classes.btn_save_service}
         >
           Сохранить

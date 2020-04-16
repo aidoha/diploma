@@ -7,6 +7,8 @@ import {
   UPDATE_PRICE,
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SERVICE_ID,
+  SERVICE_ERROR,
+  SERVICE_SUCCESS,
 } from './types';
 
 export const handleServiceName = (serviceName = '') => {
@@ -55,5 +57,17 @@ export const handleServiceId = (id = 0) => {
   return {
     type: UPDATE_SERVICE_ID,
     payload: id,
+  };
+};
+export const handleError = (error = false) => {
+  return {
+    type: SERVICE_ERROR,
+    payload: error,
+  };
+};
+export const handleSuccess = (success = false) => {
+  return {
+    type: SERVICE_SUCCESS,
+    payload: success,
   };
 };
