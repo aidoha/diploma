@@ -21,6 +21,7 @@ const ServiceSelect = ({
           required
           value={value}
           onChange={(e) => onChange(e)}
+          inputProps={inputProps}
         >
           {name === 'service-subcategory' &&
             options.map((item) => {

@@ -37,9 +37,9 @@ export const useStyles = makeStyles({
     flexGrow: 1,
   },
   service_item: {
-    width: '100%',
     background: '#fff',
     padding: '25px',
+    margin: '30px',
     borderRadius: '12px',
     border: '1px solid #eeecf3',
     cursor: 'pointer',

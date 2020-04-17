@@ -1,16 +1,26 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
+import { GET_BUSINESS_COMPANY_SERVICES } from '../queries';
 import { useStyles } from '../style';
 
-const services = ['service 1', 'service 2', 'service 3'];
 const { service } = routes;
+
 const CompanyServices = () => {
   const classes = useStyles();
   const { push } = useHistory();
+  const { data, loading } = useQuery(GET_BUSINESS_COMPANY_SERVICES, {
+    variables: { businessCompanyID: 5 },
+  });
+  const services = data?.getBusinessCompanyServices?.businessCompanyService;
+  console.log('data', services);
+
+  if (loading) return <div />;
+
   return (
     <Grid
       container

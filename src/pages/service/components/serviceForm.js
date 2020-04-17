@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Box, InputAdornment, Button } from '@material-ui/core';
+import {
+  Box,
+  InputAdornment,
+  Button,
+  CircularProgress,
+} from '@material-ui/core';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
-
 import {
   handleName,
   handleSubcategory,
@@ -26,7 +30,7 @@ import {
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
-  const { slug } = useParams();
+  // const { slug } = useParams();
   const classes = useStyles();
   const { push } = useHistory();
   const serviceState = useSelector((state) => state.service);
@@ -54,10 +58,7 @@ const ServiceForm = () => {
   } = useQuery(GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY, {
     variables: { subCategoryID: ids.subcategory },
   });
-  const [
-    createCompanyService,
-    { error: createCompanyServiceError },
-  ] = useMutation(CREATE_COMPANY_SERVICE);
+  const [createCompanyService] = useMutation(CREATE_COMPANY_SERVICE);
 
   const onChangeTextField = (name, value) => {
     switch (name) {
@@ -97,6 +98,7 @@ const ServiceForm = () => {
       businessServiceID: ids.service,
       businessCompanyID: 5,
     };
+
     if (!name || !duration || !price || !ids.service) {
       dispatch(handleServiceError(true));
     } else {
@@ -130,7 +132,9 @@ const ServiceForm = () => {
     );
   }, [serviceData, ids.subcategory]);
 
-  // console.log('serviceState', serviceState);
+  if (serviceError || subcategoryError) {
+    return <div />;
+  }
 
   return (
     <form onSubmit={onSubmit}>

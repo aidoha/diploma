@@ -1,44 +1,62 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { Grid, Snackbar } from '@material-ui/core';
+// import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
+import { useSelector, useDispatch } from 'react-redux';
+import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { MainLayout, ServiceHeader } from '../../components';
 import ServiceDetail from './components/serviceDetail';
-import { useStyles } from './style';
-import { useSelector } from 'react-redux';
+import { handleServiceSuccess, handleServiceError } from '../../redux';
+import { GET_BUSINESS_COMPANY_SERVICES } from './queries';
+
+const saveStatuses = [
+  {
+    value: 'error',
+    autoHideDuration: 6000,
+    text: 'Упс... Что-то пошло не так',
+  },
+  {
+    value: 'success',
+    autoHideDuration: 6000,
+    text: 'Вы успешно создали услугу!',
+  },
+];
 
 const Service = () => {
-  const { slug } = useParams();
+  // const { slug } = useParams();
   const serviceState = useSelector((state) => state.service);
   const { error, success } = serviceState;
+  const dispatch = useDispatch();
+
+  const serviceStatusHandler = (status) => {
+    switch (status) {
+      case 'success':
+        dispatch(handleServiceSuccess(!success));
+        break;
+      case 'error':
+        dispatch(handleServiceError(!error));
+        break;
+    }
+  };
+
   return (
     <MainLayout padding='0'>
       <ServiceHeader />
       <ServiceDetail />
-      <Snackbar
-        open={error}
-        autoHideDuration={6000}
-        // onClose={handleClose}
-      >
-        <Alert
-          // onClose={handleClose}
-          severity='error'
+      {saveStatuses.map((item) => (
+        <Snackbar
+          open={item.value}
+          autoHideDuration={item.autoHideDuration}
+          onClose={() => serviceStatusHandler(item.value)}
         >
-          This is a error message!
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={success}
-        autoHideDuration={6000}
-        // onClose={handleClose}
-      >
-        <Alert
-          // onClose={handleClose}
-          severity='success'
-        >
-          This is a success message!
-        </Alert>
-      </Snackbar>
+          <Alert
+            onClose={() => serviceStatusHandler(item.value)}
+            severity={item.value}
+          >
+            {item.text}
+          </Alert>
+        </Snackbar>
+      ))}
     </MainLayout>
   );
 };
