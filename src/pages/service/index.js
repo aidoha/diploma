@@ -1,13 +1,11 @@
 import React from 'react';
 // import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { MainLayout, ServiceHeader } from '../../components';
 import ServiceDetail from './components/serviceDetail';
 import { handleServiceSuccess, handleServiceError } from '../../redux';
-import { GET_BUSINESS_COMPANY_SERVICES } from './queries';
 
 const saveStatuses = [
   {

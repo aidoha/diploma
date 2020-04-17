@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
+import { Loader } from '../../../components';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
 import { GET_BUSINESS_COMPANY_SERVICES } from '../queries';
@@ -17,9 +18,8 @@ const CompanyServices = () => {
     variables: { businessCompanyID: 5 },
   });
   const services = data?.getBusinessCompanyServices?.businessCompanyService;
-  console.log('data', services);
 
-  if (loading) return <div />;
+  console.log('data', services);
 
   return (
     <Grid
@@ -58,12 +58,19 @@ const CompanyServices = () => {
           </Typography>
         </Grid>
       </Grid>
-
-      <Grid container justify='space-between' alignItems='center'>
-        {services.map((item, index) => (
-          <ServiceItem key={index} item={item} />
-        ))}
-      </Grid>
+      {loading ? (
+        <Grid container justify='center'>
+          <Box margin='50px 0'>
+            <Loader />
+          </Box>
+        </Grid>
+      ) : (
+        <Grid container justify='space-between' alignItems='center'>
+          {services.map((item, index) => (
+            <ServiceItem key={index} item={item} />
+          ))}
+        </Grid>
+      )}
     </Grid>
   );
 };
