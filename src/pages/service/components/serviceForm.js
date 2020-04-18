@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Box, InputAdornment, Button } from '@material-ui/core';
@@ -7,26 +7,30 @@ import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
 import {
   handleName,
-  handleSubcategory,
-  handleService,
+  handleSubcategories,
+  handleServices,
   handleDescription,
   handleDuration,
   handlePrice,
   handleSubcategoryId,
   handleServiceId,
   handleServiceError,
-  handleServiceSuccess,
+  handleServiceSaveSuccess,
+  handleServiceEditSuccess,
 } from '../../../redux';
 import {
   GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
   GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY,
   CREATE_COMPANY_SERVICE,
+  UPDATE_COMPANY_SERVICE,
+  GET_COMPANY_SERVICE,
 } from '../queries';
+import { routes } from '../../../constants';
 import { useStyles } from '../style';
 
 const ServiceForm = () => {
-  // const { slug } = useParams();
   const classes = useStyles();
+  const { slug, id } = useParams();
   const { push } = useHistory();
   const serviceState = useSelector((state) => state.service);
   const {
@@ -36,24 +40,26 @@ const ServiceForm = () => {
     description,
     duration,
     price,
-    ids,
+    business_ids,
   } = serviceState;
   const dispatch = useDispatch();
-  const {
-    loading: subcategoryLoading,
-    error: subcategoryError,
-    data: subcategoryData,
-  } = useQuery(GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY, {
-    variables: { businessCategoryID: 4 },
-  });
-  const {
-    loading: serviceLoading,
-    error: serviceError,
-    data: serviceData,
-  } = useQuery(GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY, {
-    variables: { subCategoryID: ids.subcategory },
+  const { error: subcategoryError, data: subcategoryData } = useQuery(
+    GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
+    {
+      variables: { businessCategoryID: 4 },
+    }
+  );
+  const { error: servicesError, data: servicesData } = useQuery(
+    GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY,
+    {
+      variables: { subCategoryID: business_ids.subcategory },
+    }
+  );
+  const { data: serviceData } = useQuery(GET_COMPANY_SERVICE, {
+    variables: { companyServiceID: id },
   });
   const [createCompanyService] = useMutation(CREATE_COMPANY_SERVICE);
+  const [updateCompanyService] = useMutation(UPDATE_COMPANY_SERVICE);
 
   const onChangeTextField = (name, value) => {
     switch (name) {
@@ -84,35 +90,54 @@ const ServiceForm = () => {
     dispatch(handleServiceId(value));
   };
 
+  const redirectToCompany = () => {
+    setTimeout(() => {
+      push(routes.company);
+    }, 1000);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const obj = {
       companyServiceName: name,
       companyServiceDuration: duration,
       companyServicePrice: price,
-      businessServiceID: ids.service,
+      businessServiceID: business_ids.service,
       businessCompanyID: 5,
     };
 
-    if (!name || !duration || !price || !ids.service) {
+    if (!name || !duration || !price || !business_ids.service) {
       dispatch(handleServiceError(true));
     } else {
-      createCompanyService({ variables: obj })
-        .then((res) => {
-          if (res.data) {
-            dispatch(handleServiceSuccess(true));
-            setTimeout(() => {
-              push('/company');
-            }, 1000);
-          }
-        })
-        .catch(() => dispatch(handleServiceError(true)));
+      if (slug === 'add') {
+        createCompanyService({ variables: obj })
+          .then((res) => {
+            if (res.data) {
+              dispatch(handleServiceSaveSuccess(true));
+              redirectToCompany();
+              setTimeout(() => {
+                push('/company');
+              }, 1000);
+            }
+          })
+          .catch(() => dispatch(handleServiceError(true)));
+      } else if (slug === 'edit') {
+        obj.companyServiceID = serviceData?.getCompanyService?.companyServiceID;
+        updateCompanyService({ variables: obj })
+          .then((res) => {
+            if (res.data) {
+              dispatch(handleServiceEditSuccess(true));
+              redirectToCompany();
+            }
+          })
+          .catch(() => dispatch(handleServiceError(true)));
+      }
     }
   };
 
   useEffect(() => {
     dispatch(
-      handleSubcategory(
+      handleSubcategories(
         subcategoryData?.getBusinessSubCategoriesUnderCategory
           ?.businessSubCategories
       )
@@ -121,13 +146,28 @@ const ServiceForm = () => {
 
   useEffect(() => {
     dispatch(
-      handleService(
-        serviceData?.getBusinessServicesUnderSubCategory?.businessServices
+      handleServices(
+        servicesData?.getBusinessServicesUnderSubCategory?.businessServices
       )
     );
-  }, [serviceData, ids.subcategory]);
+  }, [servicesData, business_ids.subcategory]);
 
-  if (serviceError || subcategoryError) {
+  useEffect(() => {
+    if (!serviceData) {
+      return;
+    }
+    const newServiceData = serviceData.getCompanyService;
+    const {
+      companyServiceName,
+      companyServiceDuration,
+      companyServicePrice,
+    } = newServiceData;
+    dispatch(handleName(companyServiceName));
+    dispatch(handleDuration(companyServiceDuration));
+    dispatch(handlePrice(companyServicePrice));
+  }, [serviceData]);
+
+  if (servicesError || subcategoryError) {
     return <div />;
   }
 
@@ -157,14 +197,14 @@ const ServiceForm = () => {
             label='Категория услуги*'
             name='service-subcategory'
             options={subcategories}
-            value={ids.subcategory}
+            value={business_ids.subcategory}
             onChange={onChangeSubcategories}
           />
           <ServiceSelect
             label='Услуга*'
             name='service'
             options={services}
-            value={ids.service}
+            value={business_ids.service}
             onChange={onChangeServices}
           />
           <ServiceTextField

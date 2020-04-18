@@ -8,7 +8,8 @@ import {
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SERVICE_ID,
   SERVICE_ERROR,
-  SERVICE_SUCCESS,
+  SERVICE_SAVE_SUCCESS,
+  SERVICE_EDIT_SUCCESS,
 } from './types';
 
 export const handleServiceName = (serviceName = '') => {
@@ -17,13 +18,13 @@ export const handleServiceName = (serviceName = '') => {
     payload: serviceName,
   };
 };
-export const handleSubcategory = (subcategories = []) => {
+export const handleSubcategories = (subcategories = []) => {
   return {
     type: UPDATE_SUBCATEGORY,
     payload: subcategories,
   };
 };
-export const handleService = (services = []) => {
+export const handleServices = (services = []) => {
   return {
     type: UPDATE_SERVICE,
     payload: services,
@@ -65,9 +66,15 @@ export const handleError = (error = false) => {
     payload: error,
   };
 };
-export const handleSuccess = (success = false) => {
+export const handleSaveSuccess = (success = false) => {
   return {
-    type: SERVICE_SUCCESS,
+    type: SERVICE_SAVE_SUCCESS,
+    payload: success,
+  };
+};
+export const handleEditSuccess = (success = false) => {
+  return {
+    type: SERVICE_EDIT_SUCCESS,
     payload: success,
   };
 };

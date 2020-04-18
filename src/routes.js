@@ -24,7 +24,7 @@ export default withRouter(() => {
       <Route path='/signin' exact component={SignIn} />
       <Route path='/signup' exact component={SignUp} />
       <Route path='/company' exact component={Company} />
-      <Route path='/service/:slug' exact component={Service} />
+      <Route path='/service/:slug/:id?' component={Service} />
       <PrivateRoute path='/intro' exact Component={Intro} />
     </Switch>
   );

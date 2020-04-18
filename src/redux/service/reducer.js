@@ -8,7 +8,8 @@ import {
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SERVICE_ID,
   SERVICE_ERROR,
-  SERVICE_SUCCESS,
+  SERVICE_SAVE_SUCCESS,
+  SERVICE_EDIT_SUCCESS,
 } from './types';
 
 const intialState = {
@@ -18,7 +19,7 @@ const intialState = {
   description: '',
   duration: '',
   price: 0,
-  ids: {
+  business_ids: {
     service: 0,
     subcategory: 0,
   },
@@ -26,14 +27,23 @@ const intialState = {
     error: {
       value: false,
       text: 'error',
+      label: 'error',
       autoHideDuration: 6000,
       message: 'Упс... Что-то пошло не так',
     },
-    success: {
+    save: {
       value: false,
       text: 'success',
+      label: 'save',
       autoHideDuration: 6000,
       message: 'Вы успешно создали услугу!',
+    },
+    edit: {
+      value: false,
+      text: 'success',
+      label: 'edit',
+      autoHideDuration: 6000,
+      message: 'Вы успешно редактировали свою услугу!',
     },
   },
 };
@@ -74,16 +84,16 @@ const reducer = (state = intialState, action) => {
     case UPDATE_SUBCATEGORY_ID:
       return {
         ...state,
-        ids: {
-          ...state.ids,
+        business_ids: {
+          ...state.business_ids,
           subcategory: payload,
         },
       };
     case UPDATE_SERVICE_ID:
       return {
         ...state,
-        ids: {
-          ...state.ids,
+        business_ids: {
+          ...state.business_ids,
           service: payload,
         },
       };
@@ -98,13 +108,24 @@ const reducer = (state = intialState, action) => {
           },
         },
       };
-    case SERVICE_SUCCESS:
+    case SERVICE_SAVE_SUCCESS:
       return {
         ...state,
         statuses: {
           ...state.statuses,
-          success: {
-            ...state.statuses.success,
+          save: {
+            ...state.statuses.save,
+            value: payload,
+          },
+        },
+      };
+    case SERVICE_EDIT_SUCCESS:
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          edit: {
+            ...state.statuses.edit,
             value: payload,
           },
         },

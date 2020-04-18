@@ -1,22 +1,27 @@
 import React from 'react';
-// import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { MainLayout, ServiceHeader } from '../../components';
 import ServiceDetail from './components/serviceDetail';
-import { handleServiceSuccess, handleServiceError } from '../../redux';
+import {
+  handleServiceSaveSuccess,
+  handleServiceEditSuccess,
+  handleServiceError,
+} from '../../redux';
 
 const Service = () => {
-  // const { slug } = useParams();
   const serviceState = useSelector((state) => state.service);
   const { statuses } = serviceState;
   const dispatch = useDispatch();
 
   const serviceStatusHandler = (status) => {
     switch (status) {
-      case 'success':
-        dispatch(handleServiceSuccess(!statuses.success.value));
+      case 'save':
+        dispatch(handleServiceSaveSuccess(!statuses.success.value));
+        break;
+      case 'edit':
+        dispatch(handleServiceEditSuccess(!statuses.edit.value));
         break;
       case 'error':
         dispatch(handleServiceError(!statuses.error.value));
@@ -33,10 +38,10 @@ const Service = () => {
           key={item.text}
           open={item.value}
           autoHideDuration={item.autoHideDuration}
-          onClose={() => serviceStatusHandler(item.text)}
+          onClose={() => serviceStatusHandler(item.label)}
         >
           <Alert
-            onClose={() => serviceStatusHandler(item.text)}
+            onClose={() => serviceStatusHandler(item.label)}
             severity={item.text}
           >
             {item.message}

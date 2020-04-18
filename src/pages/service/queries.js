@@ -28,6 +28,21 @@ export const GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY = gql`
   }
 `;
 
+export const GET_COMPANY_SERVICE = gql`
+  query GetCompanyService($companyServiceID: ID!) {
+    getCompanyService(input: { companyServiceID: $companyServiceID }) {
+      companyServiceID
+      companyServiceName
+      companyServicePrice
+      companyServiceDuration
+      businessServiceID
+      businessServiceName
+      businessCompanyID
+      businessCompanyName
+    }
+  }
+`;
+
 export const CREATE_COMPANY_SERVICE = gql`
   mutation createCompanyService(
     $companyServiceName: String!
@@ -41,6 +56,37 @@ export const CREATE_COMPANY_SERVICE = gql`
         companyServiceName: $companyServiceName
         companyServiceDuration: $companyServiceDuration
         companyServicePrice: $companyServicePrice
+        businessServiceID: $businessServiceID
+        businessCompanyID: $businessCompanyID
+      }
+    ) {
+      companyService {
+        companyServiceID
+        companyServiceName
+        companyServicePrice
+        companyServiceDuration
+        businessServiceID
+        businessCompanyID
+      }
+    }
+  }
+`;
+
+export const UPDATE_COMPANY_SERVICE = gql`
+  mutation UpdateCompanyService(
+    $companyServiceID: ID!
+    $companyServiceName: String!
+    $companyServiceDuration: Int!
+    $companyServicePrice: Float!
+    $businessServiceID: Int!
+    $businessCompanyID: Int!
+  ) {
+    updateCompanyService(
+      input: {
+        companyServiceID: $companyServiceID
+        companyServiceName: $companyServiceName
+        companyServicePrice: $companyServicePrice
+        companyServiceDuration: $companyServiceDuration
         businessServiceID: $businessServiceID
         businessCompanyID: $businessCompanyID
       }
