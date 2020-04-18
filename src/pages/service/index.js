@@ -33,9 +33,9 @@ const Service = () => {
     <MainLayout padding='0'>
       <ServiceHeader />
       <ServiceDetail />
-      {Object.values(statuses).map((item) => (
+      {Object.values(statuses).map((item, index) => (
         <Snackbar
-          key={item.text}
+          key={index}
           open={item.value}
           autoHideDuration={item.autoHideDuration}
           onClose={() => serviceStatusHandler(item.label)}

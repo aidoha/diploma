@@ -57,7 +57,9 @@ const ServiceForm = () => {
   );
   const { data: serviceData } = useQuery(GET_COMPANY_SERVICE, {
     variables: { companyServiceID: id },
+    skip: slug === 'add',
   });
+
   const [createCompanyService] = useMutation(CREATE_COMPANY_SERVICE);
   const [updateCompanyService] = useMutation(UPDATE_COMPANY_SERVICE);
 
@@ -93,6 +95,7 @@ const ServiceForm = () => {
   const redirectToCompany = () => {
     setTimeout(() => {
       push(routes.company);
+      window.location.reload();
     }, 1000);
   };
 
@@ -156,15 +159,17 @@ const ServiceForm = () => {
     if (!serviceData) {
       return;
     }
-    const newServiceData = serviceData.getCompanyService;
-    const {
-      companyServiceName,
-      companyServiceDuration,
-      companyServicePrice,
-    } = newServiceData;
-    dispatch(handleName(companyServiceName));
-    dispatch(handleDuration(companyServiceDuration));
-    dispatch(handlePrice(companyServicePrice));
+    if (slug === 'edit') {
+      const newServiceData = serviceData.getCompanyService;
+      const {
+        companyServiceName,
+        companyServiceDuration,
+        companyServicePrice,
+      } = newServiceData;
+      dispatch(handleName(companyServiceName));
+      dispatch(handleDuration(companyServiceDuration));
+      dispatch(handlePrice(companyServicePrice));
+    }
   }, [serviceData]);
 
   if (servicesError || subcategoryError) {
