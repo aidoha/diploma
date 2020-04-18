@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import {
-  Box,
-  InputAdornment,
-  Button,
-  CircularProgress,
-} from '@material-ui/core';
+import { Box, InputAdornment, Button } from '@material-ui/core';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
 import {
@@ -155,14 +150,12 @@ const ServiceForm = () => {
             label='Название услуги*'
             name='service-name'
             placeholder='Например, Моя услуга'
-            required
             value={name}
             onChange={onChangeTextField}
           />
           <ServiceSelect
             label='Категория услуги*'
             name='service-subcategory'
-            required
             options={subcategories}
             value={ids.subcategory}
             onChange={onChangeSubcategories}
@@ -170,7 +163,6 @@ const ServiceForm = () => {
           <ServiceSelect
             label='Услуга*'
             name='service'
-            required
             options={services}
             value={ids.service}
             onChange={onChangeServices}
@@ -187,7 +179,6 @@ const ServiceForm = () => {
             label='Продолжительность услуги*'
             name='service-duration'
             placeholder='Например, 50 мин'
-            required
             value={duration}
             onChange={onChangeTextField}
             inputProps={<InputAdornment position='end'>мин</InputAdornment>}
@@ -197,7 +188,6 @@ const ServiceForm = () => {
             label='Стоимость услуги*'
             name='service-price'
             placeholder='Например, 2000 ₸'
-            required
             value={price}
             onChange={onChangeTextField}
             inputProps={<InputAdornment position='end'>₸</InputAdornment>}

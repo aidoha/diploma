@@ -1,12 +1,12 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { Grid, Typography, Box } from '@material-ui/core';
 import ServiceForm from './serviceForm';
-import { useStyles } from '../style';
+// import { useStyles } from '../style';
 
 const ServiceDetail = () => {
-  const { slug } = useParams();
-  const classes = useStyles();
+  // const { slug } = useParams();
+  // const classes = useStyles();
   return (
     <Grid container>
       <Box margin='25px'>

@@ -19,7 +19,15 @@ const CompanyServices = () => {
   });
   const services = data?.getBusinessCompanyServices?.businessCompanyService;
 
-  console.log('data', services);
+  if (loading) {
+    return (
+      <Grid container justify='center'>
+        <Box margin='50px 0'>
+          <Loader />
+        </Box>
+      </Grid>
+    );
+  }
 
   return (
     <Grid
@@ -58,19 +66,13 @@ const CompanyServices = () => {
           </Typography>
         </Grid>
       </Grid>
-      {loading ? (
-        <Grid container justify='center'>
-          <Box margin='50px 0'>
-            <Loader />
-          </Box>
-        </Grid>
-      ) : (
-        <Grid container justify='space-between' alignItems='center'>
-          {services.map((item, index) => (
+
+      <Grid container justify='space-between' alignItems='center'>
+        {services &&
+          services.map((item, index) => (
             <ServiceItem key={index} item={item} />
           ))}
-        </Grid>
-      )}
+      </Grid>
     </Grid>
   );
 };

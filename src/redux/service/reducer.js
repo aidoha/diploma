@@ -22,8 +22,20 @@ const intialState = {
     service: 0,
     subcategory: 0,
   },
-  error: false,
-  success: false,
+  statuses: {
+    error: {
+      value: false,
+      text: 'error',
+      autoHideDuration: 6000,
+      message: 'Упс... Что-то пошло не так',
+    },
+    success: {
+      value: false,
+      text: 'success',
+      autoHideDuration: 6000,
+      message: 'Вы успешно создали услугу!',
+    },
+  },
 };
 
 const reducer = (state = intialState, action) => {
@@ -78,12 +90,24 @@ const reducer = (state = intialState, action) => {
     case SERVICE_ERROR:
       return {
         ...state,
-        error: payload,
+        statuses: {
+          ...state.statuses,
+          error: {
+            ...state.statuses.error,
+            value: payload,
+          },
+        },
       };
     case SERVICE_SUCCESS:
       return {
         ...state,
-        success: payload,
+        statuses: {
+          ...state.statuses,
+          success: {
+            ...state.statuses.success,
+            value: payload,
+          },
+        },
       };
     default:
       return state;
