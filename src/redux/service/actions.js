@@ -10,6 +10,7 @@ import {
   SERVICE_ERROR,
   SERVICE_SAVE_SUCCESS,
   SERVICE_EDIT_SUCCESS,
+  SERVICE_DELETE_SUCCESS,
 } from './types';
 
 export const handleServiceName = (serviceName = '') => {
@@ -75,6 +76,12 @@ export const handleSaveSuccess = (success = false) => {
 export const handleEditSuccess = (success = false) => {
   return {
     type: SERVICE_EDIT_SUCCESS,
+    payload: success,
+  };
+};
+export const handleDeleteSuccess = (success = false) => {
+  return {
+    type: SERVICE_DELETE_SUCCESS,
     payload: success,
   };
 };

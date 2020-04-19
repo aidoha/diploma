@@ -10,6 +10,7 @@ import {
   SERVICE_ERROR,
   SERVICE_SAVE_SUCCESS,
   SERVICE_EDIT_SUCCESS,
+  SERVICE_DELETE_SUCCESS,
 } from './types';
 
 const intialState = {
@@ -44,6 +45,13 @@ const intialState = {
       label: 'edit',
       autoHideDuration: 6000,
       message: 'Вы успешно редактировали свою услугу!',
+    },
+    delete: {
+      value: false,
+      text: 'success',
+      label: 'delete',
+      autoHideDuration: 6000,
+      message: 'Вы успешно удалили услугу!',
     },
   },
 };
@@ -126,6 +134,17 @@ const reducer = (state = intialState, action) => {
           ...state.statuses,
           edit: {
             ...state.statuses.edit,
+            value: payload,
+          },
+        },
+      };
+    case SERVICE_DELETE_SUCCESS:
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          delete: {
+            ...state.statuses.delete,
             value: payload,
           },
         },

@@ -4,6 +4,7 @@ import signInReducer from './auth/signInReducer';
 import introFormReducer from './intro/introFormReducer';
 import scheduleReducer from './intro/scheduleReducer';
 import serviceReducer from './service/reducer';
+import companyReducer from './company/reducer';
 
 const rootReducer = combineReducers({
   signUp: signUpReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   introForm: introFormReducer,
   schedule: scheduleReducer,
   service: serviceReducer,
+  company: companyReducer,
 });
 
 export default rootReducer;

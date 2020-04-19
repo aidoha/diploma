@@ -25,7 +25,7 @@ export default withRouter(() => {
       <Route path='/signup' exact component={SignUp} />
       <Route path='/company' exact component={Company} />
       <Route path='/service/:slug/:id?' component={Service} />
-      <PrivateRoute path='/intro' exact Component={Intro} />
+      {/* <PrivateRoute path='/intro' exact Component={Intro} /> */}
     </Switch>
   );
 });

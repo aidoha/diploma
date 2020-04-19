@@ -10,16 +10,16 @@ export {
   handleSetAuthorized,
 } from './auth/actions';
 
-export {
-  handleBackStep,
-  handleNextStep,
-  handleServiceName,
-  handleServiceAddress,
-  handleStartTime,
-  handleFinishTime,
-  handleServiceDuration,
-  handleServicePrice,
-} from './intro/actions';
+// export {
+//   handleBackStep,
+//   handleNextStep,
+//   handleServiceName,
+//   handleServiceAddress,
+//   handleStartTime,
+//   handleFinishTime,
+//   handleServiceDuration,
+//   handleServicePrice,
+// } from './intro/actions';
 
 export {
   handleServiceName as handleName,
@@ -33,4 +33,5 @@ export {
   handleError as handleServiceError,
   handleSaveSuccess as handleServiceSaveSuccess,
   handleEditSuccess as handleServiceEditSuccess,
+  handleDeleteSuccess as handleServiceDeleteSuccess,
 } from './service/actions';

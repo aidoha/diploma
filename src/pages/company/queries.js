@@ -14,3 +14,13 @@ export const GET_BUSINESS_COMPANY_SERVICES = gql`
     }
   }
 `;
+
+export const DELETE_COMPANY_SERVICE = gql`
+  mutation DeleteCompanyService($companyServiceID: ID!) {
+    deleteCompanyService(input: { companyServiceID: $companyServiceID }) {
+      companyService {
+        companyServiceID
+      }
+    }
+  }
+`;

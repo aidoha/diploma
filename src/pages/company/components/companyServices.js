@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-import { Loader } from '../../../components';
+import { Loader, ServiceStatuses } from '../../../components';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
 import { GET_BUSINESS_COMPANY_SERVICES } from '../queries';
+import {
+  handleCompanyServices,
+  handleResetCompanyServices,
+} from '../../../redux/company/actions';
 import { useStyles } from '../style';
 
 const { service } = routes;
@@ -14,10 +19,22 @@ const { service } = routes;
 const CompanyServices = () => {
   const classes = useStyles();
   const { push } = useHistory();
+  const dispatch = useDispatch();
+  const companyState = useSelector((state) => state.company);
+  const { companyServices } = companyState;
   const { data, loading } = useQuery(GET_BUSINESS_COMPANY_SERVICES, {
-    variables: { businessCompanyID: 5 },
+    variables: { businessCompanyID: 6 },
   });
   const services = data?.getBusinessCompanyServices?.businessCompanyService;
+
+  useEffect(() => {
+    if (services) {
+      dispatch(handleCompanyServices(services));
+    } else {
+      dispatch(handleResetCompanyServices());
+    }
+    // return () => stopPolling();
+  }, [data, dispatch]);
 
   if (loading) {
     return (
@@ -68,11 +85,12 @@ const CompanyServices = () => {
       </Grid>
 
       <Grid container justify='space-between' alignItems='center'>
-        {services &&
-          services.map((item, index) => (
-            <ServiceItem key={index} item={item} />
+        {companyServices &&
+          companyServices.map((item, index) => (
+            <ServiceItem key={index} item={item} index={index} />
           ))}
       </Grid>
+      <ServiceStatuses />
     </Grid>
   );
 };

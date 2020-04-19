@@ -106,7 +106,7 @@ const ServiceForm = () => {
       companyServiceDuration: duration,
       companyServicePrice: price,
       businessServiceID: business_ids.service,
-      businessCompanyID: 5,
+      businessCompanyID: 6,
     };
 
     if (!name || !duration || !price || !business_ids.service) {
@@ -118,9 +118,6 @@ const ServiceForm = () => {
             if (res.data) {
               dispatch(handleServiceSaveSuccess(true));
               redirectToCompany();
-              setTimeout(() => {
-                push('/company');
-              }, 1000);
             }
           })
           .catch(() => dispatch(handleServiceError(true)));

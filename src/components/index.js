@@ -5,6 +5,7 @@ import MainLayout from './main-layout/index';
 import CompanyHeader from './headers/companyHeader';
 import ServiceHeader from './headers/serviceHeader';
 import Loader from './loader';
+import ServiceStatuses from './service-statuses';
 
 export {
   Topbar,
@@ -14,4 +15,5 @@ export {
   CompanyHeader,
   ServiceHeader,
   Loader,
+  ServiceStatuses,
 };
