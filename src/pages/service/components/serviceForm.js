@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Box, InputAdornment, Button } from '@material-ui/core';
+import { Box, InputAdornment, Button, Grid } from '@material-ui/core';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
+import DialogBusiness from './businessDialog';
 import {
   handleName,
   handleSubcategories,
@@ -32,6 +33,10 @@ const ServiceForm = () => {
   const classes = useStyles();
   const { slug, id } = useParams();
   const { push } = useHistory();
+  const [dialogBusiness, setDialogBusiness] = useState(true);
+  const handleDialogBusiness = () => {
+    setDialogBusiness(!dialogBusiness);
+  };
   const serviceState = useSelector((state) => state.service);
   const {
     name,
@@ -243,6 +248,27 @@ const ServiceForm = () => {
         >
           Сохранить
         </Button>
+
+        {slug === 'add' && (
+          <Box marginTop='50px'>
+            <Box fontSize='16px' color='#999' margin='10px 0'>
+              Вы не нашли свою услугу в списке?
+            </Box>
+            <Button
+              variant='contained'
+              size='large'
+              className={classes.btn_save_service}
+              onClick={handleDialogBusiness}
+            >
+              Создать свою услугу
+            </Button>
+          </Box>
+        )}
+        <DialogBusiness
+          state={{ name, business_ids, subcategories }}
+          dialogBusiness={dialogBusiness}
+          handleDialogBusiness={handleDialogBusiness}
+        />
       </Box>
     </form>
   );

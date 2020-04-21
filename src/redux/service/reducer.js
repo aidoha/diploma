@@ -6,6 +6,7 @@ import {
   UPDATE_DURATION,
   UPDATE_PRICE,
   UPDATE_SUBCATEGORY_ID,
+  UPDATE_SUBCATEGORY_IDS,
   UPDATE_SERVICE_ID,
   SERVICE_ERROR,
   SERVICE_SAVE_SUCCESS,
@@ -23,6 +24,7 @@ const intialState = {
   business_ids: {
     service: 0,
     subcategory: 0,
+    subcategories: [],
   },
   statuses: {
     error: {
@@ -103,6 +105,14 @@ const reducer = (state = intialState, action) => {
         business_ids: {
           ...state.business_ids,
           service: payload,
+        },
+      };
+    case UPDATE_SUBCATEGORY_IDS:
+      return {
+        ...state,
+        business_ids: {
+          ...state.business_ids,
+          subcategories: payload,
         },
       };
     case SERVICE_ERROR:

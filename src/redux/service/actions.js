@@ -11,6 +11,7 @@ import {
   SERVICE_SAVE_SUCCESS,
   SERVICE_EDIT_SUCCESS,
   SERVICE_DELETE_SUCCESS,
+  UPDATE_SUBCATEGORY_IDS,
 } from './types';
 
 export const handleServiceName = (serviceName = '') => {
@@ -53,6 +54,12 @@ export const handleSubcategoryId = (id = 0) => {
   return {
     type: UPDATE_SUBCATEGORY_ID,
     payload: id,
+  };
+};
+export const handleSubcategoryIds = (ids = []) => {
+  return {
+    type: UPDATE_SUBCATEGORY_IDS,
+    payload: ids,
   };
 };
 export const handleServiceId = (id = 0) => {
