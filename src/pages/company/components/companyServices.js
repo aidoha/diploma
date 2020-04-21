@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Typography, Box } from '@material-ui/core';
+import { Grid, Typography, Box, Link } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import { Loader, ServiceStatuses } from '../../../components';
 import ServiceItem from './serviceItem';
@@ -18,7 +17,6 @@ const { service } = routes;
 
 const CompanyServices = () => {
   const classes = useStyles();
-  const { push } = useHistory();
   const dispatch = useDispatch();
   const companyState = useSelector((state) => state.company);
   const { companyServices } = companyState;
@@ -33,7 +31,6 @@ const CompanyServices = () => {
     } else {
       dispatch(handleResetCompanyServices());
     }
-    // return () => stopPolling();
   }, [data, dispatch]);
 
   if (loading) {
@@ -60,18 +57,7 @@ const CompanyServices = () => {
         </Typography>
       </Grid>
 
-      <Grid
-        item
-        container
-        justify='flex-end'
-        alignItems='center'
-        lg={6}
-        md={6}
-        xs={12}
-        spacing={2}
-        className={classes.company_services__add}
-        onClick={() => push(service.add)}
-      >
+      <Link href={service.add} style={{ display: 'flex' }}>
         <Grid item>
           <AddCircle className={classes.add_icon} />
         </Grid>
@@ -82,7 +68,7 @@ const CompanyServices = () => {
             </Box>
           </Typography>
         </Grid>
-      </Grid>
+      </Link>
 
       <Grid container justify='space-between' alignItems='center'>
         {companyServices &&

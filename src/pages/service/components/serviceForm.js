@@ -167,7 +167,7 @@ const ServiceForm = () => {
       dispatch(handleDuration(companyServiceDuration));
       dispatch(handlePrice(companyServicePrice));
     }
-  }, [serviceData]);
+  }, [serviceData, slug]);
 
   if (servicesError || subcategoryError) {
     return <div />;

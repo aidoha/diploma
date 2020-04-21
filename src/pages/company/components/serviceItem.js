@@ -33,18 +33,14 @@ const ServiceItem = ({ item }) => {
   };
 
   const deleteService = () => {
-    dispatch(handleDeleteCompanyService(item));
-    // deleteCompanyService({ variables: { companyServiceID } })
-    //   .then((res) => {
-    //     if (res.data) {
-    //       dispatch(handleServiceDeleteSuccess(true));
-    //       handleConfirmModal();
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log('err', err);
-    //     dispatch(handleServiceError(true));
-    //   });
+    deleteCompanyService({ variables: { companyServiceID } })
+      .then((res) => {
+        if (res.data) {
+          dispatch(handleDeleteCompanyService(item));
+          dispatch(handleServiceDeleteSuccess(true));
+        }
+      })
+      .catch(() => dispatch(handleServiceError(true)));
   };
 
   return (
