@@ -33,7 +33,7 @@ const ServiceForm = () => {
   const classes = useStyles();
   const { slug, id } = useParams();
   const { push } = useHistory();
-  const [dialogBusiness, setDialogBusiness] = useState(true);
+  const [dialogBusiness, setDialogBusiness] = useState(false);
   const handleDialogBusiness = () => {
     setDialogBusiness(!dialogBusiness);
   };
