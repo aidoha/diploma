@@ -4,10 +4,21 @@ import { Skeleton } from '@material-ui/lab';
 // import { MoreHoriz } from '@material-ui/icons';
 import { useStyles } from '../style';
 
-const CompanyPreview = () => {
+const CompanyPreview = ({
+  companyData,
+  companyLoading,
+  companyServicesData,
+}) => {
   const classes = useStyles();
   // const [edit, setEdit] = useState(false);
-  const count = 5;
+  const companyName = companyData?.getBusinessCompany?.businessCompanyName;
+  const servicesCount =
+    companyServicesData?.getBusinessCompanyServices?.businessCompanyService
+      .length;
+
+  if (companyLoading) {
+    return <div />;
+  }
   return (
     <Grid
       container
@@ -25,7 +36,7 @@ const CompanyPreview = () => {
         <Grid item>
           <Typography variant='h3'>
             <Box fontSize={20} fontWeight={600}>
-              company name
+              {companyName}
             </Box>
           </Typography>
           <Grid container alignItems='center' style={{ marginTop: '20px' }}>
@@ -40,7 +51,7 @@ const CompanyPreview = () => {
               alignItems='center'
               className={classes.company_preview_counts_item}
             >
-              {count}
+              {servicesCount}
             </Grid>
           </Grid>
         </Grid>

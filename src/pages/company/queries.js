@@ -1,5 +1,13 @@
 import gql from 'graphql-tag';
 
+export const GET_BUSINESS_COMPANY = gql`
+  query getBusinessCompany($businessCompanyID: ID!) {
+    getBusinessCompany(input: { businessCompanyID: $businessCompanyID }) {
+      businessCompanyName
+    }
+  }
+`;
+
 export const GET_BUSINESS_COMPANY_SERVICES = gql`
   query GetBusinessCompanyServices($businessCompanyID: ID!) {
     getBusinessCompanyServices(

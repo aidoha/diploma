@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
 import { Grid, Typography, Box, Link } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import { Loader, ServiceStatuses } from '../../../components';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
-import { GET_BUSINESS_COMPANY_SERVICES } from '../queries';
 import {
   handleCompanyServices,
   handleResetCompanyServices,
@@ -15,15 +13,13 @@ import { useStyles } from '../style';
 
 const { service } = routes;
 
-const CompanyServices = () => {
+const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const companyState = useSelector((state) => state.company);
   const { companyServices } = companyState;
-  const { data, loading } = useQuery(GET_BUSINESS_COMPANY_SERVICES, {
-    variables: { businessCompanyID: 6 },
-  });
-  const services = data?.getBusinessCompanyServices?.businessCompanyService;
+  const services =
+    companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
 
   useEffect(() => {
     if (services) {
@@ -31,9 +27,9 @@ const CompanyServices = () => {
     } else {
       dispatch(handleResetCompanyServices());
     }
-  }, [data, dispatch]);
+  }, [companyServicesData, dispatch]);
 
-  if (loading) {
+  if (companyServicesLoading) {
     return (
       <Grid container justify='center'>
         <Box margin='50px 0'>
