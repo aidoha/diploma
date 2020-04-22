@@ -268,6 +268,7 @@ const ServiceForm = () => {
           state={{ name, business_ids, subcategories }}
           dialogBusiness={dialogBusiness}
           handleDialogBusiness={handleDialogBusiness}
+          redirectToCompany={redirectToCompany}
         />
       </Box>
     </form>

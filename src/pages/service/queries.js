@@ -102,3 +102,21 @@ export const UPDATE_COMPANY_SERVICE = gql`
     }
   }
 `;
+
+export const CREATE_BUSINESS_SERVICE = gql`
+  mutation createBusinessService(
+    $businessServiceName: String!
+    $businessServiceSubCategories: [Int!]!
+  ) {
+    createBusinessService(
+      input: {
+        businessServiceName: $businessServiceName
+        businessServiceSubCategories: $businessServiceSubCategories
+      }
+    ) {
+      businessService {
+        businessServiceID
+      }
+    }
+  }
+`;

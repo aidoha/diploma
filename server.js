@@ -10,24 +10,3 @@ app.get('*', (req, res) => {
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`);
 });
-
-// const fetch = require('node-fetch');
-// var query = `query GetBusinessCategories {
-//   getBusinessCategories {
-//       businessCategoryID
-//       businessCategoryName
-//     }
-// }`;
-
-// fetch('http://46.101.138.224:8080/query', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Accept: 'application/json'
-//   },
-//   body: JSON.stringify({
-//     query
-//   })
-// })
-//   .then(r => r.json())
-//   .then(data => console.log('data returned:', data));
