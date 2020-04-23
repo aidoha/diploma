@@ -10,11 +10,7 @@ export default withRouter(() => {
     <Route
       {...rest}
       render={(props) =>
-        signUpState.isLoggedIn === true ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to='/' />
-        )
+        signUpState.isLoggedIn ? <Component {...props} /> : <Redirect to='/' />
       }
     />
   );
@@ -23,8 +19,8 @@ export default withRouter(() => {
       <Route path='/' exact component={Main} />
       <Route path='/signin' exact component={SignIn} />
       <Route path='/signup' exact component={SignUp} />
-      <Route path='/company' exact component={Company} />
-      <Route path='/service/:slug/:id?' component={Service} />
+      <PrivateRoute path='/company' exact Component={Company} />
+      <PrivateRoute path='/service/:slug/:id?' Component={Service} />
       {/* <PrivateRoute path='/intro' exact Component={Intro} /> */}
     </Switch>
   );

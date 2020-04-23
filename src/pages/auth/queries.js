@@ -1,5 +1,30 @@
 import gql from 'graphql-tag';
 
+export const GET_BUSINESS_CATEGORIES = gql`
+  query getBusinessCategories {
+    getBusinessCategories {
+      businessCategoryID
+      businessCategoryName
+    }
+  }
+`;
+
+export const CREATE_BUSINESS_COMPANY = gql`
+  mutation createBusinessCompany(
+    $businessCompanyName: String!
+    $businessCompanyCategoryID: ID!
+  ) {
+    createBusinessCompany(
+      input: {
+        businessCompanyName: $businessCompanyName
+        businessCompanyCategoryID: $businessCompanyCategoryID
+      }
+    ) {
+      businessCompanyID
+    }
+  }
+`;
+
 export const CREATE_BUSINESS_OWNER = gql`
   mutation createBusinessOwner(
     $businessOwnerName: String!
@@ -19,7 +44,15 @@ export const CREATE_BUSINESS_OWNER = gql`
         businessOwnerPhoneNumberPrefix: $businessOwnerPhoneNumberPrefix
       }
     ) {
-      businessOwnerID
+      businessOwner {
+        businessOwnerID
+      }
+      token {
+        accessToken
+        expiresIn
+        tokenType
+        refreshToken
+      }
     }
   }
 `;

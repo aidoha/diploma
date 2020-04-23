@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Typography, Box, Link } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-import { Loader, ServiceStatuses } from '../../../components';
+import { Loader, Statuses } from '../../../components';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
 import {
@@ -72,7 +72,7 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
             <ServiceItem key={index} item={item} index={index} />
           ))}
       </Grid>
-      <ServiceStatuses />
+      <Statuses type='service' />
     </Grid>
   );
 };

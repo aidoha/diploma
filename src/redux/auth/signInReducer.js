@@ -2,18 +2,18 @@ import {
   UPDATE_CUSTOMER_EMAIL,
   UPDATE_CUSTOMER_PASSWORD,
   SHOW_PASSWORD,
-  SET_AUTHORIZED
+  SET_AUTHORIZED,
 } from './types';
 
 const initialState = {
   email: '',
   password: '',
   showPassword: false,
-  isLoggedIn: Boolean(localStorage.getItem('isLoggedIn')) || null,
+  isLoggedIn: localStorage.getItem('isLoggedIn') || null,
   touched: {
     email: false,
-    password: false
-  }
+    password: false,
+  },
 };
 
 const signInReducer = (state = initialState, action) => {
@@ -24,8 +24,8 @@ const signInReducer = (state = initialState, action) => {
         email: action.payload,
         touched: {
           ...state.touched,
-          email: true
-        }
+          email: true,
+        },
       };
     case UPDATE_CUSTOMER_PASSWORD:
       return {
@@ -33,18 +33,18 @@ const signInReducer = (state = initialState, action) => {
         password: action.payload,
         touched: {
           ...state.touched,
-          password: true
-        }
+          password: true,
+        },
       };
     case SHOW_PASSWORD:
       return {
         ...state,
-        showPassword: action.payload
+        showPassword: action.payload,
       };
     case SET_AUTHORIZED:
       return {
         ...state,
-        isLoggedIn: true
+        isLoggedIn: true,
       };
     default:
       return state;

@@ -19,14 +19,22 @@ const SecondStep = () => {
   const classes = useStyles();
   const signUpState = useSelector((state) => state.signUp);
   const dispatch = useDispatch();
-  const { name, email, password, phone, showPassword, touched } = signUpState;
+  const {
+    name,
+    email,
+    password,
+    phone,
+    showPassword,
+    companyId,
+    touched,
+  } = signUpState;
   const [register, { loading, error }] = useMutation(CREATE_BUSINESS_OWNER);
 
   const onSubmit = (event) => {
     event.preventDefault();
     const businessOwner = {
       businessOwnerName: name,
-      businessCompanyID: 7,
+      businessCompanyID: companyId,
       businessOwnerEmail: email,
       businessOwnerPassword: password,
       businessOwnerPhoneNumber: phone,
@@ -35,7 +43,10 @@ const SecondStep = () => {
     register({ variables: businessOwner }).then((res) => {
       if (res.data) {
         dispatch(handleSetAuthorized());
-        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem(
+          'isLoggedIn',
+          res.data.createBusinessOwner.token.accessToken
+        );
       }
     });
   };

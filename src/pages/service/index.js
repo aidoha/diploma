@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainLayout, ServiceHeader, ServiceStatuses } from '../../components';
+import { MainLayout, ServiceHeader, Statuses } from '../../components';
 import ServiceDetail from './components/serviceDetail';
 
 const Service = () => {
@@ -7,7 +7,7 @@ const Service = () => {
     <MainLayout padding='0'>
       <ServiceHeader />
       <ServiceDetail />
-      <ServiceStatuses />
+      <Statuses type='service' />
     </MainLayout>
   );
 };

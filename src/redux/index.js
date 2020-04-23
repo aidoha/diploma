@@ -1,13 +1,16 @@
 export {
   handleBusinessCategory,
   handleCompanyName,
+  handleCompanyId,
   handleSteps,
+  handleCompanySuccess,
   handleCustomerEmail,
   handleCustomerName,
   handleCustomerPassword,
   handleCustomerPhone,
   handlePasswordVisibility,
   handleSetAuthorized,
+  handleBusinessCategories,
 } from './auth/actions';
 
 // export {
