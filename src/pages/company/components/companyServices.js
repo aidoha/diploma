@@ -27,7 +27,11 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
     } else {
       dispatch(handleResetCompanyServices());
     }
-  }, [companyServicesData, dispatch]);
+
+    return () => {
+      dispatch(handleCompanyServices([]));
+    };
+  }, [services, dispatch]);
 
   if (companyServicesLoading) {
     return (

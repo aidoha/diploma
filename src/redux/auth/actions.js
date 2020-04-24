@@ -93,9 +93,10 @@ export const handlePasswordVisibility = (show = false) => {
     payload: show,
   };
 };
-export const handleSetAuthorized = () => {
+export const handleSetAuthorized = (success = false) => {
   return {
     type: SET_AUTHORIZED,
+    payload: success,
   };
 };
 

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Box, InputAdornment, Button, Grid } from '@material-ui/core';
+import { Box, InputAdornment, Button } from '@material-ui/core';
+import withCurrentUser from '../../../hoc/currentUser';
 import ServiceTextField from './serviceTextField';
 import ServiceSelect from './serviceSelect';
 import DialogBusiness from './businessDialog';
@@ -29,7 +30,9 @@ import {
 import { routes } from '../../../constants';
 import { useStyles } from '../style';
 
-const ServiceForm = () => {
+const ServiceForm = (props) => {
+  const businessCategoryID = props?.currentUser[0]?.businessCompanyCategoryID;
+  const businessCompanyID = props?.currentUser[0]?.businessCompanyID;
   const classes = useStyles();
   const { slug, id } = useParams();
   const { push } = useHistory();
@@ -51,7 +54,7 @@ const ServiceForm = () => {
   const { error: subcategoryError, data: subcategoryData } = useQuery(
     GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
     {
-      variables: { businessCategoryID: 4 },
+      variables: { businessCategoryID },
     }
   );
   const { error: servicesError, data: servicesData } = useQuery(
@@ -99,8 +102,11 @@ const ServiceForm = () => {
 
   const redirectToCompany = () => {
     setTimeout(() => {
-      push(routes.company);
-      window.location.reload();
+      window.location.href = `${window.location.protocol}//${
+        window.location.hostname
+      }${window.location.port ? `:${window.location.port}` : ''}${
+        routes.company
+      }`;
     }, 1000);
   };
 
@@ -111,7 +117,7 @@ const ServiceForm = () => {
       companyServiceDuration: duration,
       companyServicePrice: price,
       businessServiceID: business_ids.service,
-      businessCompanyID: 6,
+      businessCompanyID,
     };
 
     if (!name || !duration || !price || !business_ids.service) {
@@ -147,7 +153,7 @@ const ServiceForm = () => {
           ?.businessSubCategories
       )
     );
-  }, [subcategoryData]);
+  }, [subcategoryData, dispatch]);
 
   useEffect(() => {
     dispatch(
@@ -155,7 +161,7 @@ const ServiceForm = () => {
         servicesData?.getBusinessServicesUnderSubCategory?.businessServices
       )
     );
-  }, [servicesData, business_ids.subcategory]);
+  }, [servicesData, business_ids.subcategory, dispatch]);
 
   useEffect(() => {
     if (!serviceData) {
@@ -172,7 +178,7 @@ const ServiceForm = () => {
       dispatch(handleDuration(companyServiceDuration));
       dispatch(handlePrice(companyServicePrice));
     }
-  }, [serviceData, slug]);
+  }, [serviceData, slug, dispatch]);
 
   if (servicesError || subcategoryError) {
     return <div />;
@@ -275,4 +281,4 @@ const ServiceForm = () => {
   );
 };
 
-export default ServiceForm;
+export default withCurrentUser(ServiceForm);

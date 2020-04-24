@@ -68,7 +68,7 @@ const FirstStep = () => {
       return;
     }
     dispatch(handleBusinessCategories(data.getBusinessCategories));
-  }, [data]);
+  }, [data, dispatch]);
 
   if (loading) {
     return <div />;

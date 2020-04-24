@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-// import { MoreHoriz } from '@material-ui/icons';
 import { useStyles } from '../style';
 
 const CompanyPreview = ({
@@ -10,15 +9,18 @@ const CompanyPreview = ({
   companyServicesData,
 }) => {
   const classes = useStyles();
-  // const [edit, setEdit] = useState(false);
+  const businessCompanyService =
+    companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
+
   const companyName = companyData?.getBusinessCompany?.businessCompanyName;
-  const servicesCount =
-    companyServicesData?.getBusinessCompanyServices?.businessCompanyService
-      .length;
+  const servicesCount = !businessCompanyService
+    ? 0
+    : businessCompanyService.length;
 
   if (companyLoading) {
     return <div />;
   }
+
   return (
     <Grid
       container
@@ -56,9 +58,6 @@ const CompanyPreview = ({
           </Grid>
         </Grid>
       </Grid>
-      {/* <Grid container item justify='flex-end' lg={4} md={4}>
-        <MoreHoriz fontSize='large' />
-      </Grid> */}
     </Grid>
   );
 };

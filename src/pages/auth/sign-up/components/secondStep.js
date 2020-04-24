@@ -9,8 +9,12 @@ import {
   handleCustomerName,
   handlePasswordVisibility,
   handleCustomerPhone,
-  handleSetAuthorized,
 } from '../../../../redux';
+import {
+  handleAuthError,
+  handleSetAuthorized,
+} from '../../../../redux/auth/actions';
+
 import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
@@ -40,15 +44,17 @@ const SecondStep = () => {
       businessOwnerPhoneNumber: phone,
       businessOwnerPhoneNumberPrefix: '+7',
     };
-    register({ variables: businessOwner }).then((res) => {
-      if (res.data) {
-        dispatch(handleSetAuthorized());
-        localStorage.setItem(
-          'isLoggedIn',
-          res.data.createBusinessOwner.token.accessToken
-        );
-      }
-    });
+    register({ variables: businessOwner })
+      .then((res) => {
+        if (res.data) {
+          dispatch(handleSetAuthorized(true));
+          localStorage.setItem(
+            'isLoggedIn',
+            res.data.createBusinessOwner.token.accessToken
+          );
+        }
+      })
+      .catch(() => dispatch(handleAuthError(true)));
   };
 
   if (error) {

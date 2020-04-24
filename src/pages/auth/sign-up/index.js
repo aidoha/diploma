@@ -1,8 +1,9 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Topbar, Statuses } from '../../../components';
 import { Container, Grid, Typography } from '@material-ui/core';
+import withApollo from '../../../hoc/withApollo';
 import FirstStep from './components/firsStep';
 import SecondStep from './components/secondStep';
 import { routes } from '../../../constants';
@@ -14,7 +15,12 @@ const SignUp = () => {
   const classes = useStyles();
 
   if (isLoggedIn) {
-    return <Redirect to={routes.company} />;
+    window.location.href = `${window.location.protocol}//${
+      window.location.hostname
+    }${window.location.port ? `:${window.location.port}` : ''}${
+      routes.company
+    }`;
+    // return <Redirect to={routes.company} />;
   }
 
   return (
@@ -34,4 +40,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withApollo(SignUp);

@@ -51,6 +51,13 @@ const initialState = {
       autoHideDuration: 3000,
       message: 'Вы успешно создали компанию!',
     },
+    singUpSuccess: {
+      value: false,
+      text: 'success',
+      label: 'singUpSuccess',
+      autoHideDuration: 4000,
+      message: 'Вы успешно зарегистрировались!',
+    },
     edit: {
       value: false,
       text: 'success',
@@ -150,6 +157,13 @@ const signUpReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
+        statuses: {
+          ...state.statuses,
+          singUpSuccess: {
+            ...state.statuses.singUpSuccess,
+            value: action.payload,
+          },
+        },
       };
     case AUTH_ERROR:
       return {

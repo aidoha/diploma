@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
-import { SignIn, Main, SignUp, Intro, Company, Service } from './pages';
+import { SignIn, Main, SignUp, Company, Service } from './pages';
 import { useSelector } from 'react-redux';
 
 export default withRouter(() => {

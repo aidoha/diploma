@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -9,7 +9,7 @@ import {
   handleServiceError,
   handleCompanySuccess,
 } from '../../redux';
-import { handleAuthError } from '../../redux/auth/actions';
+import { handleAuthError, handleSetAuthorized } from '../../redux/auth/actions';
 
 const Statuses = ({ type }) => {
   const serviceState = useSelector((state) => state.service);
@@ -18,26 +18,34 @@ const Statuses = ({ type }) => {
 
   const statusHandler = (status) => {
     switch (status) {
-      case 'save':
+      // service handlers
+      case 'saveService':
         dispatch(handleServiceSaveSuccess(!serviceState.statuses.save.value));
         break;
-      case 'edit':
+      case 'editService':
         dispatch(handleServiceEditSuccess(!serviceState.statuses.edit.value));
         break;
-      case 'delete':
+      case 'deleteService':
         dispatch(
           handleServiceDeleteSuccess(!serviceState.statuses.delete.value)
         );
         break;
-      case 'error':
+      case 'errorService':
         dispatch(handleServiceError(!serviceState.statuses.error.value));
         break;
+      // sign up handlers
       case 'saveCompany':
         dispatch(handleCompanySuccess(!signUpState.statuses.saveCompany.value));
         break;
-      case 'errorCompany':
+      case 'singUpSuccess':
+        dispatch(
+          handleSetAuthorized(!signUpState.statuses.singUpSuccess.value)
+        );
+        break;
+      case 'errorAuth':
         dispatch(handleAuthError(!signUpState.statuses.error.value));
         break;
+
       default:
         return 'No such action';
     }
