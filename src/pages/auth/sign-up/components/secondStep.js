@@ -14,7 +14,6 @@ import {
   handleAuthError,
   handleSetAuthorized,
 } from '../../../../redux/auth/actions';
-
 import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
@@ -57,9 +56,9 @@ const SecondStep = () => {
       .catch(() => dispatch(handleAuthError(true)));
   };
 
-  if (error) {
-    return <div />;
-  }
+  // if (error) {
+  //   return <div />;
+  // }
 
   return (
     <form noValidate onSubmit={onSubmit}>

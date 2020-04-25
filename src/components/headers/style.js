@@ -10,4 +10,7 @@ export const useStyles = makeStyles({
     cursor: 'pointer',
     marginRight: '20px',
   },
+  logout: {
+    cursor: 'pointer',
+  },
 });

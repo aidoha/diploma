@@ -14,6 +14,7 @@ import { handleAuthError, handleSetAuthorized } from '../../redux/auth/actions';
 const Statuses = ({ type }) => {
   const serviceState = useSelector((state) => state.service);
   const signUpState = useSelector((state) => state.signUp);
+  const signInState = useSelector((state) => state.signIn);
   const dispatch = useDispatch();
 
   const statusHandler = (status) => {
@@ -42,6 +43,12 @@ const Statuses = ({ type }) => {
           handleSetAuthorized(!signUpState.statuses.singUpSuccess.value)
         );
         break;
+      // sign in handlers
+      case 'singInSuccess':
+        dispatch(
+          handleSetAuthorized(!signInState.statuses.singInSuccess.value)
+        );
+        break;
       case 'errorAuth':
         dispatch(handleAuthError(!signUpState.statuses.error.value));
         break;
@@ -66,6 +73,19 @@ const Statuses = ({ type }) => {
     ));
   } else if (type === 'signUp') {
     return Object.values(signUpState.statuses).map((item, index) => (
+      <Snackbar
+        key={index}
+        open={item.value}
+        autoHideDuration={item.autoHideDuration}
+        onClose={() => statusHandler(item.label)}
+      >
+        <Alert onClose={() => statusHandler(item.label)} severity={item.text}>
+          {item.message}
+        </Alert>
+      </Snackbar>
+    ));
+  } else if (type === 'signIn') {
+    return Object.values(signInState.statuses).map((item, index) => (
       <Snackbar
         key={index}
         open={item.value}

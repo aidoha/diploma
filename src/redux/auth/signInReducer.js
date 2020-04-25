@@ -3,6 +3,8 @@ import {
   UPDATE_CUSTOMER_PASSWORD,
   SHOW_PASSWORD,
   SET_AUTHORIZED,
+  VALIDATE_EMAIL,
+  AUTH_ERROR,
 } from './types';
 
 const initialState = {
@@ -13,6 +15,25 @@ const initialState = {
   touched: {
     email: false,
     password: false,
+  },
+  validated: {
+    email: true,
+  },
+  statuses: {
+    error: {
+      value: false,
+      text: 'error',
+      label: 'errorAuth',
+      autoHideDuration: 6000,
+      message: 'Упс... Что-то пошло не так',
+    },
+    singInSuccess: {
+      value: false,
+      text: 'success',
+      label: 'singInSuccess',
+      autoHideDuration: 4000,
+      message: 'Вы успешно авторизовались!',
+    },
   },
 };
 
@@ -36,15 +57,40 @@ const signInReducer = (state = initialState, action) => {
           password: true,
         },
       };
+    case VALIDATE_EMAIL:
+      return {
+        ...state,
+        validated: {
+          email: action.payload,
+        },
+      };
     case SHOW_PASSWORD:
       return {
         ...state,
         showPassword: action.payload,
       };
+    case AUTH_ERROR:
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          error: {
+            ...state.statuses.error,
+            value: action.payload,
+          },
+        },
+      };
     case SET_AUTHORIZED:
       return {
         ...state,
         isLoggedIn: true,
+        statuses: {
+          ...state.statuses,
+          singInSuccess: {
+            ...state.statuses.singInSuccess,
+            value: action.payload,
+          },
+        },
       };
     default:
       return state;

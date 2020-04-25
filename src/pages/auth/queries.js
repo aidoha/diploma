@@ -56,3 +56,11 @@ export const CREATE_BUSINESS_OWNER = gql`
     }
   }
 `;
+
+export const GENERATE_TOKEN = gql`
+  mutation generateToken($email: String!, $password: String!) {
+    generateToken(input: { email: $email, password: $password }) {
+      accessToken
+    }
+  }
+`;

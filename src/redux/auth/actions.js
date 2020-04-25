@@ -13,6 +13,7 @@ import {
   LOGOUT,
   AUTH_ERROR,
   COMPANY_SAVE_SUCCESS,
+  VALIDATE_EMAIL,
 } from './types';
 
 export const handleAuthError = (error = false) => {
@@ -99,9 +100,14 @@ export const handleSetAuthorized = (success = false) => {
     payload: success,
   };
 };
-
 export const handleLogout = () => {
   return {
     type: LOGOUT,
+  };
+};
+export const handleValidateEmail = (validateEmail = false) => {
+  return {
+    type: VALIDATE_EMAIL,
+    payload: validateEmail,
   };
 };

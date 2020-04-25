@@ -1,23 +1,53 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMutation } from '@apollo/react-hooks';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import {
   handleCustomerEmail,
   handleCustomerPassword,
-  handlePasswordVisibility
-} from '../../../../redux';
-import { useStyles } from '../../style';
+  handlePasswordVisibility,
+  handleValidateEmail,
+  handleAuthError,
+  handleSetAuthorized,
+} from '../../../../redux/auth/actions';
+import { GENERATE_TOKEN } from '../../queries';
+import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
+import { validateEmail } from '../../../../utils';
+// import { errors } from '../../../../constants';
 
 const AuthForm = () => {
   const classes = useStyles();
-  const signInState = useSelector(state => state.signIn);
-  const { email, password, showPassword, touched } = signInState;
+  // const [errorLabel, setErrorLabel] = useState(null);
+  const signInState = useSelector((state) => state.signIn);
+  const { email, password, showPassword, touched, validated } = signInState;
   const dispatch = useDispatch();
+  const [auhtorize, { loading }] = useMutation(GENERATE_TOKEN);
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     event.preventDefault();
+    if (validateEmail(email)) {
+      dispatch(handleValidateEmail(true));
+      auhtorize({ variables: { email, password } })
+        .then((res) => {
+          if (res.data) {
+            dispatch(handleSetAuthorized(true));
+            localStorage.setItem(
+              'isLoggedIn',
+              res.data.generateToken.accessToken
+            );
+          }
+        })
+        .catch((err) => {
+          dispatch(handleAuthError(true));
+          // if (err === errors.auth.no_such_email.text) {
+          //   setErrorLabel(errors.auth.no_such_email.label);
+          // }
+        });
+    } else {
+      dispatch(handleValidateEmail(false));
+    }
   };
 
   return (
@@ -30,8 +60,8 @@ const AuthForm = () => {
         name='email'
         value={email}
         error={touched.email && email === ''}
-        onBlur={e => dispatch(handleCustomerEmail(e.target.value))}
-        onChange={e => dispatch(handleCustomerEmail(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerEmail(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerEmail(e.target.value))}
       />
       <CssTextField
         type={showPassword ? 'text' : 'password'}
@@ -42,8 +72,8 @@ const AuthForm = () => {
         name='password'
         value={password}
         error={touched.password && password === ''}
-        onBlur={e => dispatch(handleCustomerPassword(e.target.value))}
-        onChange={e => dispatch(handleCustomerPassword(e.target.value))}
+        onBlur={(e) => dispatch(handleCustomerPassword(e.target.value))}
+        onChange={(e) => dispatch(handleCustomerPassword(e.target.value))}
         InputProps={{
           endAdornment: (
             <InputAdornment position='end'>
@@ -55,7 +85,7 @@ const AuthForm = () => {
                 {!showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
-          )
+          ),
         }}
       />
       <Button
@@ -64,10 +94,13 @@ const AuthForm = () => {
         variant='contained'
         size='large'
         className={classes.btn_auth}
+        startIcon={loading && <Spinner width='20px' height='20px' />}
         disabled={email === '' || password === ''}
       >
         Войти
       </Button>
+      {/* <div>{validated.email === false && 'ERROR EMAIL'}</div> */}
+      {/* <div>{errorLabel}</div> */}
     </form>
   );
 };

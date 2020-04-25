@@ -1,19 +1,26 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { Topbar } from '../../../components';
-import { Container, Grid, Typography } from '@material-ui/core';
-import AuthForm from './components/authForm';
-import { useStyles } from '../style';
+// import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Container, Grid, Typography } from '@material-ui/core';
+import withApollo from '../../../hoc/withApollo';
+import { Topbar, Statuses } from '../../../components';
+import AuthForm from './components/authForm';
+import { routes } from '../../../constants';
+import { useStyles } from '../style';
 
 const SignIn = () => {
   const classes = useStyles();
-  const signInState = useSelector(state => state.signIn);
+  const signInState = useSelector((state) => state.signIn);
   const { isLoggedIn } = signInState;
 
   if (isLoggedIn) {
-    return <Redirect to='/intro' />;
+    window.location.href = `${window.location.protocol}//${
+      window.location.hostname
+    }${window.location.port ? `:${window.location.port}` : ''}${
+      routes.company
+    }`;
   }
+
   return (
     <>
       <Topbar />
@@ -25,8 +32,9 @@ const SignIn = () => {
           <AuthForm />
         </Grid>
       </Container>
+      <Statuses type='signIn' />
     </>
   );
 };
 
-export default SignIn;
+export default withApollo(SignIn);
