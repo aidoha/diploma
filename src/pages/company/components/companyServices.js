@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Typography, Box, Link } from '@material-ui/core';
+import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import { Loader, Statuses } from '../../../components';
 import ServiceItem from './serviceItem';
@@ -11,8 +11,6 @@ import {
 } from '../../../redux/company/actions';
 import { useStyles } from '../style';
 
-const { service } = routes;
-
 const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -20,6 +18,14 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
   const { companyServices } = companyState;
   const services =
     companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
+
+  const redirectToAddService = () => {
+    window.location.href = `${window.location.protocol}//${
+      window.location.hostname
+    }${window.location.port ? `:${window.location.port}` : ''}${
+      routes.service.add
+    }`;
+  };
 
   useEffect(() => {
     if (services) {
@@ -57,7 +63,18 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
         </Typography>
       </Grid>
 
-      <Link href={service.add} style={{ display: 'flex' }}>
+      <Grid
+        item
+        container
+        justify='flex-end'
+        alignItems='center'
+        lg={6}
+        md={6}
+        xs={12}
+        spacing={1}
+        className={classes.company_services__add}
+        onClick={redirectToAddService}
+      >
         <Grid item>
           <AddCircle className={classes.add_icon} />
         </Grid>
@@ -68,7 +85,7 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
             </Box>
           </Typography>
         </Grid>
-      </Link>
+      </Grid>
 
       <Grid container justify='space-between' alignItems='center'>
         {companyServices &&
