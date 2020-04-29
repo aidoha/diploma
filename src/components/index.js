@@ -6,6 +6,7 @@ import CompanyHeader from './headers/companyHeader';
 import ServiceHeader from './headers/serviceHeader';
 import Loader from './loader';
 import Statuses from './statuses';
+import InputField from './input-field';
 
 export {
   Topbar,
@@ -16,4 +17,5 @@ export {
   ServiceHeader,
   Loader,
   Statuses,
+  InputField,
 };

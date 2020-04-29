@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { MainLayout } from '../../components';
 import CompanyPreview from './components/companyPreview';
 import CompanyServices from './components/companyServices';
+import CompanyView from './components/companyView';
 import { GET_BUSINESS_COMPANY, GET_BUSINESS_COMPANY_SERVICES } from './queries';
 import withCurrentUser from '../../hoc/currentUser';
 import withApollo from '../../hoc/withApollo';
@@ -30,9 +31,10 @@ const Company = (props) => {
   return (
     <MainLayout padding='25px' section='company'>
       <CompanyPreview
-        companyData={companyData && companyData}
+        companyData={companyData}
         companyLoading={companyLoading}
         companyServicesData={companyServicesData}
+        businessCompanyID={businessCompanyID}
       />
       <CompanyServices
         companyServicesData={companyServicesData}

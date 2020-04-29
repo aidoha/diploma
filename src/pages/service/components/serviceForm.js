@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Box, InputAdornment, Button } from '@material-ui/core';
 import withCurrentUser from '../../../hoc/currentUser';
-import ServiceTextField from './serviceTextField';
+import { InputField } from '../../../components';
 import ServiceSelect from './serviceSelect';
 import DialogBusiness from './businessDialog';
 import {
@@ -199,7 +199,7 @@ const ServiceForm = (props) => {
           Информация о вашей услуге
         </Box>
         <Box margin='35px 0'>
-          <ServiceTextField
+          <InputField
             label='Название услуги*'
             name='service-name'
             placeholder='Например, Моя услуга'
@@ -220,7 +220,7 @@ const ServiceForm = (props) => {
             value={business_ids.service}
             onChange={onChangeServices}
           />
-          <ServiceTextField
+          <InputField
             label='Описание услуги'
             name='service-description'
             placeholder='Добавьте важную и полезную информацию о вашей услуге'
@@ -228,7 +228,7 @@ const ServiceForm = (props) => {
             value={description}
             onChange={onChangeTextField}
           />
-          <ServiceTextField
+          <InputField
             label='Продолжительность услуги*'
             name='service-duration'
             placeholder='Например, 50 мин'
@@ -236,7 +236,7 @@ const ServiceForm = (props) => {
             onChange={onChangeTextField}
             inputProps={<InputAdornment position='end'>мин</InputAdornment>}
           />
-          <ServiceTextField
+          <InputField
             type='number'
             label='Стоимость услуги*'
             name='service-price'

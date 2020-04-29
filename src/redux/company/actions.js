@@ -6,14 +6,12 @@ export const handleCompanyServices = (companyServices = []) => {
     payload: companyServices,
   };
 };
-
 export const handleDeleteCompanyService = (service = {}) => {
   return {
     type: DELETE_COMPANY_SERVICE,
     payload: service,
   };
 };
-
 export const handleResetCompanyServices = () => {
   return {
     type: RESET,

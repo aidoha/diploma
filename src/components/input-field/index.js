@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, FormControl } from '@material-ui/core';
-import { CssTextField } from '../../../globalStyle';
+import { CssTextField } from '../../globalStyle';
 
-const ServiceTextField = ({
+const InputTextField = ({
   label = '',
   name = '',
   placeholder = '',
@@ -35,4 +35,4 @@ const ServiceTextField = ({
   );
 };
 
-export default ServiceTextField;
+export default InputTextField;

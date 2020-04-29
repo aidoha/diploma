@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import { SignIn, Main, SignUp, Company, Service } from './pages';
+import CompanyView from './pages/company/components/companyView';
 import { useSelector } from 'react-redux';
 
 export default withRouter(() => {
@@ -20,6 +21,7 @@ export default withRouter(() => {
       <Route path='/signin' exact component={SignIn} />
       <Route path='/signup' exact component={SignUp} />
       <PrivateRoute path='/company' exact Component={Company} />
+      <PrivateRoute path='/company/edit/:id' exact Component={CompanyView} />
       <PrivateRoute path='/service/:slug/:id?' Component={Service} />
       {/* <PrivateRoute path='/intro' exact Component={Intro} /> */}
     </Switch>

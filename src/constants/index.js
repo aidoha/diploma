@@ -27,6 +27,7 @@ export const routes = {
   signIn: '/signin',
   signUp: '/signup',
   company: '/company',
+  companyView: '/company/edit',
   service: {
     add: '/service/add',
     edit: '/service/edit',

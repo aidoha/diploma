@@ -1,14 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { useStyles } from '../style';
+import { routes } from '../../../constants';
 
 const CompanyPreview = ({
   companyData,
   companyLoading,
   companyServicesData,
+  businessCompanyID,
 }) => {
   const classes = useStyles();
+  const { push } = useHistory();
   const businessCompanyService =
     companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
 
@@ -36,7 +40,10 @@ const CompanyPreview = ({
           <Skeleton variant='rect' width={110} height={110} animation='wave' />
         </Grid>
         <Grid item>
-          <Typography variant='h3'>
+          <Typography
+            variant='h3'
+            onClick={() => push(`${routes.companyView}/${businessCompanyID}`)}
+          >
             <Box fontSize={20} fontWeight={600}>
               {companyName}
             </Box>
