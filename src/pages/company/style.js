@@ -33,9 +33,6 @@ export const useStyles = makeStyles({
     width: '24px',
     height: '24px',
   },
-  service_items_list: {
-    flexGrow: 1,
-  },
   service_item: {
     background: '#fff',
     padding: '25px',
@@ -59,5 +56,24 @@ export const useStyles = makeStyles({
     '&:hover': {
       color: '#8282ff',
     },
+  },
+  textfield: {
+    '& input::-webkit-clear-button, & input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+  },
+  btn_save_time: {
+    backgroundColor: '#8282ff',
+    borderColor: '#8282ff',
+    textShadow: '0 -1px 0 rgba(0,0,0,.12)',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#7654ff',
+    },
+  },
+  btn_save_time_oulined: {
+    border: '1px solid #8282ff',
+    textShadow: '0 -1px 0 rgba(0,0,0,.12)',
+    color: '#8282ff',
   },
 });

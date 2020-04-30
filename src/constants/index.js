@@ -13,15 +13,16 @@ export const getSteps = () => {
 };
 export const getWeekDays = () => {
   return [
-    { day: 'Пн' },
-    { day: 'Вт' },
-    { day: 'Ср' },
-    { day: 'Чт' },
-    { day: 'Пт' },
-    { day: 'Сб' },
-    { day: 'Вс' },
+    { day: 'Пн', id: 1 },
+    { day: 'Вт', id: 2 },
+    { day: 'Ср', id: 3 },
+    { day: 'Чт', id: 4 },
+    { day: 'Пт', id: 5 },
+    { day: 'Сб', id: 6 },
+    { day: 'Вс', id: 0 },
   ];
 };
+
 export const routes = {
   main: '/',
   signIn: '/signin',
@@ -40,6 +41,13 @@ export const errors = {
       text:
         'Error: GraphQL error: rpc error: code = Unknown desc = no rows in result set',
       label: 'Ваш email не зарегистрирован',
+    },
+  },
+  company: {
+    operation_hours: {
+      general: 'Упс... Что-то пошло не так',
+      empty_field: 'Заполните все поля',
+      exists: 'Этот день уже существует',
     },
   },
 };

@@ -15,6 +15,7 @@ const Statuses = ({ type }) => {
   const serviceState = useSelector((state) => state.service);
   const signUpState = useSelector((state) => state.signUp);
   const signInState = useSelector((state) => state.signIn);
+  const companyScheduleState = useSelector((state) => state.companySchedule);
   const dispatch = useDispatch();
 
   const statusHandler = (status) => {
@@ -52,6 +53,7 @@ const Statuses = ({ type }) => {
       case 'errorAuth':
         dispatch(handleAuthError(!signUpState.statuses.error.value));
         break;
+      // company schedule handlers
 
       default:
         return 'No such action';
@@ -86,6 +88,19 @@ const Statuses = ({ type }) => {
     ));
   } else if (type === 'signIn') {
     return Object.values(signInState.statuses).map((item, index) => (
+      <Snackbar
+        key={index}
+        open={item.value}
+        autoHideDuration={item.autoHideDuration}
+        onClose={() => statusHandler(item.label)}
+      >
+        <Alert onClose={() => statusHandler(item.label)} severity={item.text}>
+          {item.message}
+        </Alert>
+      </Snackbar>
+    ));
+  } else if (type === 'companySchedule') {
+    return Object.values(companyScheduleState.statuses).map((item, index) => (
       <Snackbar
         key={index}
         open={item.value}
