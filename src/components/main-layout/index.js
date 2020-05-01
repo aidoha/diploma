@@ -21,14 +21,14 @@ const useStyles = makeStyles({
 
 const MainLayout = (props) => {
   const classes = useStyles(props);
-  const { section } = props;
+  const { section, hasBackArrow } = props;
   return (
     <div className={classes.root}>
       <div className={classes.main_menu}>
         <MainMenu />
       </div>
       <div className={classes.main}>
-        {section === 'company' && <CompanyHeader />}
+        {section === 'company' && <CompanyHeader hasBackArrow={hasBackArrow} />}
         <div className={classes.content}>{props.children}</div>
       </div>
     </div>

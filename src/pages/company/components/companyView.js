@@ -211,7 +211,7 @@ const CompanyView = memo((props) => {
   };
 
   return (
-    <MainLayout padding='25px' section='company'>
+    <MainLayout padding='25px' section='company' hasBackArrow>
       {companyLoading || companyOperationHoursLoading ? (
         <Loader />
       ) : (
