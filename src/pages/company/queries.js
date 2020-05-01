@@ -48,7 +48,7 @@ export const GET_COMPANY_OPERTATION_HOURS = gql`
   }
 `;
 
-export const CREACTE_COMPANY_OPERTATION_HOURS = gql`
+export const CREATE_COMPANY_OPERTATION_HOURS = gql`
   mutation createBusinessCompanyOperationHours(
     $businessCompanyID: Int!
     $dayOfWeek: Int!
@@ -62,6 +62,42 @@ export const CREACTE_COMPANY_OPERTATION_HOURS = gql`
         openTime: $openTime
         closeTime: $closeTime
       }
+    ) {
+      businessCompanyOperationHour {
+        companyOperationHourID
+      }
+    }
+  }
+`;
+
+export const UPDATE_COMPANY_OPERATION_HOURS = gql`
+  mutation updateBusinessCompanyOperationHours(
+    $companyOperationHourID: ID!
+    $businessCompanyID: Int!
+    $dayOfWeek: Int!
+    $openTime: String!
+    $closeTime: String!
+  ) {
+    updateBusinessCompanyOperationHours(
+      input: {
+        companyOperationHourID: $companyOperationHourID
+        businessCompanyID: $businessCompanyID
+        dayOfWeek: $dayOfWeek
+        openTime: $openTime
+        closeTime: $closeTime
+      }
+    ) {
+      businessCompanyOperationHour {
+        companyOperationHourID
+      }
+    }
+  }
+`;
+
+export const DELETE_COMPANY_OPERATION_HOURS = gql`
+  mutation deleteBusinessCompanyOperationHours($companyOperationHourID: Int!) {
+    deleteBusinessCompanyOperationHours(
+      input: { companyOperationHourID: $companyOperationHourID }
     ) {
       businessCompanyOperationHour {
         companyOperationHourID

@@ -2,8 +2,10 @@ import {
   UPDATE_START_TIME,
   UPDATE_FINISH_TIME,
   UPDATE_WEEK,
-  ADD_DAY,
   UPDATE_SELECTED_DAY,
+  ADD_DAY,
+  EDIT_DAY,
+  DELETE_DAY,
 } from './types';
 
 //Timetable
@@ -16,6 +18,18 @@ export const handleWeekArray = (week = []) => {
 export const handleAddDay = (day = {}) => {
   return {
     type: ADD_DAY,
+    payload: day,
+  };
+};
+export const handleEditDay = (day = {}) => {
+  return {
+    type: EDIT_DAY,
+    payload: day,
+  };
+};
+export const handleDeleteDay = (day = {}) => {
+  return {
+    type: DELETE_DAY,
     payload: day,
   };
 };

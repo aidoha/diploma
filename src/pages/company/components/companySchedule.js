@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -7,7 +7,11 @@ import {
   Button,
   Select,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from '@material-ui/core';
+import { Edit, Delete, Bookmark } from '@material-ui/icons';
 import {
   handleStartTime,
   handleFinishTime,
@@ -16,11 +20,22 @@ import {
 import { getDayOfWeekById } from '../../../utils';
 import { useStyles } from '../style';
 
-const CompanySchedule = ({ item, addCompanyTimes }) => {
+const CompanySchedule = ({
+  item,
+  addCompanyTimes,
+  editCompanyTimes,
+  deleteCompanyTimes,
+  editDayOfWeek,
+}) => {
   const classes = useStyles();
-  const { openTime, closeTime, dayOfWeek, added } = item;
+  const { openTime, closeTime, dayOfWeek, added, edited } = item;
   const dispatch = useDispatch();
   const scheduleState = useSelector((state) => state.companySchedule);
+  const [confirmModal, setConfirmModal] = useState(false);
+
+  const handleConfirmModal = () => {
+    setConfirmModal(!confirmModal);
+  };
 
   const onChangeStartTime = (day, value) => {
     dispatch(handleStartTime(day, value));
@@ -69,6 +84,7 @@ const CompanySchedule = ({ item, addCompanyTimes }) => {
             value={openTime}
             onChange={(e) => onChangeStartTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
+            disabled={!edited}
           />
           -
           <TextField
@@ -78,10 +94,34 @@ const CompanySchedule = ({ item, addCompanyTimes }) => {
             value={closeTime}
             onChange={(e) => onChangeFinishTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
+            disabled={!edited}
           />
         </Box>
-        {added && (
-          <Box width='35%' display='flex' justifyContent='center'>
+        <Box width='35%' display='flex' justifyContent='center'>
+          {!added && (
+            <div>
+              {edited && (
+                <Bookmark
+                  color='action'
+                  className={classes.service_item_actions}
+                  onClick={() => editCompanyTimes(item)}
+                />
+              )}
+              {!edited && (
+                <Edit
+                  color='action'
+                  className={classes.service_item_actions}
+                  onClick={() => editDayOfWeek(item)}
+                />
+              )}
+              <Delete
+                color='action'
+                className={classes.service_item_actions}
+                onClick={handleConfirmModal}
+              />
+            </div>
+          )}
+          {added && (
             <Button
               variant='contained'
               size='large'
@@ -90,9 +130,22 @@ const CompanySchedule = ({ item, addCompanyTimes }) => {
             >
               Сохранить
             </Button>
-          </Box>
-        )}
+          )}
+        </Box>
       </Grid>
+      <Dialog open={confirmModal} onClose={handleConfirmModal}>
+        <DialogTitle>
+          Вы действительно хотите удалить этот рабочий день?
+        </DialogTitle>
+        <DialogActions>
+          <Button color='default' onClick={handleConfirmModal}>
+            Отменить
+          </Button>
+          <Button color='primary' onClick={() => deleteCompanyTimes(item)}>
+            Удалить
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

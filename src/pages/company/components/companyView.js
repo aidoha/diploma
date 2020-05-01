@@ -8,12 +8,16 @@ import withCurrentUser from '../../../hoc/currentUser';
 import withApollo from '../../../hoc/withApollo';
 import {
   GET_BUSINESS_COMPANY,
-  CREACTE_COMPANY_OPERTATION_HOURS,
+  CREATE_COMPANY_OPERTATION_HOURS,
   GET_COMPANY_OPERTATION_HOURS,
+  UPDATE_COMPANY_OPERATION_HOURS,
+  DELETE_COMPANY_OPERATION_HOURS,
 } from '../queries';
 import {
   handleWeekArray,
   handleAddDay,
+  handleEditDay,
+  handleDeleteDay,
 } from '../../../redux/companySchedule/actions';
 import {
   handleErrorStatus,
@@ -45,8 +49,14 @@ const CompanyView = memo((props) => {
   } = useQuery(GET_COMPANY_OPERTATION_HOURS, {
     variables: { businessCompanyID },
   });
-  const [createServiceOperationHours] = useMutation(
-    CREACTE_COMPANY_OPERTATION_HOURS
+  const [createCompanyOperationHours] = useMutation(
+    CREATE_COMPANY_OPERTATION_HOURS
+  );
+  const [updateCompanyOperationHours] = useMutation(
+    UPDATE_COMPANY_OPERATION_HOURS
+  );
+  const [deleteCompanyOperationHours] = useMutation(
+    DELETE_COMPANY_OPERATION_HOURS
   );
 
   useEffect(() => {
@@ -66,6 +76,10 @@ const CompanyView = memo((props) => {
     setCompanyName(value);
   };
 
+  const findDayInWeek = (day) => {
+    return scheduleState.week.find((item) => item === day);
+  };
+
   const addDayToWeek = () => {
     const addedEmptyDay = {
       dayOfWeek: null,
@@ -74,6 +88,75 @@ const CompanyView = memo((props) => {
       added: true,
     };
     dispatch(handleAddDay(addedEmptyDay));
+  };
+
+  const editDayOfWeek = (day) => {
+    const objDay = findDayInWeek(day);
+    dispatch(handleEditDay(objDay));
+  };
+
+  const deleteCompanyTimes = (day) => {
+    const objDay = findDayInWeek(day);
+
+    deleteCompanyOperationHours({
+      variables: { companyOperationHourID: objDay.companyOperationHourID },
+    })
+      .then((res) => {
+        if (res.data) {
+          dispatch(
+            handleSuccessStatus({
+              value: true,
+              message: succeses.company.operation_hours.delete,
+            })
+          );
+          dispatch(handleDeleteDay(objDay));
+        }
+      })
+      .catch(() =>
+        dispatch(
+          handleErrorStatus({
+            value: true,
+            message: errors.general,
+          })
+        )
+      );
+  };
+
+  const editCompanyTimes = (day) => {
+    const objDay = findDayInWeek(day);
+    const obj = { ...objDay, businessCompanyID };
+    delete obj.edited;
+    delete obj.__typename;
+    delete objDay.edited;
+
+    if (!obj.dayOfWeek || !obj.openTime || !obj.closeTime) {
+      dispatch(
+        handleErrorStatus({
+          value: true,
+          message: errors.company.operation_hours.empty_field,
+        })
+      );
+    } else {
+      updateCompanyOperationHours({ variables: obj })
+        .then((res) => {
+          if (res.data) {
+            dispatch(
+              handleSuccessStatus({
+                value: true,
+                message: succeses.company.operation_hours.edit,
+              })
+            );
+          }
+        })
+        .catch(() =>
+          dispatch(
+            handleErrorStatus({
+              value: true,
+              message: errors.general,
+            })
+          )
+        );
+    }
   };
 
   const addCompanyTimes = (item) => {
@@ -102,7 +185,7 @@ const CompanyView = memo((props) => {
         })
       );
     } else {
-      createServiceOperationHours({ variables: obj })
+      createCompanyOperationHours({ variables: obj })
         .then((res) => {
           if (res.data) {
             dispatch(
@@ -152,17 +235,22 @@ const CompanyView = memo((props) => {
               key={item.dayOfWeek}
               item={item}
               addCompanyTimes={addCompanyTimes}
+              editCompanyTimes={editCompanyTimes}
+              deleteCompanyTimes={deleteCompanyTimes}
+              editDayOfWeek={editDayOfWeek}
             />
           ))}
-          <Grid container item lg={4} md={4} xs={12}>
-            <Button
-              size='large'
-              onClick={addDayToWeek}
-              className={classes.btn_save_time_oulined}
-            >
-              Добавить
-            </Button>
-          </Grid>
+          {scheduleState.week.length < 7 && (
+            <Grid container item lg={4} md={4} xs={12}>
+              <Button
+                size='large'
+                onClick={addDayToWeek}
+                className={classes.btn_save_time_oulined}
+              >
+                Добавить
+              </Button>
+            </Grid>
+          )}
         </Grid>
       )}
       <Statuses />

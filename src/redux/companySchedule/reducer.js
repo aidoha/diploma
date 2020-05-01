@@ -2,8 +2,10 @@ import {
   UPDATE_WEEK,
   UPDATE_START_TIME,
   UPDATE_FINISH_TIME,
-  ADD_DAY,
   UPDATE_SELECTED_DAY,
+  ADD_DAY,
+  EDIT_DAY,
+  DELETE_DAY,
 } from './types';
 import { getWeekDays } from '../../constants';
 
@@ -24,6 +26,26 @@ const scheduleReducer = (state = intialState, action) => {
       return {
         ...state,
         week: [...state.week, action.payload],
+      };
+    case EDIT_DAY:
+      return {
+        ...state,
+        week: [
+          ...state.week.map((item) => {
+            if (item === action.payload) {
+              return {
+                ...item,
+                edited: true,
+              };
+            }
+            return item;
+          }),
+        ],
+      };
+    case DELETE_DAY:
+      return {
+        ...state,
+        week: [...state.week.filter((item) => item !== action.payload)],
       };
     case UPDATE_SELECTED_DAY:
       return {
