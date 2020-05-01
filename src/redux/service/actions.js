@@ -7,10 +7,6 @@ import {
   UPDATE_PRICE,
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SERVICE_ID,
-  SERVICE_ERROR,
-  SERVICE_SAVE_SUCCESS,
-  SERVICE_EDIT_SUCCESS,
-  SERVICE_DELETE_SUCCESS,
   UPDATE_SUBCATEGORY_IDS,
 } from './types';
 
@@ -66,29 +62,5 @@ export const handleServiceId = (id = 0) => {
   return {
     type: UPDATE_SERVICE_ID,
     payload: id,
-  };
-};
-export const handleError = (error = false) => {
-  return {
-    type: SERVICE_ERROR,
-    payload: error,
-  };
-};
-export const handleSaveSuccess = (success = false) => {
-  return {
-    type: SERVICE_SAVE_SUCCESS,
-    payload: success,
-  };
-};
-export const handleEditSuccess = (success = false) => {
-  return {
-    type: SERVICE_EDIT_SUCCESS,
-    payload: success,
-  };
-};
-export const handleDeleteSuccess = (success = false) => {
-  return {
-    type: SERVICE_DELETE_SUCCESS,
-    payload: success,
   };
 };

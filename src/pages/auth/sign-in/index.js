@@ -32,7 +32,7 @@ const SignIn = () => {
           <AuthForm />
         </Grid>
       </Container>
-      <Statuses type='signIn' />
+      <Statuses />
     </>
   );
 };

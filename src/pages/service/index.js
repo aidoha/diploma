@@ -9,7 +9,7 @@ const Service = () => {
     <MainLayout padding='0'>
       <ServiceHeader />
       <ServiceDetail />
-      <Statuses type='service' />
+      <Statuses />
     </MainLayout>
   );
 };

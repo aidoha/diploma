@@ -8,10 +8,6 @@ import {
   UPDATE_SUBCATEGORY_ID,
   UPDATE_SUBCATEGORY_IDS,
   UPDATE_SERVICE_ID,
-  SERVICE_ERROR,
-  SERVICE_SAVE_SUCCESS,
-  SERVICE_EDIT_SUCCESS,
-  SERVICE_DELETE_SUCCESS,
 } from './types';
 
 const intialState = {
@@ -25,36 +21,6 @@ const intialState = {
     service: 0,
     subcategory: 0,
     subcategories: [],
-  },
-  statuses: {
-    error: {
-      value: false,
-      text: 'error',
-      label: 'errorService',
-      autoHideDuration: 6000,
-      message: 'Упс... Что-то пошло не так',
-    },
-    save: {
-      value: false,
-      text: 'success',
-      label: 'saveService',
-      autoHideDuration: 6000,
-      message: 'Вы успешно создали услугу!',
-    },
-    edit: {
-      value: false,
-      text: 'success',
-      label: 'editService',
-      autoHideDuration: 6000,
-      message: 'Вы успешно редактировали свою услугу!',
-    },
-    delete: {
-      value: false,
-      text: 'success',
-      label: 'deleteService',
-      autoHideDuration: 6000,
-      message: 'Вы успешно удалили услугу!',
-    },
   },
 };
 
@@ -113,50 +79,6 @@ const reducer = (state = intialState, action) => {
         business_ids: {
           ...state.business_ids,
           subcategories: payload,
-        },
-      };
-    case SERVICE_ERROR:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          error: {
-            ...state.statuses.error,
-            value: payload,
-          },
-        },
-      };
-    case SERVICE_SAVE_SUCCESS:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          save: {
-            ...state.statuses.save,
-            value: payload,
-          },
-        },
-      };
-    case SERVICE_EDIT_SUCCESS:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          edit: {
-            ...state.statuses.edit,
-            value: payload,
-          },
-        },
-      };
-    case SERVICE_DELETE_SUCCESS:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          delete: {
-            ...state.statuses.delete,
-            value: payload,
-          },
         },
       };
     default:

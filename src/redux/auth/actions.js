@@ -11,17 +11,8 @@ import {
   SHOW_PASSWORD,
   SET_AUTHORIZED,
   LOGOUT,
-  AUTH_ERROR,
-  COMPANY_SAVE_SUCCESS,
   VALIDATE_EMAIL,
 } from './types';
-
-export const handleAuthError = (error = false) => {
-  return {
-    type: AUTH_ERROR,
-    payload: error,
-  };
-};
 
 //FIRST STEP
 export const handleCompanyName = (companyName = '') => {
@@ -54,12 +45,6 @@ export const handleBusinessCategory = (
 export const handleSteps = () => {
   return {
     type: HIDE_FIRST_STEP,
-  };
-};
-export const handleCompanySuccess = (success = false) => {
-  return {
-    type: COMPANY_SAVE_SUCCESS,
-    payload: success,
   };
 };
 

@@ -12,8 +12,12 @@ import {
 import { Edit, Delete } from '@material-ui/icons';
 import { routes } from '../../../constants';
 import { handleDeleteCompanyService } from '../../../redux/company/actions';
-import { handleServiceDeleteSuccess, handleServiceError } from '../../../redux';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../redux/statuses/actions';
 import { DELETE_COMPANY_SERVICE } from '../queries';
+import { errors, succeses } from '../../../constants/statuses';
 import { useStyles } from '../style';
 
 const ServiceItem = ({ item }) => {
@@ -37,10 +41,17 @@ const ServiceItem = ({ item }) => {
       .then((res) => {
         if (res.data) {
           dispatch(handleDeleteCompanyService(item));
-          dispatch(handleServiceDeleteSuccess(true));
+          dispatch(
+            handleSuccessStatus({
+              value: true,
+              message: succeses.service.delete,
+            })
+          );
         }
       })
-      .catch(() => dispatch(handleServiceError(true)));
+      .catch(() =>
+        dispatch(handleErrorStatus({ value: true, message: errors.general }))
+      );
   };
 
   return (

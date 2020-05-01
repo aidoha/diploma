@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Box, InputAdornment, Button } from '@material-ui/core';
@@ -8,7 +8,7 @@ import { InputField } from '../../../components';
 import ServiceSelect from './serviceSelect';
 import DialogBusiness from './businessDialog';
 import {
-  handleName,
+  handleServiceName,
   handleSubcategories,
   handleServices,
   handleDescription,
@@ -16,10 +16,11 @@ import {
   handlePrice,
   handleSubcategoryId,
   handleServiceId,
-  handleServiceError,
-  handleServiceSaveSuccess,
-  handleServiceEditSuccess,
-} from '../../../redux';
+} from '../../../redux/service/actions';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../redux/statuses/actions';
 import {
   GET_BUSINESS_SUBCATEGORIES_UNDER_CATEGORY,
   GET_BUSINESS_SERVICES_UNDER_SUBCATEGORY,
@@ -29,17 +30,14 @@ import {
 } from '../queries';
 import { routes } from '../../../constants';
 import { useStyles } from '../style';
+import { errors, succeses } from '../../../constants/statuses';
 
 const ServiceForm = (props) => {
   const businessCategoryID = props?.currentUser[0]?.businessCompanyCategoryID;
   const businessCompanyID = props?.currentUser[0]?.businessCompanyID;
   const classes = useStyles();
   const { slug, id } = useParams();
-  const { push } = useHistory();
   const [dialogBusiness, setDialogBusiness] = useState(false);
-  const handleDialogBusiness = () => {
-    setDialogBusiness(!dialogBusiness);
-  };
   const serviceState = useSelector((state) => state.service);
   const {
     name,
@@ -74,7 +72,7 @@ const ServiceForm = (props) => {
   const onChangeTextField = (name, value) => {
     switch (name) {
       case 'service-name':
-        dispatch(handleName(value));
+        dispatch(handleServiceName(value));
         break;
       case 'service-description':
         dispatch(handleDescription(value));
@@ -88,6 +86,10 @@ const ServiceForm = (props) => {
       default:
         return null;
     }
+  };
+
+  const handleDialogBusiness = () => {
+    setDialogBusiness(!dialogBusiness);
   };
 
   const onChangeSubcategories = (e) => {
@@ -121,27 +123,45 @@ const ServiceForm = (props) => {
     };
 
     if (!name || !duration || !price || !business_ids.service) {
-      dispatch(handleServiceError(true));
+      dispatch(handleErrorStatus({ value: true, message: errors.general }));
     } else {
       if (slug === 'add') {
         createCompanyService({ variables: obj })
           .then((res) => {
             if (res.data) {
-              dispatch(handleServiceSaveSuccess(true));
+              dispatch(
+                handleSuccessStatus({
+                  value: true,
+                  message: succeses.service.add,
+                })
+              );
               redirectToCompany();
             }
           })
-          .catch(() => dispatch(handleServiceError(true)));
+          .catch(() =>
+            dispatch(
+              handleErrorStatus({ value: true, message: errors.general })
+            )
+          );
       } else if (slug === 'edit') {
         obj.companyServiceID = serviceData?.getCompanyService?.companyServiceID;
         updateCompanyService({ variables: obj })
           .then((res) => {
             if (res.data) {
-              dispatch(handleServiceEditSuccess(true));
+              dispatch(
+                handleSuccessStatus({
+                  value: true,
+                  message: succeses.service.edit,
+                })
+              );
               redirectToCompany();
             }
           })
-          .catch(() => dispatch(handleServiceError(true)));
+          .catch(() =>
+            dispatch(
+              handleErrorStatus({ value: true, message: errors.general })
+            )
+          );
       }
     }
   };
@@ -174,7 +194,7 @@ const ServiceForm = (props) => {
         companyServiceDuration,
         companyServicePrice,
       } = newServiceData;
-      dispatch(handleName(companyServiceName));
+      dispatch(handleServiceName(companyServiceName));
       dispatch(handleDuration(companyServiceDuration));
       dispatch(handlePrice(companyServicePrice));
     }

@@ -8,13 +8,16 @@ import {
   handleBusinessCategory,
   handleSteps,
   handleBusinessCategories,
-  handleAuthError,
-  handleCompanySuccess,
 } from '../../../../redux/auth/actions';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../../redux/statuses/actions';
 import {
   GET_BUSINESS_CATEGORIES,
   CREATE_BUSINESS_COMPANY,
 } from '../../queries';
+import { errors, succeses } from '../../../../constants/statuses';
 import { useStyles } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
 
@@ -47,10 +50,17 @@ const FirstStep = () => {
         dispatch(
           handleCompanyId(res.data.createBusinessCompany.businessCompanyID)
         );
-        dispatch(handleCompanySuccess(true));
+        dispatch(
+          handleSuccessStatus({
+            value: true,
+            message: succeses.auth.create_company,
+          })
+        );
         dispatch(handleSteps());
       })
-      .catch(() => dispatch(handleAuthError(true)));
+      .catch(() =>
+        dispatch(handleErrorStatus({ value: true, message: errors.general }))
+      );
   };
 
   const onChangeCompanyName = (value) => {

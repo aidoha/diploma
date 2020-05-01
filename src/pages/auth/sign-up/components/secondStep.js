@@ -9,14 +9,16 @@ import {
   handleCustomerName,
   handlePasswordVisibility,
   handleCustomerPhone,
-} from '../../../../redux';
-import {
-  handleAuthError,
   handleSetAuthorized,
 } from '../../../../redux/auth/actions';
+import {
+  handleSuccessStatus,
+  handleErrorStatus,
+} from '../../../../redux/statuses/actions';
 import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
+import { succeses, errors } from '../../../../constants/statuses';
 
 const SecondStep = () => {
   const classes = useStyles();
@@ -47,13 +49,21 @@ const SecondStep = () => {
       .then((res) => {
         if (res.data) {
           dispatch(handleSetAuthorized(true));
+          dispatch(
+            handleSuccessStatus({
+              value: true,
+              message: succeses.auth.registered,
+            })
+          );
           localStorage.setItem(
             'isLoggedIn',
             res.data.createBusinessOwner.token.accessToken
           );
         }
       })
-      .catch(() => dispatch(handleAuthError(true)));
+      .catch(() =>
+        dispatch(handleErrorStatus({ value: true, message: errors.general }))
+      );
   };
 
   // if (error) {

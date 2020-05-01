@@ -14,7 +14,12 @@ import {
 import {
   handleWeekArray,
   handleAddDay,
-} from '../../../redux/compnaySchedule/actions';
+} from '../../../redux/companySchedule/actions';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../redux/statuses/actions';
+import { errors, succeses } from '../../../constants/statuses';
 import { useStyles } from '../style';
 
 const CompanyView = memo((props) => {
@@ -62,17 +67,16 @@ const CompanyView = memo((props) => {
   };
 
   const addDayToWeek = () => {
-    dispatch(
-      handleAddDay({
-        dayOfWeek: '',
-        openTime: '08:00',
-        closeTime: '13:00',
-        added: true,
-      })
-    );
+    const addedEmptyDay = {
+      dayOfWeek: null,
+      openTime: '',
+      closeTime: '',
+      added: true,
+    };
+    dispatch(handleAddDay(addedEmptyDay));
   };
 
-  const saveServiceTimes = (item) => {
+  const addCompanyTimes = (item) => {
     const obj = {
       businessCompanyID,
       dayOfWeek: scheduleState.selectedDay,
@@ -84,13 +88,42 @@ const CompanyView = memo((props) => {
       (item) => item.dayOfWeek === obj.dayOfWeek
     );
     if (existDay) {
-      console.log('IDI NAHUI UJE SEWESTVUET');
+      dispatch(
+        handleErrorStatus({
+          value: true,
+          message: errors.company.operation_hours.exists,
+        })
+      );
     } else if (!obj.dayOfWeek || !obj.openTime || !obj.closeTime) {
-      console.log('че то пусто блять');
+      dispatch(
+        handleErrorStatus({
+          value: true,
+          message: errors.company.operation_hours.empty_field,
+        })
+      );
     } else {
       createServiceOperationHours({ variables: obj })
-        .then((res) => console.log('res', res))
-        .catch((err) => console.log('err', err));
+        .then((res) => {
+          if (res.data) {
+            dispatch(
+              handleSuccessStatus({
+                value: true,
+                message: succeses.company.operation_hours.add,
+              })
+            );
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+        })
+        .catch(() =>
+          dispatch(
+            handleErrorStatus({
+              value: true,
+              message: errors.general,
+            })
+          )
+        );
     }
   };
 
@@ -118,7 +151,7 @@ const CompanyView = memo((props) => {
             <CompanySchedule
               key={item.dayOfWeek}
               item={item}
-              saveServiceTimes={saveServiceTimes}
+              addCompanyTimes={addCompanyTimes}
             />
           ))}
           <Grid container item lg={4} md={4} xs={12}>
@@ -132,7 +165,7 @@ const CompanyView = memo((props) => {
           </Grid>
         </Grid>
       )}
-      <Statuses type='companySchedule' />
+      <Statuses />
     </MainLayout>
   );
 });

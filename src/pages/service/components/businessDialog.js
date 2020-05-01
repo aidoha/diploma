@@ -12,14 +12,18 @@ import {
   Select,
   Box,
   FormControl,
-  Checkbox,
+  // Checkbox,
 } from '@material-ui/core';
 import { CREATE_BUSINESS_SERVICE } from '../queries';
 import {
   handleServiceName,
   handleSubcategoryIds,
 } from '../../../redux/service/actions';
-import { handleServiceSaveSuccess, handleServiceError } from '../../../redux';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../redux/statuses/actions';
+import { errors, succeses } from '../../../constants/statuses';
 
 const BusinessDialog = ({
   dialogBusiness,
@@ -33,7 +37,7 @@ const BusinessDialog = ({
 
   const createBusinessServiceHandler = () => {
     if (!name || !business_ids.subcategories) {
-      dispatch(handleServiceError(true));
+      dispatch(handleErrorStatus({ value: true, message: errors.general }));
     } else {
       const obj = {
         businessServiceName: name,
@@ -42,11 +46,18 @@ const BusinessDialog = ({
       createBusinessService({ variables: obj })
         .then((res) => {
           if (res.data) {
-            dispatch(handleServiceSaveSuccess(true));
+            dispatch(
+              handleSuccessStatus({
+                value: true,
+                message: succeses.service.add,
+              })
+            );
             redirectToCompany();
           }
         })
-        .catch(() => dispatch(handleServiceError(true)));
+        .catch(() =>
+          dispatch(handleErrorStatus({ value: true, message: errors.general }))
+        );
     }
   };
 

@@ -93,7 +93,7 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
             <ServiceItem key={index} item={item} index={index} />
           ))}
       </Grid>
-      <Statuses type='service' />
+      <Statuses />
     </Grid>
   );
 };

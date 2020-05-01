@@ -8,14 +8,17 @@ import {
   handleCustomerPassword,
   handlePasswordVisibility,
   handleValidateEmail,
-  handleAuthError,
   handleSetAuthorized,
 } from '../../../../redux/auth/actions';
+import {
+  handleErrorStatus,
+  handleSuccessStatus,
+} from '../../../../redux/statuses/actions';
 import { GENERATE_TOKEN } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
 import { validateEmail } from '../../../../utils';
-// import { errors } from '../../../../constants';
+import { errors, succeses } from '../../../../constants/statuses';
 
 const AuthForm = () => {
   const classes = useStyles();
@@ -33,6 +36,12 @@ const AuthForm = () => {
         .then((res) => {
           if (res.data) {
             dispatch(handleSetAuthorized(true));
+            dispatch(
+              handleSuccessStatus({
+                value: true,
+                message: succeses.auth.authorized,
+              })
+            );
             localStorage.setItem(
               'isLoggedIn',
               res.data.generateToken.accessToken
@@ -40,7 +49,7 @@ const AuthForm = () => {
           }
         })
         .catch((err) => {
-          dispatch(handleAuthError(true));
+          dispatch(handleErrorStatus({ value: true, message: errors.general }));
           // if (err === errors.auth.no_such_email.text) {
           //   setErrorLabel(errors.auth.no_such_email.label);
           // }

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Topbar, Statuses } from '../../../components';
 import { Container, Grid, Typography } from '@material-ui/core';
@@ -20,7 +19,6 @@ const SignUp = () => {
     }${window.location.port ? `:${window.location.port}` : ''}${
       routes.company
     }`;
-    // return <Redirect to={routes.company} />;
   }
 
   return (
@@ -35,7 +33,7 @@ const SignUp = () => {
           {secondStep && <SecondStep />}
         </Grid>
       </Container>
-      <Statuses type='signUp' />
+      <Statuses />
     </>
   );
 };

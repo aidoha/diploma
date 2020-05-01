@@ -10,8 +10,6 @@ import {
   SHOW_PASSWORD,
   SET_AUTHORIZED,
   UPDATE_COMPANY_ID,
-  AUTH_ERROR,
-  COMPANY_SAVE_SUCCESS,
 } from './types';
 
 const initialState = {
@@ -35,43 +33,6 @@ const initialState = {
     email: false,
     password: false,
     phone: false,
-  },
-  statuses: {
-    error: {
-      value: false,
-      text: 'error',
-      label: 'errorAuth',
-      autoHideDuration: 6000,
-      message: 'Упс... Что-то пошло не так',
-    },
-    saveCompany: {
-      value: false,
-      text: 'success',
-      label: 'saveCompany',
-      autoHideDuration: 3000,
-      message: 'Вы успешно создали компанию!',
-    },
-    singUpSuccess: {
-      value: false,
-      text: 'success',
-      label: 'singUpSuccess',
-      autoHideDuration: 4000,
-      message: 'Вы успешно зарегистрировались!',
-    },
-    edit: {
-      value: false,
-      text: 'success',
-      label: 'edit',
-      autoHideDuration: 3000,
-      message: 'Вы успешно редактировали свою компанию!',
-    },
-    delete: {
-      value: false,
-      text: 'success',
-      label: 'delete',
-      autoHideDuration: 3000,
-      message: 'Вы успешно удалили компанию!',
-    },
   },
 };
 
@@ -157,35 +118,6 @@ const signUpReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        statuses: {
-          ...state.statuses,
-          singUpSuccess: {
-            ...state.statuses.singUpSuccess,
-            value: action.payload,
-          },
-        },
-      };
-    case AUTH_ERROR:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          error: {
-            ...state.statuses.error,
-            value: action.payload,
-          },
-        },
-      };
-    case COMPANY_SAVE_SUCCESS:
-      return {
-        ...state,
-        statuses: {
-          ...state.statuses,
-          saveCompany: {
-            ...state.statuses.saveCompany,
-            value: action.payload,
-          },
-        },
       };
     default:
       return state;

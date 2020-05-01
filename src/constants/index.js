@@ -35,23 +35,6 @@ export const routes = {
   },
 };
 
-export const errors = {
-  auth: {
-    no_such_email: {
-      text:
-        'Error: GraphQL error: rpc error: code = Unknown desc = no rows in result set',
-      label: 'Ваш email не зарегистрирован',
-    },
-  },
-  company: {
-    operation_hours: {
-      general: 'Упс... Что-то пошло не так',
-      empty_field: 'Заполните все поля',
-      exists: 'Этот день уже существует',
-    },
-  },
-};
-
 export const categoryBoxList = [
   {
     icon: <Beauty />,
