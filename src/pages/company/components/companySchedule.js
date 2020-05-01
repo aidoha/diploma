@@ -84,7 +84,7 @@ const CompanySchedule = ({
             value={openTime}
             onChange={(e) => onChangeStartTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
-            disabled={!edited}
+            disabled={!added && !edited}
           />
           -
           <TextField
@@ -94,7 +94,7 @@ const CompanySchedule = ({
             value={closeTime}
             onChange={(e) => onChangeFinishTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
-            disabled={!edited}
+            disabled={!added && !edited}
           />
         </Box>
         <Box width='35%' display='flex' justifyContent='center'>

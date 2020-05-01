@@ -127,7 +127,7 @@ const CompanyView = memo((props) => {
     delete obj.__typename;
     delete objDay.edited;
 
-    if (!obj.dayOfWeek || !obj.openTime || !obj.closeTime) {
+    if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
       dispatch(
         handleErrorStatus({
           value: true,
@@ -175,7 +175,7 @@ const CompanyView = memo((props) => {
           message: errors.company.operation_hours.exists,
         })
       );
-    } else if (!obj.dayOfWeek || !obj.openTime || !obj.closeTime) {
+    } else if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
       dispatch(
         handleErrorStatus({
           value: true,
