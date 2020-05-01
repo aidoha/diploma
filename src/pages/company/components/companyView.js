@@ -64,12 +64,10 @@ const CompanyView = memo((props) => {
   }, [companyData]);
 
   useEffect(() => {
-    dispatch(
-      handleWeekArray(
-        companyOperationHours?.getBusinessCompanyOperationHours
-          ?.businessCompanyOperationHour
-      )
+    const sortedWeek = companyOperationHours?.getBusinessCompanyOperationHours?.businessCompanyOperationHour.sort(
+      (a, b) => a.dayOfWeek - b.dayOfWeek
     );
+    dispatch(handleWeekArray(sortedWeek));
   }, [companyOperationHours]);
 
   const onChangeCompanyName = (name, value) => {
@@ -230,6 +228,9 @@ const CompanyView = memo((props) => {
               onChange={onChangeCompanyName}
             />
           </Grid>
+          <Box fontWeight={600} fontSize='20px' marginTop='15px'>
+            Настройка расписания
+          </Box>
           {scheduleState.week.map((item) => (
             <CompanySchedule
               key={item.dayOfWeek}
