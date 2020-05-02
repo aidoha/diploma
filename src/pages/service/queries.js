@@ -103,6 +103,7 @@ export const UPDATE_COMPANY_SERVICE = gql`
   }
 `;
 
+// create own service if doesn't exist in list
 export const CREATE_BUSINESS_SERVICE = gql`
   mutation createBusinessService(
     $businessServiceName: String!
@@ -116,6 +117,83 @@ export const CREATE_BUSINESS_SERVICE = gql`
     ) {
       businessService {
         businessServiceID
+      }
+    }
+  }
+`;
+
+export const GET_SERVICE_OPERATION_HOURS = gql`
+  query GetBusinessCompanyServiceOperationHours($serviceID: Int!) {
+    getBusinessCompanyServiceOperationHours(input: { serviceID: $serviceID }) {
+      businessCompanyServiceOperationHour {
+        serviceOperationHourID
+        businessCompanyID
+        businessServiceID
+        dayOfWeek
+        openTime
+        closeTime
+      }
+    }
+  }
+`;
+
+export const CREATE_SERVICE_OPERATION_HOURS = gql`
+  mutation CreateBusinessCompanyServiceOperationHours(
+    $businessCompanyID: Int!
+    $businessServiceID: Int!
+    $dayOfWeek: Int!
+    $openTime: String!
+    $closeTime: String!
+  ) {
+    createBusinessCompanyServiceOperationHours(
+      input: {
+        businessCompanyID: $businessCompanyID
+        businessServiceID: $businessServiceID
+        dayOfWeek: $dayOfWeek
+        openTime: $openTime
+        closeTime: $closeTime
+      }
+    ) {
+      businessCompanyServiceOperationHour {
+        serviceOperationHourID
+      }
+    }
+  }
+`;
+
+export const UPDATE_SERVICE_OPERATION_HOURS = gql`
+  mutation UpdateBusinessCompanyServiceOperationHours(
+    $operationHourID: Int!
+    $businessCompanyID: Int!
+    $businessServiceID: Int!
+    $dayOfWeek: Int!
+    $openTime: String!
+    $closeTime: String!
+  ) {
+    updateBusinessCompanyServiceOperationHours(
+      input: {
+        operationHourID: $operationHourID
+        businessCompanyID: $businessCompanyID
+        businessServiceID: $businessServiceID
+        dayOfWeek: $dayOfWeek
+        openTime: $openTime
+        closeTime: $closeTime
+      }
+    ) {
+      businessCompanyServiceOperationHour {
+        serviceOperationHourID
+      }
+    }
+  }
+`;
+
+export const DELETE_SERVICE_OPERATION_HOURS = gql`
+  mutation DeleteBusinessCompanyServiceOperationHours($operationHourID: Int!) {
+    deleteBusinessCompanyServiceOperationHours(
+      input: { operationHourID: $operationHourID }
+    ) {
+      businessCompanyServiceOperationHour {
+        serviceOperationHourID
       }
     }
   }

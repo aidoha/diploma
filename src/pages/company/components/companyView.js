@@ -2,8 +2,13 @@ import React, { useEffect, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Grid, Box, Button } from '@material-ui/core';
-import { MainLayout, Loader, InputField, Statuses } from '../../../components';
-import CompanySchedule from './companySchedule';
+import {
+  MainLayout,
+  Loader,
+  InputField,
+  Statuses,
+  ScheduleItem,
+} from '../../../components';
 import withCurrentUser from '../../../hoc/currentUser';
 import withApollo from '../../../hoc/withApollo';
 import {
@@ -231,16 +236,18 @@ const CompanyView = memo((props) => {
           <Box fontWeight={600} fontSize='20px' marginTop='15px'>
             Настройка расписания
           </Box>
-          {scheduleState.week.map((item) => (
-            <CompanySchedule
-              key={item.dayOfWeek}
-              item={item}
-              addCompanyTimes={addCompanyTimes}
-              editCompanyTimes={editCompanyTimes}
-              deleteCompanyTimes={deleteCompanyTimes}
-              editDayOfWeek={editDayOfWeek}
-            />
-          ))}
+          <Grid item lg={4} md={4} xs={12}>
+            {scheduleState.week.map((item) => (
+              <ScheduleItem
+                key={item.dayOfWeek}
+                item={item}
+                addTimes={addCompanyTimes}
+                editTimes={editCompanyTimes}
+                deleteTimes={deleteCompanyTimes}
+                editDayOfWeek={editDayOfWeek}
+              />
+            ))}
+          </Grid>
           {scheduleState.week.length < 7 && (
             <Grid container item lg={4} md={4} xs={12}>
               <Button

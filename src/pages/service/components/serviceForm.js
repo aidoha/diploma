@@ -33,8 +33,16 @@ import { useStyles } from '../style';
 import { errors, succeses } from '../../../constants/statuses';
 
 const ServiceForm = (props) => {
-  const businessCategoryID = props?.currentUser[0]?.businessCompanyCategoryID;
-  const businessCompanyID = props?.currentUser[0]?.businessCompanyID;
+  const businessCategoryID =
+    props &&
+    props.currentUser &&
+    props.currentUser[0] &&
+    props.currentUser[0].businessCompanyCategoryID;
+  const businessCompanyID =
+    props &&
+    props.currentUser &&
+    props.currentUser[0] &&
+    props.currentUser[0].businessCompanyID;
   const classes = useStyles();
   const { slug, id } = useParams();
   const [dialogBusiness, setDialogBusiness] = useState(false);
@@ -205,20 +213,9 @@ const ServiceForm = (props) => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <Box
-        marginTop='20px'
-        border='1px solid #cbcbeb'
-        borderRadius='12px'
-        padding='25px'
-      >
-        <Box fontWeight='bold' fontSize='18px' marginBottom='10px'>
-          Описание
-        </Box>
-        <Box fontWeight='lighter' fontSize='16px' color='#4a4a4a'>
-          Информация о вашей услуге
-        </Box>
-        <Box margin='35px 0'>
+    <form onSubmit={onSubmit} style={{ width: '100%' }}>
+      <Box>
+        <Box>
           <InputField
             label='Название услуги*'
             name='service-name'

@@ -16,15 +16,15 @@ import {
   handleStartTime,
   handleFinishTime,
   handleSelectedDay,
-} from '../../../redux/companySchedule/actions';
-import { getDayOfWeekById } from '../../../utils';
-import { useStyles } from '../style';
+} from '../../redux/companySchedule/actions';
+import { getDayOfWeekById } from '../../utils';
+import { useStyles } from './style';
 
-const CompanySchedule = ({
+const ServiceSchedule = ({
   item,
-  addCompanyTimes,
-  editCompanyTimes,
-  deleteCompanyTimes,
+  addTimes,
+  editTimes,
+  deleteTimes,
   editDayOfWeek,
 }) => {
   const classes = useStyles();
@@ -51,7 +51,7 @@ const CompanySchedule = ({
 
   return (
     <Box margin='20px 0'>
-      <Grid container item alignItems='center' lg={6} md={6} xs={12}>
+      <Grid container item alignItems='center' lg={12} md={12} xs={12}>
         <Box width='10%'>
           {!added && getDayOfWeekById(dayOfWeek)}
           {added && (
@@ -75,7 +75,7 @@ const CompanySchedule = ({
           display='flex'
           justifyContent='space-between'
           alignItems='center'
-          width='30%'
+          width='50%'
         >
           <TextField
             variant='outlined'
@@ -104,7 +104,7 @@ const CompanySchedule = ({
                 <Bookmark
                   color='action'
                   className={classes.service_item_actions}
-                  onClick={() => editCompanyTimes(item)}
+                  onClick={() => editTimes(item)}
                 />
               )}
               {!edited && (
@@ -126,7 +126,7 @@ const CompanySchedule = ({
               variant='contained'
               size='large'
               className={classes.btn_save_time}
-              onClick={() => addCompanyTimes(item)}
+              onClick={() => addTimes(item)}
             >
               Сохранить
             </Button>
@@ -141,7 +141,7 @@ const CompanySchedule = ({
           <Button color='default' onClick={handleConfirmModal}>
             Отменить
           </Button>
-          <Button color='primary' onClick={() => deleteCompanyTimes(item)}>
+          <Button color='primary' onClick={() => deleteTimes(item)}>
             Удалить
           </Button>
         </DialogActions>
@@ -150,4 +150,4 @@ const CompanySchedule = ({
   );
 };
 
-export default CompanySchedule;
+export default ServiceSchedule;

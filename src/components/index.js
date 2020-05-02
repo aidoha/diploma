@@ -7,6 +7,7 @@ import ServiceHeader from './headers/serviceHeader';
 import Loader from './loader';
 import Statuses from './statuses';
 import InputField from './input-field';
+import ScheduleItem from './schedule-item';
 
 export {
   Topbar,
@@ -18,4 +19,5 @@ export {
   Loader,
   Statuses,
   InputField,
+  ScheduleItem,
 };
