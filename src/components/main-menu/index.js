@@ -15,7 +15,7 @@ const MainMenu = (props) => {
   const { push, location } = useHistory();
   const { pathname } = location;
   const listItems = [
-    { value: 'orders', pathname: '/orders' },
+    { value: 'orders', pathname: pathname === routes.orders },
     {
       value: 'company',
       pathname:

@@ -45,8 +45,16 @@ const Orders = (props) => {
     };
   }, [services, dispatch]);
 
+  useEffect(() => {
+    document.title = 'Заказы | Cactus';
+  }, []);
+
   return (
-    <MainLayout padding='25px' section='orders'>
+    <MainLayout
+      padding='25px'
+      section='orders'
+      hasBackArrow={!companyServicesLoading && serviceID}
+    >
       {companyServicesLoading && (
         <Grid container justify='center'>
           <Box margin='100px 0'>

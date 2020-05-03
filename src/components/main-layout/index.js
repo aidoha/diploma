@@ -29,7 +29,7 @@ const MainLayout = (props) => {
       </div>
       <div className={classes.main}>
         {section === 'company' && <CompanyHeader hasBackArrow={hasBackArrow} />}
-        {section === 'orders' && <OrdersHeader />}
+        {section === 'orders' && <OrdersHeader hasBackArrow={hasBackArrow} />}
         <div className={classes.content}>{props.children}</div>
       </div>
     </div>
