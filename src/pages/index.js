@@ -4,5 +4,6 @@ import Main from './main/index';
 import Intro from './intro/index';
 import Company from './company/index';
 import Service from './service/index';
+import Orders from './orders/index';
 
-export { SignIn, SignUp, Main, Intro, Company, Service };
+export { SignIn, SignUp, Main, Intro, Company, Service, Orders };

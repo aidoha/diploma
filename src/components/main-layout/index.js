@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { MainMenu, CompanyHeader } from '../index';
+import { MainMenu, CompanyHeader, OrdersHeader } from '../index';
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +29,7 @@ const MainLayout = (props) => {
       </div>
       <div className={classes.main}>
         {section === 'company' && <CompanyHeader hasBackArrow={hasBackArrow} />}
+        {section === 'orders' && <OrdersHeader />}
         <div className={classes.content}>{props.children}</div>
       </div>
     </div>

@@ -33,6 +33,7 @@ export const routes = {
     add: '/service/add',
     edit: '/service/edit',
   },
+  orders: '/orders',
 };
 
 export const categoryBoxList = [

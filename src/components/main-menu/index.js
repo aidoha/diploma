@@ -43,7 +43,12 @@ const MainMenu = (props) => {
           >
             <ListItemIcon className={classes.icon}>
               <>
-                {icon.value === 'orders' && <TodayRounded fontSize='large' />}
+                {icon.value === 'orders' && (
+                  <TodayRounded
+                    fontSize='large'
+                    onClick={() => push(routes.orders)}
+                  />
+                )}
                 {icon.value === 'company' && (
                   <BusinessCenterRounded
                     fontSize='large'
