@@ -33,6 +33,8 @@ const OrderSlotBase = ({
         ...style,
         backgroundColor: '#8282ff',
         borderRadius: '8px',
+        color: 'white',
+        padding: '5px',
       }}
     >
       <React.Fragment>
@@ -49,6 +51,7 @@ const OrderSlotBase = ({
           <InfoIcon fontSize='small' />
         </IconButton>
         {children}
+        {data.price}
       </React.Fragment>
     </Appointments.Appointment>
   );

@@ -16,10 +16,10 @@ import ToolbarWithLoading from './toolbar-loading';
 
 const URL = 'https://js.devexpress.com/Demos/Mvc/api/SchedulerData/Get';
 
-const makeQueryString = (currentDate, currentViewName) => {
+const makeQueryString = (currentDate) => {
   const format = 'YYYY-MM-DDTHH:mm:ss';
-  const start = moment(currentDate).startOf(currentViewName.toLowerCase());
-  const end = start.clone().endOf(currentViewName.toLowerCase());
+  const start = moment(currentDate).startOf('Week'.toLowerCase());
+  const end = start.clone().endOf('Week'.toLowerCase());
   return encodeURI(
     `${URL}?filter=[["EndDate", ">", "${start.format(
       format
@@ -35,11 +35,10 @@ const mapAppointmentData = (appointment) => ({
   price: 4000,
 });
 
-export default class Demo extends React.PureComponent {
+export default class OrderCalendar extends React.PureComponent {
   state = {
     loading: true,
     currentDate: '2017-05-23',
-    currentViewName: 'Week',
     visible: false,
     appointmentMeta: {
       target: null,
@@ -69,8 +68,8 @@ export default class Demo extends React.PureComponent {
   }
 
   loadData = () => {
-    const { currentDate, currentViewName } = this.state;
-    const queryString = makeQueryString(currentDate, currentViewName);
+    const { currentDate } = this.state;
+    const queryString = makeQueryString(currentDate);
     if (queryString === this.lastQuery) {
       this.setState({ loading: false });
       return;
@@ -100,14 +99,7 @@ export default class Demo extends React.PureComponent {
   };
 
   render() {
-    const {
-      data,
-      loading,
-      currentDate,
-      currentViewName,
-      appointmentMeta,
-      visible,
-    } = this.state;
+    const { data, loading, currentDate, appointmentMeta, visible } = this.state;
 
     const formattedData = data ? data.map(mapAppointmentData) : [];
 
@@ -116,7 +108,7 @@ export default class Demo extends React.PureComponent {
         <Scheduler data={formattedData} height={660}>
           <ViewState
             currentDate={currentDate}
-            currentViewName={currentViewName}
+            currentViewName={'Week'}
             onCurrentDateChange={this.currentDateChange}
           />
           <WeekView startDayHour={6} endDayHour={23} />
