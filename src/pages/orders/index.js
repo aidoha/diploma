@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Grid, Box } from '@material-ui/core';
 import { MainLayout, Loader } from '../../components';
 import ServiceItem from './components/serviceItem';
+import OrdersCalendar from './components/orders-calendar';
 import withCurrentUser from '../../hoc/currentUser';
 import withApollo from '../../hoc/withApollo';
 import { GET_BUSINESS_COMPANY_SERVICES } from '../company/queries';
@@ -51,7 +52,6 @@ const Orders = (props) => {
 
   return (
     <MainLayout
-      padding='25px'
       section='orders'
       hasBackArrow={!companyServicesLoading && serviceID}
     >
@@ -70,7 +70,7 @@ const Orders = (props) => {
             ))}
         </Grid>
       )}
-      {!companyServicesLoading && serviceID && <div>order/{serviceID}</div>}
+      {!companyServicesLoading && serviceID && <OrdersCalendar />}
     </MainLayout>
   );
 };

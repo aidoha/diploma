@@ -965,6 +965,51 @@
   dependencies:
     "@date-io/core" "^1.3.13"
 
+"@date-io/moment@^1.3.11":
+  version "1.3.13"
+  resolved "https://registry.yarnpkg.com/@date-io/moment/-/moment-1.3.13.tgz#56c2772bc4f6675fc6970257e6033e7a7c2960f0"
+  integrity sha512-3kJYusJtQuOIxq6byZlzAHoW/18iExJer9qfRF5DyyzdAk074seTuJfdofjz4RFfTd/Idk8WylOQpWtERqvFuQ==
+  dependencies:
+    "@date-io/core" "^1.3.13"
+
+"@devexpress/dx-core@2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.6.2.tgz#7f87250b1d95b71dd67bc17683f02192ca46f729"
+  integrity sha512-+0SX4dsakt0Yo10wbMhfw/enC71+RKCCUbr8uxmn9xvnUKH5bkVTKS412bFlqJs04e9uTn9R6dvGhC/C7jobLA==
+
+"@devexpress/dx-react-core@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-core/-/dx-react-core-2.6.2.tgz#b3dc30d79c73d2b16c83bc535ed12b581f8a7610"
+  integrity sha512-5734dJ7TIhFYHpFykajrxCX7YYc+7AIrn8FN6T/rPIOCee0ku1tsG2wQwDLIaPr+SQ7eJ+i5n15jKVsrU27L8g==
+  dependencies:
+    "@devexpress/dx-core" "2.6.2"
+    prop-types "^15.7.2"
+
+"@devexpress/dx-react-scheduler-material-ui@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-scheduler-material-ui/-/dx-react-scheduler-material-ui-2.6.2.tgz#02d5b9d2474842b12824ee6f74ad8d1ebe7cd771"
+  integrity sha512-dP4SrxUHoxtOoYEJi2tSJZn5ByuKoBfduuiRewz276dbGdQnIJa+zxNC3UCB14hExW7YzMLovv8z4Dw4/IA8Pg==
+  dependencies:
+    "@date-io/moment" "^1.3.11"
+    "@material-ui/pickers" "^3.2.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@devexpress/dx-react-scheduler@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-scheduler/-/dx-react-scheduler-2.6.2.tgz#a0ce6aa0421ea1b394b03ae462b955a47327977d"
+  integrity sha512-lGqm3bnenbDd7oTAScvJ7TQlOtGbA/9NHHCqOYfsnK2O0HOXztxTCBOmiRtkpVtja7qIiGzPvRbA+GzbV1FbOw==
+  dependencies:
+    "@devexpress/dx-scheduler-core" "2.6.2"
+
+"@devexpress/dx-scheduler-core@2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-scheduler-core/-/dx-scheduler-core-2.6.2.tgz#cda32a714186e7fc2de193a1951584b262ab794f"
+  integrity sha512-B3Z+y+51ihrnS5ps5BUXFCWKQr38+DfYI2+7VQKHyD0kkBo9fqMqc6hZ9Fpv/GW3dPy0BYKHpZrX4m8kk6lfKg==
+  dependencies:
+    moment "^2.24.0"
+    rrule "^2.6.2"
+
 "@emotion/hash@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
@@ -6667,6 +6712,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+luxon@^1.21.3:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.24.0.tgz#6db04b79ec8f7159973d4dcf21871fd6acfb3d58"
+  integrity sha512-PNeB5cFbBtmuS137OuEdaJnCMTMPS2vz9hnM1Zl6tUIuYdtUgEhMqfVZ7yxX0jHEGx6rp757ECe7cdZxDgq2Tg==
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -6962,6 +7012,11 @@ mkdirp@0.5.1, mkdirp@^0.5.1, mkdirp@~0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment@^2.24.0, moment@^2.25.3:
+  version "2.25.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.25.3.tgz#252ff41319cf41e47761a1a88cab30edfe9808c0"
+  integrity sha512-PuYv0PHxZvzc15Sp8ybUCoQ+xpyPWvjOuK72a5ovzp2LI32rJXOiIfyoFoYvG3s6EwwrdkMyWuRiEHSZRLJNdg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -9275,6 +9330,15 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rrule@^2.6.2:
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/rrule/-/rrule-2.6.4.tgz#7f4f31fda12bc7249bb176c891109a9bc448e035"
+  integrity sha512-sLdnh4lmjUqq8liFiOUXD5kWp/FcnbDLPwq5YAc/RrN6120XOPb86Ae5zxF7ttBVq8O3LxjjORMEit1baluahA==
+  dependencies:
+    tslib "^1.10.0"
+  optionalDependencies:
+    luxon "^1.21.3"
 
 rsvp@^4.8.4:
   version "4.8.5"

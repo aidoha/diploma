@@ -8,7 +8,7 @@ import {
   Grid,
   ThemeProvider,
 } from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack, AddCircle } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -40,35 +40,36 @@ const OrdersHeader = ({ hasBackArrow }) => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item lg={5} md={5}>
+          {/* <Grid item lg={5} md={5}>
             <Box
               display='flex'
               justifyContent='space-around'
               alignItems='center'
             >
-              <ThemeProvider theme={theme}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant='inline'
-                    inputVariant='outlined'
-                    format='dd/MM/yyyy'
-                    margin='normal'
-                    label='Дата с'
-                  />
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant='inline'
-                    inputVariant='outlined'
-                    format='dd/MM/yyyy'
-                    margin='normal'
-                    label='Дата с'
-                  />
-                </MuiPickersUtilsProvider>
-              </ThemeProvider>
-              <Box>Add</Box>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant='inline'
+                  inputVariant='outlined'
+                  format='dd/MM/yyyy'
+                  margin='normal'
+                  label='Дата с'
+                />
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant='inline'
+                  inputVariant='outlined'
+                  format='dd/MM/yyyy'
+                  margin='normal'
+                  label='Дата с'
+                />
+              </MuiPickersUtilsProvider>
+
+              <Box>
+                <AddCircle className={classes.add_icon} />
+              </Box>
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Toolbar>
     </AppBar>
