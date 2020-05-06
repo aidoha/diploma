@@ -44,6 +44,13 @@ export const useStyles = makeStyles({
       transition: 'box-shadow 0.3s ease-in-out;',
     },
   },
+  service_item_actions: {
+    margin: '0 10px',
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#8282ff',
+    },
+  },
   service_item_name: {
     cursor: 'pointer',
     '&:hover': {
