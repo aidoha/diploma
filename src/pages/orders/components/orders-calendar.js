@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import { connectProps } from '@devexpress/dx-react-core';
 import {
@@ -15,7 +14,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { Fab, Paper } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import OrderSlot from './order-slot';
-import { OrderFormContainer } from './order-form';
+import OrderToolTip from './order-tooltip';
+import { OrderFormContainer } from './order-form-v2';
 import ToolbarWithLoading from './toolbar-loading';
 
 const mapOrderData = (order) => {
@@ -46,11 +46,11 @@ class OrderCalendar extends React.PureComponent {
     },
     confirmationVisible: false,
     editingFormVisible: false,
-    deletedAppointmentId: undefined,
-    editingAppointment: undefined,
-    previousAppointment: undefined,
-    addedAppointment: {},
-    isNewAppointment: false,
+    deletedOrderd: undefined,
+    editingOrder: undefined,
+    previousOrder: undefined,
+    addedOrder: {},
+    isNewOrder: false,
   };
 
   currentDateChange = (currentDate) => {
@@ -62,28 +62,28 @@ class OrderCalendar extends React.PureComponent {
     this.setState({ visible: !tooltipVisibility });
   };
 
-  onAppointmentMetaChange = ({ data, target }) => {
+  onOrderMetaChange = ({ data, target }) => {
     this.setState({ appointmentMeta: { data, target } });
   };
 
-  onEditingAppointmentChange = (editingAppointment) => {
-    this.setState({ editingAppointment });
-  };
+  // onEditingAppointmentChange = (editingAppointment) => {
+  //   this.setState({ editingAppointment });
+  // };
 
-  onAddedAppointmentChange = (addedAppointment) => {
-    this.setState({ addedAppointment });
-    const { editingAppointment } = this.state;
-    if (editingAppointment !== undefined) {
-      this.setState({
-        previousAppointment: editingAppointment,
-      });
-    }
-    this.setState({ editingAppointment: undefined, isNewAppointment: true });
-  };
+  // onAddedAppointmentChange = (addedAppointment) => {
+  //   this.setState({ addedAppointment });
+  //   const { editingAppointment } = this.state;
+  //   if (editingAppointment !== undefined) {
+  //     this.setState({
+  //       previousAppointment: editingAppointment,
+  //     });
+  //   }
+  //   this.setState({ editingAppointment: undefined, isNewAppointment: true });
+  // };
 
-  setDeletedAppointmentId = (id) => {
-    this.setState({ deletedAppointmentId: id });
-  };
+  // setDeletedAppointmentId = (id) => {
+  //   this.setState({ deletedAppointmentId: id });
+  // };
 
   toggleEditingFormVisibility = () => {
     const { editingFormVisible } = this.state;
@@ -92,45 +92,45 @@ class OrderCalendar extends React.PureComponent {
     });
   };
 
-  toggleConfirmationVisible = () => {
-    const { confirmationVisible } = this.state;
-    this.setState({ confirmationVisible: !confirmationVisible });
-  };
+  // toggleConfirmationVisible = () => {
+  //   const { confirmationVisible } = this.state;
+  //   this.setState({ confirmationVisible: !confirmationVisible });
+  // };
 
-  commitChanges = ({ added, changed, deleted }) => {
-    this.setState((state) => {
-      let { data } = state;
-      if (added) {
-        const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-      }
-      if (changed) {
-        data = data.map((appointment) =>
-          changed[appointment.id]
-            ? { ...appointment, ...changed[appointment.id] }
-            : appointment
-        );
-      }
-      if (deleted !== undefined) {
-        this.setDeletedAppointmentId(deleted);
-        this.toggleConfirmationVisible();
-      }
-      return { data, addedAppointment: {} };
-    });
-  };
+  // commitChanges = ({ added, changed, deleted }) => {
+  //   this.setState((state) => {
+  //     let { data } = state;
+  //     if (added) {
+  //       const startingAddedId =
+  //         data.length > 0 ? data[data.length - 1].id + 1 : 0;
+  //       data = [...data, { id: startingAddedId, ...added }];
+  //     }
+  //     if (changed) {
+  //       data = data.map((appointment) =>
+  //         changed[appointment.id]
+  //           ? { ...appointment, ...changed[appointment.id] }
+  //           : appointment
+  //       );
+  //     }
+  //     if (deleted !== undefined) {
+  //       this.setDeletedAppointmentId(deleted);
+  //       this.toggleConfirmationVisible();
+  //     }
+  //     return { data, addedAppointment: {} };
+  //   });
+  // };
 
-  commitDeletedAppointment = () => {
-    this.setState((state) => {
-      const { data, deletedAppointmentId } = state;
-      const nextData = data.filter(
-        (appointment) => appointment.id !== deletedAppointmentId
-      );
+  // commitDeletedAppointment = () => {
+  //   this.setState((state) => {
+  //     const { data, deletedAppointmentId } = state;
+  //     const nextData = data.filter(
+  //       (appointment) => appointment.id !== deletedAppointmentId
+  //     );
 
-      return { data: nextData, deletedAppointmentId: null };
-    });
-    this.toggleConfirmationVisible();
-  };
+  //     return { data: nextData, deletedAppointmentId: null };
+  //   });
+  //   this.toggleConfirmationVisible();
+  // };
 
   componentDidUpdate() {
     this.myAppointmentForm.update();
@@ -141,7 +141,7 @@ class OrderCalendar extends React.PureComponent {
       <OrderSlot
         {...props}
         toggleVisibility={this.toggleVisibility}
-        onAppointmentMetaChange={this.onAppointmentMetaChange}
+        onAppointmentMetaChange={this.onOrderMetaChange}
       />
     );
   };
@@ -149,52 +149,51 @@ class OrderCalendar extends React.PureComponent {
   myAppointmentForm = connectProps(OrderFormContainer, () => {
     const {
       editingFormVisible,
-      editingAppointment,
-      data,
-      addedAppointment,
-      isNewAppointment,
-      previousAppointment,
+      editingOrder,
+      addedOrder,
+      isNewOrder,
+      previousOrder,
     } = this.state;
+    const { ordersData } = this.props;
 
-    const currentAppointment =
-      (data &&
-        data.filter(
-          (appointment) =>
-            editingAppointment && appointment.id === editingAppointment.id
-        )[0]) ||
-      addedAppointment;
-    const cancelAppointment = () => {
-      if (isNewAppointment) {
-        this.setState({
-          editingAppointment: previousAppointment,
-          isNewAppointment: false,
-        });
-      }
-    };
+    // const currentOrder =
+    //   (ordersData &&
+    //     ordersData.filter(
+    //       (order) =>
+    //         editingOrder &&
+    //         order.businessServiceOrderID === editingOrder.businessServiceOrderID
+    //     )[0]) ||
+    //   addedOrder;
+
+    // const cancelOrder = () => {
+    //   if (isNewOrder) {
+    //     this.setState({
+    //       editingOrder: previousOrder,
+    //       isNewOrder: false,
+    //     });
+    //   }
+    // };
 
     return {
       visible: editingFormVisible,
-      appointmentData: currentAppointment,
-      commitChanges: this.commitChanges,
+      // orderData: currentOrder,
+      // commitChanges: this.commitChanges,
       visibleChange: this.toggleEditingFormVisibility,
-      onEditingAppointmentChange: this.onEditingAppointmentChange,
-      cancelAppointment,
+      // onEditingAppointmentChange: this.onEditingAppointmentChange,
+      // cancelOrder,
     };
   });
 
   render() {
     const {
-      data,
-      loading,
       currentDate,
       appointmentMeta,
       visible,
       editingFormVisible,
     } = this.state;
-    const { classes, ordersData } = this.props;
-    // const formattedData = data ? data.map(mapOrderData) : [];
+    const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
-    // console.log('this.prop', ordersData);
+    // console.log('appointmentMeta', appointmentMeta);
     return (
       <>
         <Paper>
@@ -207,15 +206,18 @@ class OrderCalendar extends React.PureComponent {
             <WeekView startDayHour={6} endDayHour={23} />
             <Appointments appointmentComponent={this.myAppointment} />
             <Toolbar
-              {...(loading ? { rootComponent: ToolbarWithLoading } : null)}
+              {...(ordersLoading
+                ? { rootComponent: ToolbarWithLoading }
+                : null)}
             />
             <DateNavigator />
             <AppointmentTooltip
               showCloseButton
+              contentComponent={OrderToolTip}
               visible={visible}
               onVisibilityChange={this.toggleVisibility}
               appointmentMeta={appointmentMeta}
-              onAppointmentMetaChange={this.onAppointmentMetaChange}
+              onAppointmentMetaChange={this.onOrderMetaChange}
             />
             <AppointmentForm
               overlayComponent={this.myAppointmentForm}
@@ -228,11 +230,11 @@ class OrderCalendar extends React.PureComponent {
             className={classes.addButton}
             onClick={() => {
               this.setState({ editingFormVisible: true });
-              this.onEditingAppointmentChange(undefined);
-              this.onAddedAppointmentChange({
-                startDate: new Date(currentDate).setHours(6),
-                endDate: new Date(currentDate).setHours(23 + 1),
-              });
+              // this.onEditingAppointmentChange(undefined);
+              // this.onAddedAppointmentChange({
+              //   startDate: new Date(currentDate),
+              //   endDate: new Date(currentDate),
+              // });
             }}
           >
             <AddIcon />

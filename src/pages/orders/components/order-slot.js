@@ -26,7 +26,6 @@ const OrderSlotBase = ({
   onAppointmentMetaChange,
   ...restProps
 }) => {
-  console.log('data', data);
   return (
     <Appointments.Appointment
       {...restProps}

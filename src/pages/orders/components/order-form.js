@@ -60,27 +60,21 @@ const containerStyles = (theme) => ({
 });
 
 export default class OrderFormContainerBasic extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  state = {
+    appointmentChanges: {},
+  };
 
-    this.state = {
-      appointmentChanges: {},
-    };
+  getAppointmentData = () => {
+    const { appointmentData } = this.props;
+    return appointmentData;
+  };
 
-    this.getAppointmentData = () => {
-      const { appointmentData } = this.props;
-      return appointmentData;
-    };
-    this.getAppointmentChanges = () => {
-      const { appointmentChanges } = this.state;
-      return appointmentChanges;
-    };
+  getAppointmentChanges = () => {
+    const { appointmentChanges } = this.state;
+    return appointmentChanges;
+  };
 
-    this.changeAppointment = this.changeAppointment.bind(this);
-    this.commitAppointment = this.commitAppointment.bind(this);
-  }
-
-  changeAppointment({ field, changes }) {
+  changeAppointment = ({ field, changes }) => {
     const nextChanges = {
       ...this.getAppointmentChanges(),
       [field]: changes,
@@ -88,9 +82,9 @@ export default class OrderFormContainerBasic extends React.PureComponent {
     this.setState({
       appointmentChanges: nextChanges,
     });
-  }
+  };
 
-  commitAppointment(type) {
+  commitAppointment = (type) => {
     const { commitChanges } = this.props;
     const appointment = {
       ...this.getAppointmentData(),
@@ -106,7 +100,7 @@ export default class OrderFormContainerBasic extends React.PureComponent {
     this.setState({
       appointmentChanges: {},
     });
-  }
+  };
 
   render() {
     const {
@@ -191,10 +185,6 @@ export default class OrderFormContainerBasic extends React.PureComponent {
                 <KeyboardDateTimePicker
                   label='Start Date'
                   {...pickerEditorProps('startDate')}
-                />
-                <KeyboardDateTimePicker
-                  label='End Date'
-                  {...pickerEditorProps('endDate')}
                 />
               </MuiPickersUtilsProvider>
             </div>

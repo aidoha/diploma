@@ -5,6 +5,7 @@ import companyScheduleReducer from './companySchedule/reducer';
 import serviceReducer from './service/reducer';
 import companyReducer from './company/reducer';
 import statusReducer from './statuses/reducer';
+import orderReducer from './order/reducer';
 
 const rootReducer = combineReducers({
   signUp: signUpReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   service: serviceReducer,
   company: companyReducer,
   status: statusReducer,
+  order: orderReducer,
 });
 
 export default rootReducer;
