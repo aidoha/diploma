@@ -12,33 +12,20 @@ import {
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import Paper from '@material-ui/core/Paper';
-import AddIcon from '@material-ui/icons/Add';
+import { Fab, Paper } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import OrderSlot from './order-slot';
 import { OrderFormContainer } from './order-form';
 import ToolbarWithLoading from './toolbar-loading';
 
-const URL = 'https://js.devexpress.com/Demos/Mvc/api/SchedulerData/Get';
-
-const makeQueryString = (currentDate) => {
-  const format = 'YYYY-MM-DDTHH:mm:ss';
-  const start = moment(currentDate).startOf('Week'.toLowerCase());
-  const end = start.clone().endOf('Week'.toLowerCase());
-  return encodeURI(
-    `${URL}?filter=[["EndDate", ">", "${start.format(
-      format
-    )}"],["StartDate", "<", "${end.format(format)}"]]`
-  );
+const mapOrderData = (order) => {
+  return {
+    ...order,
+    startDate: order.startAt,
+    endDate: order.endAt,
+    title: order.clientFirstName,
+  };
 };
-
-const mapAppointmentData = (appointment) => ({
-  ...appointment,
-  startDate: appointment.StartDate,
-  endDate: appointment.EndDate,
-  title: appointment.Text,
-  price: 4000,
-});
 
 const styles = (theme) => ({
   addButton: {
@@ -50,8 +37,8 @@ const styles = (theme) => ({
 
 class OrderCalendar extends React.PureComponent {
   state = {
-    loading: true,
-    currentDate: '2017-05-23',
+    loading: false,
+    currentDate: new Date(),
     visible: false,
     appointmentMeta: {
       target: null,
@@ -145,35 +132,9 @@ class OrderCalendar extends React.PureComponent {
     this.toggleConfirmationVisible();
   };
 
-  componentDidMount() {
-    this.loadData();
-  }
-
   componentDidUpdate() {
-    this.loadData();
     this.myAppointmentForm.update();
   }
-
-  loadData = () => {
-    const { currentDate } = this.state;
-    const queryString = makeQueryString(currentDate);
-    if (queryString === this.lastQuery) {
-      this.setState({ loading: false });
-      return;
-    }
-    fetch(queryString)
-      .then((response) => response.json())
-      .then(({ data }) => {
-        setTimeout(() => {
-          this.setState({
-            data,
-            loading: false,
-          });
-        }, 600);
-      })
-      .catch(() => this.setState({ loading: false }));
-    this.lastQuery = queryString;
-  };
 
   myAppointment = (props) => {
     return (
@@ -230,53 +191,56 @@ class OrderCalendar extends React.PureComponent {
       visible,
       editingFormVisible,
     } = this.state;
-    const { classes } = this.props;
-    const formattedData = data ? data.map(mapAppointmentData) : [];
-
+    const { classes, ordersData } = this.props;
+    // const formattedData = data ? data.map(mapOrderData) : [];
+    const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
+    // console.log('this.prop', ordersData);
     return (
-      <Paper>
-        <Scheduler data={formattedData} locale='ru-RU' height={660}>
-          <ViewState
-            currentDate={currentDate}
-            currentViewName='Week'
-            onCurrentDateChange={this.currentDateChange}
-          />
-          <WeekView startDayHour={6} endDayHour={23} />
-          <Appointments appointmentComponent={this.myAppointment} />
-          <Toolbar
-            {...(loading ? { rootComponent: ToolbarWithLoading } : null)}
-          />
-          <DateNavigator />
-          <AppointmentTooltip
-            showCloseButton
-            visible={visible}
-            onVisibilityChange={this.toggleVisibility}
-            appointmentMeta={appointmentMeta}
-            onAppointmentMetaChange={this.onAppointmentMetaChange}
-          />
-          <AppointmentForm
-            overlayComponent={this.myAppointmentForm}
-            visible={editingFormVisible}
-            onVisibilityChange={this.toggleEditingFormVisibility}
-          />
-        </Scheduler>
-        <Fab
-          color='secondary'
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(6),
-              endDate: new Date(currentDate).setHours(23 + 1),
-            });
-          }}
-        >
-          <AddIcon />
-        </Fab>
-      </Paper>
+      <>
+        <Paper>
+          <Scheduler data={formattedData} locale='ru-RU' height={660}>
+            <ViewState
+              currentDate={currentDate}
+              currentViewName='Week'
+              onCurrentDateChange={this.currentDateChange}
+            />
+            <WeekView startDayHour={6} endDayHour={23} />
+            <Appointments appointmentComponent={this.myAppointment} />
+            <Toolbar
+              {...(loading ? { rootComponent: ToolbarWithLoading } : null)}
+            />
+            <DateNavigator />
+            <AppointmentTooltip
+              showCloseButton
+              visible={visible}
+              onVisibilityChange={this.toggleVisibility}
+              appointmentMeta={appointmentMeta}
+              onAppointmentMetaChange={this.onAppointmentMetaChange}
+            />
+            <AppointmentForm
+              overlayComponent={this.myAppointmentForm}
+              visible={editingFormVisible}
+              onVisibilityChange={this.toggleEditingFormVisibility}
+            />
+          </Scheduler>
+          <Fab
+            color='secondary'
+            className={classes.addButton}
+            onClick={() => {
+              this.setState({ editingFormVisible: true });
+              this.onEditingAppointmentChange(undefined);
+              this.onAddedAppointmentChange({
+                startDate: new Date(currentDate).setHours(6),
+                endDate: new Date(currentDate).setHours(23 + 1),
+              });
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Paper>
+      </>
     );
   }
 }
 
-export default withStyles(styles, { name: 'EditingDemo' })(OrderCalendar);
+export default withStyles(styles, { name: 'OrderCalendar' })(OrderCalendar);

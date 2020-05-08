@@ -13,6 +13,7 @@ import {
   handleCompanyServices,
   handleResetCompanyServices,
 } from '../../redux/company/actions';
+import { GET_BUSINESS_SERVICE_ORDERS } from './queries';
 
 const Orders = (props) => {
   const { id: serviceID } = useParams();
@@ -25,6 +26,13 @@ const Orders = (props) => {
   const companyState = useSelector((state) => state.company);
   const { companyServices } = companyState;
 
+  const { data: ordersData, loading: ordersLoading } = useQuery(
+    GET_BUSINESS_SERVICE_ORDERS,
+    {
+      variables: { businessServiceID: serviceID },
+      skip: !serviceID,
+    }
+  );
   const {
     data: companyServicesData,
     loading: companyServicesLoading,
@@ -55,14 +63,14 @@ const Orders = (props) => {
       section='orders'
       hasBackArrow={!companyServicesLoading && serviceID}
     >
-      {companyServicesLoading && (
+      {(companyServicesLoading || ordersLoading) && (
         <Grid container justify='center'>
           <Box margin='100px 0'>
             <Loader />
           </Box>
         </Grid>
       )}
-      {!companyServicesLoading && !serviceID && (
+      {!companyServicesLoading && !ordersLoading && !serviceID && (
         <Grid container justify='space-between' alignItems='center'>
           {companyServices &&
             companyServices.map((item, index) => (
@@ -70,7 +78,13 @@ const Orders = (props) => {
             ))}
         </Grid>
       )}
-      {!companyServicesLoading && serviceID && <OrdersCalendar />}
+      {!companyServicesLoading && !ordersLoading && serviceID && ordersData && (
+        <OrdersCalendar
+          ordersData={
+            ordersData?.getBusinessServiceOrders?.businessServicesOrders
+          }
+        />
+      )}
     </MainLayout>
   );
 };

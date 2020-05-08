@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import InputMask from 'react-input-mask';
 import {
   handleCustomerEmail,
   handleCustomerPassword,
@@ -97,15 +98,18 @@ const SecondStep = () => {
       />
       <CssTextField
         variant='outlined'
-        margin='normal'
         fullWidth
+        margin='normal'
         label='Номер телефона'
         name='phone'
+        type='text'
         value={phone}
         error={touched.phone && phone === ''}
         onBlur={(e) => dispatch(handleCustomerPhone(e.target.value))}
         onChange={(e) => dispatch(handleCustomerPhone(e.target.value))}
-      />
+      >
+        <InputMask mask='+7 (999) 999 99 99' maskChar=' ' />
+      </CssTextField>
       <CssTextField
         type={showPassword ? 'text' : 'password'}
         variant='outlined'
