@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMutation } from '@apollo/react-hooks';
+import InputMask from 'react-input-mask';
+import { formatISO } from 'date-fns';
 import { AppointmentForm } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  KeyboardDateTimePicker,
+  KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -15,27 +18,49 @@ import {
   PhoneIphone,
   Comment,
 } from '@material-ui/icons';
-import { CssTextField } from '../../../globalStyle';
 import {
   handleClientName,
   handleClientPhone,
   handleClientComment,
+  handleOrderDate,
 } from '../../../redux/order/action';
+import { CREATE_BUSINESS_SERVICE_ORDER } from '../queries';
+import { parsePhone } from '../../../utils';
+import { CssTextField } from '../../../globalStyle';
 import { containerStyles } from '../style';
 
 const OrderFormContainerBasic = (props) => {
-  const orderState = useSelector((state) => state.order);
-  const dispatch = useDispatch();
-
   const {
     classes,
     visible,
     visibleChange,
-    // orderData,
-    // cancelOrder,
     target,
     onHide,
+    serviceID: businessServiceID,
   } = props;
+  const orderState = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  const [createBusinessServiceOrder, { loading }] = useMutation(
+    CREATE_BUSINESS_SERVICE_ORDER
+  );
+
+  const onSubmit = () => {
+    const obj = {
+      businessServiceID,
+      startAt: formatISO(orderState.date),
+      clientFirstName: orderState.client.name,
+      clientPhoneNumber: parsePhone(orderState.client.phone),
+      clientPhoneNumberPrefix: '+7',
+      clientCommentary: orderState.client.comment,
+    };
+
+    console.log('obj =>', obj);
+
+    // createBusinessServiceOrder({ variables: obj })
+    //   .then((res) => console.log('res', res))
+    //   .catch((err) => console.log('err', err));
+  };
 
   const onChangeTextField = (name, value) => {
     switch (name) {
@@ -48,6 +73,9 @@ const OrderFormContainerBasic = (props) => {
       case 'client-comment':
         dispatch(handleClientComment(value));
         break;
+      case 'order-date':
+        dispatch(handleOrderDate(formatISO(value)));
+        break;
       default:
         return null;
     }
@@ -59,10 +87,9 @@ const OrderFormContainerBasic = (props) => {
     dispatch(handleClientComment(''));
 
     visibleChange();
-    // cancelOrder();
   };
 
-  console.log('orderState ===>', orderState);
+  console.log('order', orderState);
 
   return (
     <AppointmentForm.Overlay
@@ -91,14 +118,39 @@ const OrderFormContainerBasic = (props) => {
           </div>
           <div className={classes.wrapper}>
             <PhoneIphone className={classes.icon} color='action' />
-            <CssTextField
-              className={classes.textField}
-              variant='outlined'
-              name='client-phone'
-              placeholder='Номер клиента'
+            <InputMask
+              mask='+7 999 999 99 99'
               value={orderState.client.phone}
-              onChange={(e) => onChangeTextField(e.target.name, e.target.value)}
-            />
+              onChange={(e) =>
+                onChangeTextField('client-phone', e.target.value)
+              }
+              disabled={false}
+              maskChar=' '
+            >
+              {() => (
+                <CssTextField
+                  className={classes.textField}
+                  variant='outlined'
+                  placeholder='Номер клиента'
+                />
+              )}
+            </InputMask>
+          </div>
+          <div className={classes.wrapper}>
+            <CalendarToday className={classes.icon} color='action' />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className={classes.textField}
+                disableToolbar
+                variant='dialog'
+                inputVariant='outlined'
+                label='Дата заказа'
+                format='dd.MM.yyyy'
+                margin='normal'
+                value={orderState.date}
+                onChange={(value) => onChangeTextField('order-date', value)}
+              />
+            </MuiPickersUtilsProvider>
           </div>
           <div className={classes.wrapper}>
             <Comment className={classes.icon} color='action' />
@@ -113,38 +165,20 @@ const OrderFormContainerBasic = (props) => {
               onChange={(e) => onChangeTextField(e.target.name, e.target.value)}
             />
           </div>
-          {/* <div className={classes.wrapper}>
-            <CalendarToday className={classes.icon} color='action' />
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDateTimePicker label='Start Date' />
-            </MuiPickersUtilsProvider>
-          </div> */}
         </div>
         <div className={classes.buttonGroup}>
-          {/* {!isNewAppointment && (
-              <Button
-                variant='outlined'
-                color='secondary'
-                className={classes.button}
-                onClick={() => {
-                  visibleChange();
-                  this.commitAppointment('deleted');
-                }}
-              >
-                Delete
-              </Button>
-            )} */}
           <Button
             variant='outlined'
             color='primary'
             className={classes.button}
-            // onClick={() => {
-            //   visibleChange();
-            //   applyChanges();
-            // }}
+            onClick={onSubmit}
+            disabled={
+              !orderState.client.name ||
+              !orderState.client.phone ||
+              !orderState.client.comment
+            }
           >
-            Create
-            {/* {isNewAppointment ? 'Create' : 'Save'} */}
+            Добавить заказ
           </Button>
         </div>
       </div>

@@ -11,7 +11,7 @@ const initialState = {
     phone: '',
     comment: '',
   },
-  orderDate: new Date(),
+  date: new Date(),
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
     case UPDATE_ORDER_DATE:
       return {
         ...state,
-        orderDate: payload,
+        date: payload,
       };
     default:
       return state;

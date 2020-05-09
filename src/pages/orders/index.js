@@ -84,6 +84,7 @@ const Orders = (props) => {
             ordersData?.getBusinessServiceOrders?.businessServicesOrders
           }
           ordersLoading={ordersLoading}
+          serviceID={serviceID}
         />
       )}
     </MainLayout>

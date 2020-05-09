@@ -40,7 +40,7 @@ class OrderCalendar extends React.PureComponent {
     loading: false,
     currentDate: new Date(),
     visible: false,
-    appointmentMeta: {
+    orderMeta: {
       target: null,
       data: {},
     },
@@ -63,7 +63,7 @@ class OrderCalendar extends React.PureComponent {
   };
 
   onOrderMetaChange = ({ data, target }) => {
-    this.setState({ appointmentMeta: { data, target } });
+    this.setState({ orderMeta: { data, target } });
   };
 
   // onEditingAppointmentChange = (editingAppointment) => {
@@ -133,20 +133,20 @@ class OrderCalendar extends React.PureComponent {
   // };
 
   componentDidUpdate() {
-    this.myAppointmentForm.update();
+    this.myOrderForm.update();
   }
 
-  myAppointment = (props) => {
+  myOrderSlot = (props) => {
     return (
       <OrderSlot
         {...props}
         toggleVisibility={this.toggleVisibility}
-        onAppointmentMetaChange={this.onOrderMetaChange}
+        onOrderMetaChange={this.onOrderMetaChange}
       />
     );
   };
 
-  myAppointmentForm = connectProps(OrderFormContainer, () => {
+  myOrderForm = connectProps(OrderFormContainer, () => {
     const {
       editingFormVisible,
       editingOrder,
@@ -176,6 +176,7 @@ class OrderCalendar extends React.PureComponent {
 
     return {
       visible: editingFormVisible,
+      serviceID: this.props.serviceID,
       // orderData: currentOrder,
       // commitChanges: this.commitChanges,
       visibleChange: this.toggleEditingFormVisibility,
@@ -185,12 +186,7 @@ class OrderCalendar extends React.PureComponent {
   });
 
   render() {
-    const {
-      currentDate,
-      appointmentMeta,
-      visible,
-      editingFormVisible,
-    } = this.state;
+    const { currentDate, orderMeta, visible, editingFormVisible } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
     // console.log('appointmentMeta', appointmentMeta);
@@ -204,7 +200,7 @@ class OrderCalendar extends React.PureComponent {
               onCurrentDateChange={this.currentDateChange}
             />
             <WeekView startDayHour={6} endDayHour={23} />
-            <Appointments appointmentComponent={this.myAppointment} />
+            <Appointments appointmentComponent={this.myOrderSlot} />
             <Toolbar
               {...(ordersLoading
                 ? { rootComponent: ToolbarWithLoading }
@@ -213,14 +209,16 @@ class OrderCalendar extends React.PureComponent {
             <DateNavigator />
             <AppointmentTooltip
               showCloseButton
+              showOpenButton
+              showDeleteButton
               contentComponent={OrderToolTip}
               visible={visible}
               onVisibilityChange={this.toggleVisibility}
-              appointmentMeta={appointmentMeta}
+              appointmentMeta={orderMeta}
               onAppointmentMetaChange={this.onOrderMetaChange}
             />
             <AppointmentForm
-              overlayComponent={this.myAppointmentForm}
+              overlayComponent={this.myOrderForm}
               visible={editingFormVisible}
               onVisibilityChange={this.toggleEditingFormVisibility}
             />

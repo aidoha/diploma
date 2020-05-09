@@ -23,7 +23,7 @@ const OrderSlotBase = ({
   onClick,
   classes,
   toggleVisibility,
-  onAppointmentMetaChange,
+  onOrderMetaChange,
   ...restProps
 }) => {
   return (
@@ -37,12 +37,12 @@ const OrderSlotBase = ({
         padding: '5px',
       }}
     >
-      <React.Fragment>
+      <>
         <IconButton
           style={{ color: 'white' }}
           onClick={({ target }) => {
             toggleVisibility();
-            onAppointmentMetaChange({
+            onOrderMetaChange({
               target: target.parentElement.parentElement,
               data,
             });
@@ -51,7 +51,7 @@ const OrderSlotBase = ({
           <InfoIcon fontSize='small' />
         </IconButton>
         {children}
-      </React.Fragment>
+      </>
     </Appointments.Appointment>
   );
 };

@@ -1,25 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Grid,
-  ThemeProvider,
-} from '@material-ui/core';
-import { ArrowBack, AddCircle } from '@material-ui/icons';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { DatePicker, theme } from '../../globalStyle';
+import { AppBar, Toolbar, Typography, Box, Grid } from '@material-ui/core';
+import { ArrowBack, ExitToApp } from '@material-ui/icons';
 import { useStyles } from './style';
 
 const OrdersHeader = ({ hasBackArrow }) => {
   const classes = useStyles();
   const { goBack } = useHistory();
+
+  const onLogoutHandler = () => {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = `${window.location.protocol}//${
+      window.location.hostname
+    }${window.location.port ? `:${window.location.port}` : ''}`;
+  };
 
   return (
     <AppBar position='sticky' elevation={1} className={classes.company_toolbar}>
@@ -40,36 +34,9 @@ const OrdersHeader = ({ hasBackArrow }) => {
               </Typography>
             </Box>
           </Grid>
-          {/* <Grid item lg={5} md={5}>
-            <Box
-              display='flex'
-              justifyContent='space-around'
-              alignItems='center'
-            >
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant='inline'
-                  inputVariant='outlined'
-                  format='dd/MM/yyyy'
-                  margin='normal'
-                  label='Дата с'
-                />
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant='inline'
-                  inputVariant='outlined'
-                  format='dd/MM/yyyy'
-                  margin='normal'
-                  label='Дата с'
-                />
-              </MuiPickersUtilsProvider>
-
-              <Box>
-                <AddCircle className={classes.add_icon} />
-              </Box>
-            </Box>
-          </Grid> */}
+          <Grid item>
+            <ExitToApp className={classes.logout} onClick={onLogoutHandler} />
+          </Grid>
         </Grid>
       </Toolbar>
     </AppBar>

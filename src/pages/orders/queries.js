@@ -18,3 +18,31 @@ export const GET_BUSINESS_SERVICE_ORDERS = gql`
     }
   }
 `;
+
+export const CREATE_BUSINESS_SERVICE_ORDER = gql`
+  mutation CreateBusinessServiceOrder(
+    $businessServiceID: ID!
+    $startAt: String!
+    $clientFirstName: String!
+    $clientPhoneNumber: String!
+    $clientPhoneNumberPrefix: String!
+    $clientCommentary: String!
+  ) {
+    createBusinessServiceOrder(
+      input: {
+        businessServiceID: $businessServiceID
+        clientID: 1
+        startAt: $startAt
+        prePaid: false
+        clientFirstName: $clientFirstName
+        clientPhoneNumber: $clientPhoneNumber
+        clientPhoneNumberPrefix: $clientPhoneNumberPrefix
+        clientCommentary: $clientCommentary
+      }
+    ) {
+      businessServiceOrder {
+        businessServiceOrderID
+      }
+    }
+  }
+`;
