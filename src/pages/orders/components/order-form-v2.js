@@ -28,15 +28,18 @@ import { CREATE_BUSINESS_SERVICE_ORDER } from '../queries';
 import { parsePhone } from '../../../utils';
 import { CssTextField } from '../../../globalStyle';
 import { containerStyles } from '../style';
+import { useEffect } from 'react';
 
 const OrderFormContainerBasic = (props) => {
   const {
     classes,
     visible,
+    edited,
     visibleChange,
     target,
     onHide,
     serviceID: businessServiceID,
+    orderMeta,
   } = props;
   const orderState = useSelector((state) => state.order);
   const dispatch = useDispatch();
@@ -85,11 +88,17 @@ const OrderFormContainerBasic = (props) => {
     dispatch(handleClientName(''));
     dispatch(handleClientPhone(''));
     dispatch(handleClientComment(''));
-
     visibleChange();
   };
 
-  console.log('order', orderState);
+  useEffect(() => {
+    if (edited) {
+      dispatch(handleClientName(orderMeta.data.clientFirstName));
+      dispatch(handleClientPhone('+7' + orderMeta.data.clientPhoneNumber));
+      dispatch(handleClientComment(orderMeta.data.clientCommentary));
+      dispatch(handleOrderDate(new Date(orderMeta.data.startAt)));
+    }
+  }, [orderMeta, edited, dispatch]);
 
   return (
     <AppointmentForm.Overlay
@@ -178,7 +187,7 @@ const OrderFormContainerBasic = (props) => {
               !orderState.client.comment
             }
           >
-            Добавить заказ
+            {edited ? 'Сохранить изменения' : 'Добавить заказ'}
           </Button>
         </div>
       </div>

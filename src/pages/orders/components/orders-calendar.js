@@ -11,10 +11,13 @@ import {
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import { Fab, Paper } from '@material-ui/core';
+import { Fab, Paper, Grid } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import OrderSlot from './order-slot';
-import OrderToolTip from './order-tooltip';
+import {
+  Content as ContentToolTip,
+  Header as HeaderToolTip,
+} from './order-tooltip';
 import { OrderFormContainer } from './order-form-v2';
 import ToolbarWithLoading from './toolbar-loading';
 
@@ -39,18 +42,16 @@ class OrderCalendar extends React.PureComponent {
   state = {
     loading: false,
     currentDate: new Date(),
-    visible: false,
+    tooltipVisibility: false,
     orderMeta: {
       target: null,
       data: {},
     },
     confirmationVisible: false,
-    editingFormVisible: false,
-    deletedOrderd: undefined,
-    editingOrder: undefined,
-    previousOrder: undefined,
-    addedOrder: {},
-    isNewOrder: false,
+    form: {
+      visible: false,
+      edited: false,
+    },
   };
 
   currentDateChange = (currentDate) => {
@@ -58,79 +59,20 @@ class OrderCalendar extends React.PureComponent {
   };
 
   toggleVisibility = () => {
-    const { visible: tooltipVisibility } = this.state;
-    this.setState({ visible: !tooltipVisibility });
+    const { tooltipVisibility } = this.state;
+    this.setState({ tooltipVisibility: !tooltipVisibility });
   };
 
   onOrderMetaChange = ({ data, target }) => {
     this.setState({ orderMeta: { data, target } });
   };
 
-  // onEditingAppointmentChange = (editingAppointment) => {
-  //   this.setState({ editingAppointment });
-  // };
-
-  // onAddedAppointmentChange = (addedAppointment) => {
-  //   this.setState({ addedAppointment });
-  //   const { editingAppointment } = this.state;
-  //   if (editingAppointment !== undefined) {
-  //     this.setState({
-  //       previousAppointment: editingAppointment,
-  //     });
-  //   }
-  //   this.setState({ editingAppointment: undefined, isNewAppointment: true });
-  // };
-
-  // setDeletedAppointmentId = (id) => {
-  //   this.setState({ deletedAppointmentId: id });
-  // };
-
-  toggleEditingFormVisibility = () => {
-    const { editingFormVisible } = this.state;
+  toggleFormVisibility = (edited) => {
+    const { form } = this.state;
     this.setState({
-      editingFormVisible: !editingFormVisible,
+      form: { edited, visible: !form.visible },
     });
   };
-
-  // toggleConfirmationVisible = () => {
-  //   const { confirmationVisible } = this.state;
-  //   this.setState({ confirmationVisible: !confirmationVisible });
-  // };
-
-  // commitChanges = ({ added, changed, deleted }) => {
-  //   this.setState((state) => {
-  //     let { data } = state;
-  //     if (added) {
-  //       const startingAddedId =
-  //         data.length > 0 ? data[data.length - 1].id + 1 : 0;
-  //       data = [...data, { id: startingAddedId, ...added }];
-  //     }
-  //     if (changed) {
-  //       data = data.map((appointment) =>
-  //         changed[appointment.id]
-  //           ? { ...appointment, ...changed[appointment.id] }
-  //           : appointment
-  //       );
-  //     }
-  //     if (deleted !== undefined) {
-  //       this.setDeletedAppointmentId(deleted);
-  //       this.toggleConfirmationVisible();
-  //     }
-  //     return { data, addedAppointment: {} };
-  //   });
-  // };
-
-  // commitDeletedAppointment = () => {
-  //   this.setState((state) => {
-  //     const { data, deletedAppointmentId } = state;
-  //     const nextData = data.filter(
-  //       (appointment) => appointment.id !== deletedAppointmentId
-  //     );
-
-  //     return { data: nextData, deletedAppointmentId: null };
-  //   });
-  //   this.toggleConfirmationVisible();
-  // };
 
   componentDidUpdate() {
     this.myOrderForm.update();
@@ -147,49 +89,30 @@ class OrderCalendar extends React.PureComponent {
   };
 
   myOrderForm = connectProps(OrderFormContainer, () => {
-    const {
-      editingFormVisible,
-      editingOrder,
-      addedOrder,
-      isNewOrder,
-      previousOrder,
-    } = this.state;
-    const { ordersData } = this.props;
-
-    // const currentOrder =
-    //   (ordersData &&
-    //     ordersData.filter(
-    //       (order) =>
-    //         editingOrder &&
-    //         order.businessServiceOrderID === editingOrder.businessServiceOrderID
-    //     )[0]) ||
-    //   addedOrder;
-
-    // const cancelOrder = () => {
-    //   if (isNewOrder) {
-    //     this.setState({
-    //       editingOrder: previousOrder,
-    //       isNewOrder: false,
-    //     });
-    //   }
-    // };
-
+    const { form, orderMeta } = this.state;
     return {
-      visible: editingFormVisible,
+      visible: form.visible,
+      edited: form.edited,
       serviceID: this.props.serviceID,
-      // orderData: currentOrder,
-      // commitChanges: this.commitChanges,
-      visibleChange: this.toggleEditingFormVisibility,
-      // onEditingAppointmentChange: this.onEditingAppointmentChange,
-      // cancelOrder,
+      orderMeta,
+      visibleChange: this.toggleFormVisibility,
+    };
+  });
+
+  headerTooltip = connectProps(HeaderToolTip, () => {
+    const { form } = this.state;
+    return {
+      onVisibilityChange: this.toggleVisibility,
+      visible: form.visible,
+      editFormVisibleChange: this.toggleFormVisibility,
     };
   });
 
   render() {
-    const { currentDate, orderMeta, visible, editingFormVisible } = this.state;
+    const { currentDate, orderMeta, tooltipVisibility, form } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
-    // console.log('appointmentMeta', appointmentMeta);
+
     return (
       <>
         <Paper>
@@ -208,31 +131,26 @@ class OrderCalendar extends React.PureComponent {
             />
             <DateNavigator />
             <AppointmentTooltip
-              showCloseButton
-              showOpenButton
-              showDeleteButton
-              contentComponent={OrderToolTip}
-              visible={visible}
+              headerComponent={this.headerTooltip}
+              contentComponent={ContentToolTip}
+              visible={tooltipVisibility}
               onVisibilityChange={this.toggleVisibility}
               appointmentMeta={orderMeta}
               onAppointmentMetaChange={this.onOrderMetaChange}
             />
             <AppointmentForm
               overlayComponent={this.myOrderForm}
-              visible={editingFormVisible}
-              onVisibilityChange={this.toggleEditingFormVisibility}
+              visible={form.visible}
+              edited={form.edited}
+              appointmentMeta={orderMeta}
+              onVisibilityChange={this.toggleFormVisibility}
             />
           </Scheduler>
           <Fab
             color='secondary'
             className={classes.addButton}
             onClick={() => {
-              this.setState({ editingFormVisible: true });
-              // this.onEditingAppointmentChange(undefined);
-              // this.onAddedAppointmentChange({
-              //   startDate: new Date(currentDate),
-              //   endDate: new Date(currentDate),
-              // });
+              this.setState({ form: { visible: true } });
             }}
           >
             <AddIcon />
