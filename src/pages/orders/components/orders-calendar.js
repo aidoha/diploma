@@ -11,7 +11,7 @@ import {
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import { Fab, Paper, Grid } from '@material-ui/core';
+import { Fab, Paper } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import OrderSlot from './order-slot';
 import {
@@ -35,6 +35,11 @@ const styles = (theme) => ({
     position: 'absolute',
     bottom: theme.spacing(1) * 3,
     right: theme.spacing(1) * 4,
+    backgroundColor: '#8282ff',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#7654ff',
+    },
   },
 });
 
@@ -122,7 +127,7 @@ class OrderCalendar extends React.PureComponent {
               currentViewName='Week'
               onCurrentDateChange={this.currentDateChange}
             />
-            <WeekView startDayHour={6} endDayHour={23} />
+            <WeekView startDayHour={8} endDayHour={23} />
             <Appointments appointmentComponent={this.myOrderSlot} />
             <Toolbar
               {...(ordersLoading
@@ -147,11 +152,8 @@ class OrderCalendar extends React.PureComponent {
             />
           </Scheduler>
           <Fab
-            color='secondary'
             className={classes.addButton}
-            onClick={() => {
-              this.setState({ form: { visible: true } });
-            }}
+            onClick={() => this.setState({ form: { visible: true } })}
           >
             <AddIcon />
           </Fab>

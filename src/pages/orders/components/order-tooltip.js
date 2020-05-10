@@ -1,8 +1,16 @@
 import React from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Grid, Box } from '@material-ui/core';
-import { Edit, Delete, Close } from '@material-ui/icons';
+import { Box } from '@material-ui/core';
+import {
+  Edit,
+  Delete,
+  Close,
+  Comment,
+  Person,
+  Schedule,
+} from '@material-ui/icons';
+import { format, toDate } from 'date-fns';
 
 const style = ({ palette }) => ({
   icon: {
@@ -22,6 +30,10 @@ const classes = makeStyles({
     },
   },
 });
+
+const parseDate = (date) => {
+  return format(new Date(date), 'HH:mm');
+};
 
 export const Header = ({
   appointmentData,
@@ -69,16 +81,24 @@ export const Header = ({
 };
 
 export const Content = withStyles(style, { name: 'Content' })(
-  ({ appointmentData, ...restProps }) => (
-    <AppointmentTooltip.Content
-      {...restProps}
-      appointmentData={appointmentData}
-    >
-      <Grid container alignItems='center'>
-        <Grid item lg={8} md={8} xs={10}>
-          <span>{appointmentData.clientCommentary}</span>
-        </Grid>
-      </Grid>
-    </AppointmentTooltip.Content>
+  ({ appointmentData }) => (
+    <Box display='flex' flexDirection='column' padding='0 25px 25px 25px'>
+      {console.log('data', new Date(appointmentData.startAt).getDay())}
+      <Box display='flex' alignItems='center'>
+        <Person color='action' />
+        <span>{appointmentData.clientFirstName}</span>
+      </Box>
+      <Box display='flex' alignItems='center'>
+        <Schedule color='action' />
+        <span>
+          {parseDate(appointmentData.startAt)} -
+          {parseDate(appointmentData.endAt)}
+        </span>
+      </Box>
+      <Box display='flex' alignItems='center'>
+        <Comment color='action' />
+        <span>{appointmentData.clientCommentary}</span>
+      </Box>
+    </Box>
   )
 );
