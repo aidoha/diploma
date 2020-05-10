@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import {
   Edit,
@@ -10,16 +10,7 @@ import {
   Person,
   Schedule,
 } from '@material-ui/icons';
-import { format, toDate } from 'date-fns';
-
-const style = ({ palette }) => ({
-  icon: {
-    color: palette.action.active,
-  },
-  textCenter: {
-    textAlign: 'center',
-  },
-});
+import { format } from 'date-fns';
 
 const classes = makeStyles({
   order_actions: {
@@ -28,6 +19,9 @@ const classes = makeStyles({
     '&:hover': {
       color: '#8282ff',
     },
+  },
+  order_info: {
+    marginLeft: '15px',
   },
 });
 
@@ -80,25 +74,26 @@ export const Header = ({
   );
 };
 
-export const Content = withStyles(style, { name: 'Content' })(
-  ({ appointmentData }) => (
-    <Box display='flex' flexDirection='column' padding='0 25px 25px 25px'>
-      {console.log('data', new Date(appointmentData.startAt).getDay())}
-      <Box display='flex' alignItems='center'>
-        <Person color='action' />
-        <span>{appointmentData.clientFirstName}</span>
-      </Box>
-      <Box display='flex' alignItems='center'>
-        <Schedule color='action' />
-        <span>
-          {parseDate(appointmentData.startAt)} -
-          {parseDate(appointmentData.endAt)}
-        </span>
-      </Box>
-      <Box display='flex' alignItems='center'>
-        <Comment color='action' />
-        <span>{appointmentData.clientCommentary}</span>
-      </Box>
+export const Content = ({ appointmentData }) => (
+  <Box display='flex' flexDirection='column' padding='0 25px 25px 25px'>
+    <Box display='flex' alignItems='center' margin='10px'>
+      <Person color='action' />
+      <span className={classes().order_info}>
+        {appointmentData.clientFirstName}
+      </span>
     </Box>
-  )
+    <Box display='flex' alignItems='center' margin='10px'>
+      <Schedule color='action' />
+      <span className={classes().order_info}>
+        {parseDate(appointmentData.startAt)} -{' '}
+        {parseDate(appointmentData.endAt)}
+      </span>
+    </Box>
+    <Box display='flex' alignItems='center' margin='10px'>
+      <Comment color='action' />
+      <span className={classes().order_info}>
+        {appointmentData.clientCommentary}
+      </span>
+    </Box>
+  </Box>
 );
