@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import InputMask from 'react-input-mask';
-import { formatISO } from 'date-fns';
+import { formatISO, format } from 'date-fns';
 import { AppointmentForm } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -24,11 +24,13 @@ import {
   handleClientComment,
   handleOrderDate,
 } from '../../../redux/order/action';
-import { CREATE_BUSINESS_SERVICE_ORDER } from '../queries';
+import {
+  CREATE_BUSINESS_SERVICE_ORDER,
+  GET_ORDER_AVAILABLE_HOURS,
+} from '../queries';
 import { parsePhone } from '../../../utils';
 import { CssTextField } from '../../../globalStyle';
 import { containerStyles } from '../style';
-import { useEffect } from 'react';
 
 const OrderFormContainerBasic = (props) => {
   const {
@@ -44,9 +46,22 @@ const OrderFormContainerBasic = (props) => {
   const orderState = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
+  const { data: availableHours, loading: availableHoursLoading } = useQuery(
+    GET_ORDER_AVAILABLE_HOURS,
+    {
+      variables: {
+        businessServiceID: parseInt(businessServiceID, 10),
+        date: format(new Date(orderState.date), 'yyyy-MM-dd'),
+      },
+      // skip: orderState.date === new Date(),
+    }
+  );
   const [createBusinessServiceOrder, { loading }] = useMutation(
     CREATE_BUSINESS_SERVICE_ORDER
   );
+
+  console.log('availableHours', availableHours);
+  // console.log('date', format(orderState.date, 'yyyy-MM-dd'));
 
   const onSubmit = () => {
     const obj = {
@@ -57,8 +72,6 @@ const OrderFormContainerBasic = (props) => {
       clientPhoneNumberPrefix: '+7',
       clientCommentary: orderState.client.comment,
     };
-
-    console.log('obj =>', obj);
 
     // createBusinessServiceOrder({ variables: obj })
     //   .then((res) => console.log('res', res))

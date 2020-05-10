@@ -46,3 +46,16 @@ export const CREATE_BUSINESS_SERVICE_ORDER = gql`
     }
   }
 `;
+
+export const GET_ORDER_AVAILABLE_HOURS = gql`
+  query GetBusinessServiceAvailableHours(
+    $businessServiceID: ID!
+    $date: String!
+  ) {
+    getCompanyAvailableHoursByDate(
+      input: { businessServiceID: $businessServiceID, date: $date }
+    ) {
+      availableHour
+    }
+  }
+`;

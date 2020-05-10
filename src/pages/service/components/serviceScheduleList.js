@@ -89,6 +89,8 @@ const ServiceScheduleList = (props) => {
     const existDay = scheduleState.week.find(
       (item) => item.dayOfWeek === obj.dayOfWeek
     );
+
+    console.log('obj', obj);
     if (existDay) {
       dispatch(
         handleErrorStatus({

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { format } from 'date-fns';
 import {
   Grid,
   Box,
@@ -38,11 +39,12 @@ const ServiceSchedule = ({
   };
 
   const onChangeStartTime = (day, value) => {
-    dispatch(handleStartTime(day, value));
+    // console.log('start time', value + ':00');
+    dispatch(handleStartTime(day, value + ':00'));
   };
 
   const onChangeFinishTime = (day, value) => {
-    dispatch(handleFinishTime(day, value));
+    dispatch(handleFinishTime(day, value + ':00'));
   };
 
   const onChangeSelectedDay = (id) => {

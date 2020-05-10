@@ -49,8 +49,6 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
     );
   }
 
-  console.log('companyServices', companyServices);
-
   return (
     <Grid
       container
