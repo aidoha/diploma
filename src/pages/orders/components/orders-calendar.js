@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatISO } from 'date-fns';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import { connectProps } from '@devexpress/dx-react-core';
 import {
@@ -20,12 +21,13 @@ import {
 } from './order-tooltip';
 import { OrderFormContainer } from './order-form-v2';
 import ToolbarWithLoading from './toolbar-loading';
+import { convertUTCDateToLocalDate } from '../../../utils';
 
 const mapOrderData = (order) => {
   return {
     ...order,
-    startDate: order.startAt,
-    endDate: order.endAt,
+    startDate: formatISO(convertUTCDateToLocalDate(new Date(order.startAt))),
+    endDate: formatISO(convertUTCDateToLocalDate(new Date(order.endAt))),
     title: order.clientFirstName,
   };
 };
@@ -117,6 +119,8 @@ class OrderCalendar extends React.PureComponent {
     const { currentDate, orderMeta, tooltipVisibility, form } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
+
+    // console.log('formattedData', formattedData);
 
     return (
       <>

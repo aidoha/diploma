@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { format } from 'date-fns';
+import moment from 'moment';
 import {
   Grid,
   Box,
@@ -39,16 +39,19 @@ const ServiceSchedule = ({
   };
 
   const onChangeStartTime = (day, value) => {
-    // console.log('start time', value + ':00');
-    dispatch(handleStartTime(day, value + ':00'));
+    dispatch(handleStartTime(day, formatTime(value)));
   };
 
   const onChangeFinishTime = (day, value) => {
-    dispatch(handleFinishTime(day, value + ':00'));
+    dispatch(handleFinishTime(day, formatTime(value)));
   };
 
   const onChangeSelectedDay = (id) => {
     dispatch(handleSelectedDay(id));
+  };
+
+  const formatTime = (time) => {
+    return moment(time, 'HH:mm:ss').format('HH:mm:ss');
   };
 
   return (
@@ -83,8 +86,8 @@ const ServiceSchedule = ({
             variant='outlined'
             type='time'
             error={openTime === ''}
-            value={openTime}
-            onChange={(e) => onChangeStartTime(dayOfWeek, e.target.value)}
+            defaultValue={openTime}
+            onBlur={(e) => onChangeStartTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
             disabled={!added && !edited}
           />
@@ -93,8 +96,8 @@ const ServiceSchedule = ({
             variant='outlined'
             type='time'
             error={closeTime === ''}
-            value={closeTime}
-            onChange={(e) => onChangeFinishTime(dayOfWeek, e.target.value)}
+            defaultValue={closeTime}
+            onBlur={(e) => onChangeFinishTime(dayOfWeek, e.target.value)}
             className={classes.textfield}
             disabled={!added && !edited}
           />

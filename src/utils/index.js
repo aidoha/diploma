@@ -42,3 +42,14 @@ export const parsePhone = (phone = '') => {
     .splice(2, phone.length)
     .join('');
 };
+
+export const convertUTCDateToLocalDate = (date) => {
+  let newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+  let offset = date.getTimezoneOffset() / 60;
+  let hours = date.getHours();
+
+  newDate.setHours(hours + offset);
+
+  return newDate;
+};

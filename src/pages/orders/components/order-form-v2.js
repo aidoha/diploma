@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import InputMask from 'react-input-mask';
@@ -10,7 +10,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Box } from '@material-ui/core';
 import {
   Close,
   CalendarToday,
@@ -28,7 +28,7 @@ import {
   CREATE_BUSINESS_SERVICE_ORDER,
   GET_ORDER_AVAILABLE_HOURS,
 } from '../queries';
-import { parsePhone } from '../../../utils';
+import { parsePhone, convertUTCDateToLocalDate } from '../../../utils';
 import { CssTextField } from '../../../globalStyle';
 import { containerStyles } from '../style';
 
@@ -43,6 +43,7 @@ const OrderFormContainerBasic = (props) => {
     serviceID: businessServiceID,
     orderMeta,
   } = props;
+  const [dateChanged, setDateChanged] = useState(false);
   const orderState = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
@@ -53,15 +54,18 @@ const OrderFormContainerBasic = (props) => {
         businessServiceID: parseInt(businessServiceID, 10),
         date: format(new Date(orderState.date), 'yyyy-MM-dd'),
       },
-      // skip: orderState.date === new Date(),
+      skip: !dateChanged,
     }
   );
   const [createBusinessServiceOrder, { loading }] = useMutation(
     CREATE_BUSINESS_SERVICE_ORDER
   );
 
-  console.log('availableHours', availableHours);
-  // console.log('date', format(orderState.date, 'yyyy-MM-dd'));
+  // console.log(
+  //   'availableHours',
+  //   availableHours?.getCompanyAvailableHoursByDate?.availableHour
+  // );
+  // console.log('date');
 
   const onSubmit = () => {
     const obj = {
@@ -91,6 +95,7 @@ const OrderFormContainerBasic = (props) => {
         break;
       case 'order-date':
         dispatch(handleOrderDate(formatISO(value)));
+        setDateChanged(true);
         break;
       default:
         return null;
@@ -173,6 +178,17 @@ const OrderFormContainerBasic = (props) => {
                 onChange={(value) => onChangeTextField('order-date', value)}
               />
             </MuiPickersUtilsProvider>
+          </div>
+          <div className={classes.wrapper}>
+            {availableHours?.getCompanyAvailableHoursByDate?.availableHour.map(
+              (item) => {
+                return (
+                  <div>
+                    {format(convertUTCDateToLocalDate(new Date(item)), 'HH:mm')}
+                  </div>
+                );
+              }
+            )}
           </div>
           <div className={classes.wrapper}>
             <Comment className={classes.icon} color='action' />
