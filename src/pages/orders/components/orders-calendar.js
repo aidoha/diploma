@@ -19,7 +19,7 @@ import {
   Content as ContentToolTip,
   Header as HeaderToolTip,
 } from './order-tooltip';
-import { OrderFormContainer } from './order-form-v2';
+import { OrderFormContainer } from './order-form';
 import ToolbarWithLoading from './toolbar-loading';
 import { convertUTCDateToLocalDate } from '../../../utils';
 
@@ -119,8 +119,6 @@ class OrderCalendar extends React.PureComponent {
     const { currentDate, orderMeta, tooltipVisibility, form } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
-
-    // console.log('formattedData', formattedData);
 
     return (
       <>

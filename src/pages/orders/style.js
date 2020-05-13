@@ -1,4 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
+
+export const Spinner = styled(CircularProgress)((props) => ({
+  color: 'white',
+  height: `${props.height} !important`,
+  width: `${props.width} !important`,
+}));
 
 export const useStyles = makeStyles({
   service_item: {

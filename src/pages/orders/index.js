@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { Grid, Box } from '@material-ui/core';
-import { MainLayout, Loader } from '../../components';
+import { MainLayout, Loader, Statuses } from '../../components';
 import ServiceItem from './components/serviceItem';
 import OrdersCalendar from './components/orders-calendar';
 import withCurrentUser from '../../hoc/currentUser';
@@ -88,6 +88,7 @@ const Orders = (props) => {
           serviceID={serviceID}
         />
       )}
+      <Statuses />
     </MainLayout>
   );
 };

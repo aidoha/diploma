@@ -11,6 +11,7 @@ import {
   Schedule,
 } from '@material-ui/icons';
 import { format } from 'date-fns';
+import { convertUTCDateToLocalDate } from '../../../utils';
 
 const classes = makeStyles({
   order_actions: {
@@ -85,8 +86,11 @@ export const Content = ({ appointmentData }) => (
     <Box display='flex' alignItems='center' margin='10px'>
       <Schedule color='action' />
       <span className={classes().order_info}>
-        {parseDate(appointmentData.startAt)} -{' '}
-        {parseDate(appointmentData.endAt)}
+        {parseDate(
+          convertUTCDateToLocalDate(new Date(appointmentData.startAt))
+        )}{' '}
+        -{' '}
+        {parseDate(convertUTCDateToLocalDate(new Date(appointmentData.endAt)))}
       </span>
     </Box>
     <Box display='flex' alignItems='center' margin='10px'>
