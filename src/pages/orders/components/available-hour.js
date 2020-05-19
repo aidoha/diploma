@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import { convertUTCDateToLocalDate } from '../../../utils';
 
 const AvailableHour = ({ item, selectAvailableHour, availableHour }) => {
+  console.log('item', item);
   return (
     <Box
       border='1px solid #8282ff'
