@@ -24,7 +24,9 @@ import {
   handleClientPhone,
   handleClientComment,
   handleOrderDate,
-} from '../../../redux/order/action';
+  handleCreateOrder,
+  handleUpdateOrder,
+} from '../../../redux/order/actions';
 import {
   handleSuccessStatus,
   handleErrorStatus,
@@ -86,7 +88,21 @@ const OrderFormContainerBasic = (props) => {
               type === 'create' ? succeses.order.add : succeses.order.edit,
           })
         );
-        setTimeout(() => window.location.reload(), 1000);
+
+        if (type === 'create') {
+          dispatch(
+            handleCreateOrder(
+              res.data?.createBusinessServiceOrder?.businessServiceOrder
+            )
+          );
+        } else if (type === 'update') {
+          setTimeout(() => window.location.reload(), 1000);
+          // dispatch(
+          //   handleUpdateOrder(
+          //     res.data?.UpdateBusinessServiceOrder?.businessServiceOrder
+          //   )
+          // );
+        }
       }
     } catch (err) {
       dispatch(handleErrorStatus({ value: true, message: errors.general }));

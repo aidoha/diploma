@@ -33,6 +33,7 @@ import {
   handleSuccessStatus,
   handleErrorStatus,
 } from '../../../redux/statuses/actions';
+import { handleDeleteOrder } from '../../../redux/order/actions';
 import { succeses, errors } from '../../../constants/statuses';
 
 const mapOrderData = (order) => {
@@ -135,7 +136,13 @@ class OrderCalendar extends React.PureComponent {
             message: succeses.order.delete,
           })
         );
-        setTimeout(() => window.location.reload(), 1000);
+        dispatch(
+          handleDeleteOrder(
+            res.data?.DeleteBusinessServiceOrder?.businessServiceOrder
+          )
+        );
+        this.handleConfirmModal();
+        this.toggleVisibility();
       }
     } catch (err) {
       dispatch(handleErrorStatus({ value: true, message: errors.general }));
@@ -163,8 +170,6 @@ class OrderCalendar extends React.PureComponent {
     } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
-
-    console.log('orderMeta.data', orderMeta.data.businessServiceOrderID);
 
     return (
       <>

@@ -42,6 +42,16 @@ export const CREATE_BUSINESS_SERVICE_ORDER = gql`
     ) {
       businessServiceOrder {
         businessServiceOrderID
+        clientID
+        businessServiceID
+        startAt
+        endAt
+        createdAt
+        prePaid
+        clientFirstName
+        clientPhoneNumber
+        clientPhoneNumberPrefix
+        clientCommentary
       }
     }
   }

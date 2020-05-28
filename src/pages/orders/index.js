@@ -12,6 +12,7 @@ import {
   handleCompanyServices,
   handleResetCompanyServices,
 } from '../../redux/company/actions';
+import { getOrderList } from '../../redux/order/actions';
 import { GET_BUSINESS_COMPANY_SERVICES } from '../company/queries';
 import {
   GET_BUSINESS_SERVICE_ORDERS,
@@ -27,7 +28,9 @@ const Orders = (props) => {
     props.currentUser[0].businessCompanyID;
   const dispatch = useDispatch();
   const companyState = useSelector((state) => state.company);
+  const orderState = useSelector((state) => state.order);
   const { companyServices } = companyState;
+  const { orderList } = orderState;
 
   const { data: ordersData, loading: ordersLoading } = useQuery(
     GET_BUSINESS_SERVICE_ORDERS,
@@ -46,6 +49,7 @@ const Orders = (props) => {
 
   const services =
     companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
+  const orders = ordersData?.getBusinessServiceOrders?.businessServicesOrders;
 
   useEffect(() => {
     if (services) {
@@ -58,6 +62,12 @@ const Orders = (props) => {
       dispatch(handleCompanyServices([]));
     };
   }, [services, dispatch]);
+
+  useEffect(() => {
+    if (orders) {
+      dispatch(getOrderList(orders));
+    }
+  }, [orders, dispatch]);
 
   useEffect(() => {
     document.title = 'Заказы | Cactus';
@@ -86,9 +96,7 @@ const Orders = (props) => {
       )}
       {!companyServicesLoading && !ordersLoading && serviceID && ordersData && (
         <OrdersCalendar
-          ordersData={
-            ordersData?.getBusinessServiceOrders?.businessServicesOrders
-          }
+          ordersData={orderList}
           ordersLoading={ordersLoading}
           serviceID={serviceID}
           deleteBusinessOrder={deleteBusinessOrder}
