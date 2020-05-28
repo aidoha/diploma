@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Grid, Box } from '@material-ui/core';
 import { MainLayout, Loader, Statuses } from '../../components';
 import ServiceItem from './components/serviceItem';
 import OrdersCalendar from './components/orders-calendar';
 import withCurrentUser from '../../hoc/currentUser';
 import withApollo from '../../hoc/withApollo';
-import { GET_BUSINESS_COMPANY_SERVICES } from '../company/queries';
 import {
   handleCompanyServices,
   handleResetCompanyServices,
 } from '../../redux/company/actions';
-import { GET_BUSINESS_SERVICE_ORDERS } from './queries';
+import { GET_BUSINESS_COMPANY_SERVICES } from '../company/queries';
+import {
+  GET_BUSINESS_SERVICE_ORDERS,
+  DELETE_BUSINESS_SERVICE_ORDER,
+} from './queries';
 
 const Orders = (props) => {
   const { id: serviceID } = useParams();
@@ -39,6 +42,8 @@ const Orders = (props) => {
   } = useQuery(GET_BUSINESS_COMPANY_SERVICES, {
     variables: { businessCompanyID },
   });
+  const [deleteBusinessOrder] = useMutation(DELETE_BUSINESS_SERVICE_ORDER);
+
   const services =
     companyServicesData?.getBusinessCompanyServices?.businessCompanyService;
 
@@ -86,6 +91,8 @@ const Orders = (props) => {
           }
           ordersLoading={ordersLoading}
           serviceID={serviceID}
+          deleteBusinessOrder={deleteBusinessOrder}
+          dispatch={dispatch}
         />
       )}
       <Statuses />

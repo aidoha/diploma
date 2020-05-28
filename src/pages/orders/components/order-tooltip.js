@@ -34,6 +34,7 @@ export const Header = ({
   appointmentData,
   onVisibilityChange,
   editFormVisibleChange,
+  deleteModalVisibleChange,
   commandButtonComponent,
   commandButtonIds,
   onHide,
@@ -64,7 +65,11 @@ export const Header = ({
           className={classes().order_actions}
           onClick={editOrderVisibilityHandler}
         />
-        <Delete color='action' className={classes().order_actions} />
+        <Delete
+          color='action'
+          className={classes().order_actions}
+          onClick={deleteModalVisibleChange}
+        />
         <Close
           color='action'
           className={classes().order_actions}

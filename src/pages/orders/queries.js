@@ -85,6 +85,16 @@ export const UPDATE_BUSINESS_SERVICE_ORDER = gql`
   }
 `;
 
+export const DELETE_BUSINESS_SERVICE_ORDER = gql`
+  mutation DeleteCustomerOrders($orderID: ID!) {
+    DeleteBusinessServiceOrder(input: { orderID: $orderID }) {
+      businessServiceOrder {
+        businessServiceOrderID
+      }
+    }
+  }
+`;
+
 export const GET_ORDER_AVAILABLE_HOURS = gql`
   query GetBusinessServiceAvailableHours(
     $businessServiceID: ID!

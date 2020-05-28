@@ -12,7 +12,14 @@ import {
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import { Fab, Paper } from '@material-ui/core';
+import {
+  Fab,
+  Paper,
+  Dialog,
+  DialogActions,
+  Button,
+  DialogTitle,
+} from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import OrderSlot from './order-slot';
 import {
@@ -22,6 +29,11 @@ import {
 import { OrderFormContainer } from './order-form';
 import ToolbarWithLoading from './toolbar-loading';
 import { convertUTCDateToLocalDate } from '../../../utils';
+import {
+  handleSuccessStatus,
+  handleErrorStatus,
+} from '../../../redux/statuses/actions';
+import { succeses, errors } from '../../../constants/statuses';
 
 const mapOrderData = (order) => {
   return {
@@ -59,6 +71,11 @@ class OrderCalendar extends React.PureComponent {
       visible: false,
       edited: false,
     },
+    confirmModal: false,
+  };
+
+  handleConfirmModal = () => {
+    this.setState({ confirmModal: !this.state.confirmModal });
   };
 
   currentDateChange = (currentDate) => {
@@ -106,19 +123,48 @@ class OrderCalendar extends React.PureComponent {
     };
   });
 
+  deleteOrder = async (orderID) => {
+    const { deleteBusinessOrder, dispatch } = this.props;
+    try {
+      const res = await deleteBusinessOrder({ variables: { orderID } });
+
+      if (res.data) {
+        dispatch(
+          handleSuccessStatus({
+            value: true,
+            message: succeses.order.delete,
+          })
+        );
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    } catch (err) {
+      dispatch(handleErrorStatus({ value: true, message: errors.general }));
+    }
+  };
+
   headerTooltip = connectProps(HeaderToolTip, () => {
     const { form } = this.state;
     return {
       onVisibilityChange: this.toggleVisibility,
       visible: form.visible,
       editFormVisibleChange: this.toggleFormVisibility,
+      deleteModalVisibleChange: this.handleConfirmModal,
+      deleteOrder: this.deleteOrder,
     };
   });
 
   render() {
-    const { currentDate, orderMeta, tooltipVisibility, form } = this.state;
+    const {
+      currentDate,
+      orderMeta,
+      tooltipVisibility,
+      form,
+      confirmModal,
+    } = this.state;
     const { classes, ordersData, ordersLoading } = this.props;
     const formattedData = ordersData ? ordersData.map(mapOrderData) : [];
+
+    console.log('orderMeta.data', orderMeta.data.businessServiceOrderID);
 
     return (
       <>
@@ -159,6 +205,25 @@ class OrderCalendar extends React.PureComponent {
           >
             <AddIcon />
           </Fab>
+          <Dialog open={confirmModal} onClose={this.handleConfirmModal}>
+            <DialogTitle>
+              Вы действительно хотите удалить запись{' '}
+              {orderMeta.data.clientFirstName}?
+            </DialogTitle>
+            <DialogActions>
+              <Button color='default' onClick={this.handleConfirmModal}>
+                Отменить
+              </Button>
+              <Button
+                color='primary'
+                onClick={() =>
+                  this.deleteOrder(orderMeta.data.businessServiceOrderID)
+                }
+              >
+                Удалить
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Paper>
       </>
     );
