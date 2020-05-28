@@ -32,6 +32,7 @@ import {
 import { succeses, errors } from '../../../constants/statuses';
 import {
   CREATE_BUSINESS_SERVICE_ORDER,
+  UPDATE_BUSINESS_SERVICE_ORDER,
   GET_ORDER_AVAILABLE_HOURS,
 } from '../queries';
 import { parsePhone } from '../../../utils';
@@ -57,23 +58,44 @@ const OrderFormContainerBasic = (props) => {
   const orderState = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
-  const { data: availableHours, loading: availableHoursLoading } = useQuery(
-    GET_ORDER_AVAILABLE_HOURS,
-    {
-      variables: {
-        businessServiceID: parseInt(businessServiceID, 10),
-        date: format(new Date(orderState.date), 'yyyy-MM-dd'),
-      },
-      skip: !dateChanged,
-    }
-  );
-  const [createBusinessServiceOrder, { loading }] = useMutation(
+  const { data: availableHours } = useQuery(GET_ORDER_AVAILABLE_HOURS, {
+    variables: {
+      businessServiceID: parseInt(businessServiceID, 10),
+      date: format(new Date(orderState.date), 'yyyy-MM-dd'),
+    },
+    skip: !dateChanged,
+  });
+  const [createBusinessServiceOrder, { loading: createLoading }] = useMutation(
     CREATE_BUSINESS_SERVICE_ORDER
   );
+  const [updateBusinessServiceOrder, { loading: updateLoading }] = useMutation(
+    UPDATE_BUSINESS_SERVICE_ORDER
+  );
 
-  const onSubmit = () => {
+  const saveOrder = async (type, obj) => {
+    try {
+      const res =
+        type === 'create'
+          ? await createBusinessServiceOrder({ variables: obj })
+          : await updateBusinessServiceOrder({ variables: obj });
+      if (res.data) {
+        dispatch(
+          handleSuccessStatus({
+            value: true,
+            message:
+              type === 'create' ? succeses.order.add : succeses.order.edit,
+          })
+        );
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    } catch (err) {
+      dispatch(handleErrorStatus({ value: true, message: errors.general }));
+    }
+  };
+
+  const onSubmit = async () => {
     const obj = {
-      businessServiceID,
+      businessServiceID: parseInt(businessServiceID, 10),
       startAt: availableHour.hourValue,
       clientFirstName: orderState.client.name,
       clientPhoneNumber: parsePhone(orderState.client.phone),
@@ -81,23 +103,12 @@ const OrderFormContainerBasic = (props) => {
       clientCommentary: orderState.client.comment,
     };
 
-    console.log('obj', obj);
-
-    createBusinessServiceOrder({ variables: obj })
-      .then((res) => {
-        if (res.data) {
-          dispatch(
-            handleSuccessStatus({
-              value: true,
-              message: succeses.order.add,
-            })
-          );
-          setTimeout(() => window.location.reload(), 1000);
-        }
-      })
-      .catch(() =>
-        dispatch(handleErrorStatus({ value: true, message: errors.general }))
-      );
+    if (!edited) {
+      saveOrder('create', obj);
+    } else {
+      obj.orderID = orderMeta.data.businessServiceOrderID;
+      saveOrder('update', obj);
+    }
   };
 
   const onChangeTextField = (name, value) => {
@@ -244,7 +255,11 @@ const OrderFormContainerBasic = (props) => {
               !orderState.client.comment ||
               !availableHour.hourValue
             }
-            endIcon={loading && <Spinner width='20px' height='20px' />}
+            endIcon={
+              (createLoading || updateLoading) && (
+                <Spinner width='20px' height='20px' />
+              )
+            }
           >
             {edited ? 'Сохранить изменения' : 'Добавить заказ'}
           </Button>

@@ -31,7 +31,7 @@ export const CREATE_BUSINESS_SERVICE_ORDER = gql`
     createBusinessServiceOrder(
       input: {
         businessServiceID: $businessServiceID
-        clientID: 1
+        clientID: 2
         startAt: $startAt
         prePaid: false
         clientFirstName: $clientFirstName
@@ -42,6 +42,44 @@ export const CREATE_BUSINESS_SERVICE_ORDER = gql`
     ) {
       businessServiceOrder {
         businessServiceOrderID
+      }
+    }
+  }
+`;
+
+export const UPDATE_BUSINESS_SERVICE_ORDER = gql`
+  mutation UpdateBusinessServiceOrder(
+    $orderID: ID!
+    $businessServiceID: ID!
+    $startAt: String!
+    $clientFirstName: String!
+    $clientPhoneNumber: String!
+    $clientPhoneNumberPrefix: String!
+    $clientCommentary: String!
+  ) {
+    UpdateBusinessServiceOrder(
+      input: {
+        orderID: $orderID
+        businessServiceID: $businessServiceID
+        startAt: $startAt
+        prePaid: false
+        clientFirstName: $clientFirstName
+        clientPhoneNumber: $clientPhoneNumber
+        clientPhoneNumberPrefix: $clientPhoneNumberPrefix
+        clientCommentary: $clientCommentary
+      }
+    ) {
+      businessServiceOrder {
+        businessServiceID
+        createdAt
+        businessServiceOrderID
+        endAt
+        startAt
+        clientCommentary
+        clientPhoneNumber
+        clientPhoneNumberPrefix
+        clientFirstName
+        prePaid
       }
     }
   }
