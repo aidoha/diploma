@@ -19,22 +19,22 @@ const SignIn = () => {
     }${window.location.port ? `:${window.location.port}` : ''}${
       routes.company
     }`;
+  } else {
+    return (
+      <>
+        <Topbar />
+        <Container maxWidth='xs' className={classes.auth__container}>
+          <Typography component='h1' variant='h5'>
+            Войти
+          </Typography>
+          <Grid container alignItems='center'>
+            <AuthForm />
+          </Grid>
+        </Container>
+        <Statuses />
+      </>
+    );
   }
-
-  return (
-    <>
-      <Topbar />
-      <Container maxWidth='xs' className={classes.auth__container}>
-        <Typography component='h1' variant='h5'>
-          Войти
-        </Typography>
-        <Grid container alignItems='center'>
-          <AuthForm />
-        </Grid>
-      </Container>
-      <Statuses />
-    </>
-  );
 };
 
 export default withApollo(SignIn);

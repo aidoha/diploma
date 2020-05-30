@@ -55,9 +55,9 @@ const MainMenu = (props) => {
                     onClick={() => push(routes.company)}
                   />
                 )}
-                {icon.value === 'profile' && (
+                {/* {icon.value === 'profile' && (
                   <AccountCircleRounded fontSize='large' />
-                )}
+                )} */}
               </>
             </ListItemIcon>
           </ListItem>
