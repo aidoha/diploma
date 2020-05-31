@@ -5,7 +5,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: 'http://46.101.138.224:8080/query',
+  uri: 'https://46.101.138.224:8080/query',
   cache,
 });
 
