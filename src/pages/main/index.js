@@ -18,19 +18,18 @@ const Main = () => {
     }${window.location.port ? `:${window.location.port}` : ''}${
       routes.company
     }`;
-  } else {
-    return (
-      <>
-        <Topbar />
-        <Grid container justify='center' className={classes.container_hello}>
-          <HelloSection classes={classes} />
-        </Grid>
-        <Grid container justify='center' className={classes.container_category}>
-          <CategorySection classes={classes} />
-        </Grid>
-      </>
-    );
   }
+  return (
+    <>
+      <Topbar />
+      <Grid container justify='center' className={classes.container_hello}>
+        <HelloSection classes={classes} />
+      </Grid>
+      <Grid container justify='center' className={classes.container_category}>
+        <CategorySection classes={classes} />
+      </Grid>
+    </>
+  );
 };
 
 export default Main;
