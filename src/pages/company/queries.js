@@ -105,3 +105,19 @@ export const DELETE_COMPANY_OPERATION_HOURS = gql`
     }
   }
 `;
+
+export const UPLOAD_COMPANY_IMAGES = gql`
+  mutation uploadCompanyImages(
+    $bussinessCompanyID: ID!
+    $file: Upload!
+  ) {
+    BusinessCompanyImageUpload(
+      input: { bussinessCompanyID: $bussinessCompanyID, file: $file }
+    ) {
+      id
+      name
+      content
+      contentType
+    }
+  }
+`;

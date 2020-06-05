@@ -17,6 +17,7 @@ import {
   GET_COMPANY_OPERTATION_HOURS,
   UPDATE_COMPANY_OPERATION_HOURS,
   DELETE_COMPANY_OPERATION_HOURS,
+  UPLOAD_COMPANY_IMAGES,
 } from '../queries';
 import {
   handleWeekArray,
@@ -63,6 +64,7 @@ const CompanyView = memo((props) => {
   const [deleteCompanyOperationHours] = useMutation(
     DELETE_COMPANY_OPERATION_HOURS
   );
+  const [uploadImages] = useMutation(UPLOAD_COMPANY_IMAGES);
 
   useEffect(() => {
     setCompanyName(companyData?.getBusinessCompany?.businessCompanyName);
@@ -73,7 +75,7 @@ const CompanyView = memo((props) => {
       (a, b) => a.dayOfWeek - b.dayOfWeek
     );
     dispatch(handleWeekArray(sortedWeek));
-  }, [companyOperationHours]);
+  }, [companyOperationHours, dispatch]);
 
   const onChangeCompanyName = (name, value) => {
     setCompanyName(value);
@@ -170,17 +172,7 @@ const CompanyView = memo((props) => {
       closeTime: item.closeTime,
     };
 
-    const existDay = scheduleState.week.find(
-      (item) => item.dayOfWeek === obj.dayOfWeek
-    );
-    if (existDay) {
-      dispatch(
-        handleErrorStatus({
-          value: true,
-          message: errors.company.operation_hours.exists,
-        })
-      );
-    } else if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
+    if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
       dispatch(
         handleErrorStatus({
           value: true,
@@ -213,6 +205,19 @@ const CompanyView = memo((props) => {
     }
   };
 
+  const uploadImagesHandler = ({ target: { validity, files } }) => {
+    if (validity.valid) {
+      uploadImages({
+        variables: {
+          file: files[0],
+          bussinessCompanyID: businessCompanyID,
+        },
+      })
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
+    }
+  };
+
   return (
     <MainLayout padding='25px' section='company' hasBackArrow>
       {companyLoading || companyOperationHoursLoading ? (
@@ -233,6 +238,36 @@ const CompanyView = memo((props) => {
               onChange={onChangeCompanyName}
             />
           </Grid>
+          <Grid item lg={6} md={6} xs={12}>
+            <Box fontWeight={600} fontSize='20px' marginTop='15px'>
+              Загрузите фотографии вашей компании
+            </Box>
+            <Box fontSize='16px' color='#999' marginTop='15px'>
+              Советуем загружать в формате .png или .jpg
+            </Box>
+            <input
+              accept='image/*'
+              style={{ display: 'none' }}
+              id='contained-button-file'
+              type='file'
+              onChange={uploadImagesHandler}
+            />
+            <label htmlFor='contained-button-file'>
+              <Box
+                border='1px dashed #eeecf3'
+                padding='20px'
+                height='100px'
+                marginTop='15px'
+                marginBottom='20px'
+                borderRadius='10px'
+                color='#8282ff'
+                style={{ cursor: 'pointer' }}
+              >
+                Загрузить фото
+              </Box>
+            </label>
+          </Grid>
+
           <Box fontWeight={600} fontSize='20px' marginTop='15px'>
             Настройка расписания
           </Box>
