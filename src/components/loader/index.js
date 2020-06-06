@@ -7,8 +7,8 @@ const ColorCircularProgress = withStyles({
   },
 })(CircularProgress);
 
-const Loader = () => {
-  return <ColorCircularProgress />;
+const Loader = ({ size = '' }) => {
+  return <ColorCircularProgress size={size} />;
 };
 
 export default Loader;

@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Grid, Box, Button } from '@material-ui/core';
+import { CheckCircle, ErrorOutlined } from '@material-ui/icons';
 import {
   MainLayout,
   Loader,
@@ -40,6 +41,7 @@ const CompanyView = memo((props) => {
     props.currentUser[0] &&
     props.currentUser[0].businessCompanyID;
   const [companyName, setCompanyName] = useState('');
+  const [uploadResult, setUploadResult] = useState(null);
   const dispatch = useDispatch();
   const scheduleState = useSelector((state) => state.companySchedule);
 
@@ -215,8 +217,8 @@ const CompanyView = memo((props) => {
           bussinessCompanyID: businessCompanyID,
         },
       })
-        .then((res) => console.log('res', res))
-        .catch((err) => console.log('err', err));
+        .then(() => setUploadResult('success'))
+        .catch(() => setUploadResult('fail'));
     }
   };
 
@@ -243,10 +245,11 @@ const CompanyView = memo((props) => {
 
           <Grid item lg={6} md={6} xs={12}>
             <Box display='flex' justifyContent='space-between'>
-              {companyData?.getBusinessCompany?.businessCompanyImages.map(
+              {/* {companyData?.getBusinessCompany?.businessCompanyImages.map(
                 (image) => (
                   <img
-                    src={require(image.imagePath)}
+                    // src={require(image.imagePath)}
+                    src={require('/home/doha/images/17/coding-2.jpg')}
                     alt={image.imagePath}
                     key={image.imageID}
                     style={{
@@ -256,7 +259,7 @@ const CompanyView = memo((props) => {
                     }}
                   />
                 )
-              )}
+              )} */}
             </Box>
             <Box fontWeight={600} fontSize='20px' marginTop='65px'>
               Загрузите фотографии вашей компании
@@ -283,7 +286,23 @@ const CompanyView = memo((props) => {
                 style={{ cursor: 'pointer' }}
               >
                 Загрузить фото
-                {uploadLoading && <Loader />}
+                <Box margin='0 20px'>
+                  {uploadLoading && <Loader size={20} />}
+                </Box>
+                <Box display='flex' alignItems='center' margin='25px 0'>
+                  {uploadResult === 'success' && (
+                    <>
+                      <CheckCircle />
+                      <Box>Успешно загуржено</Box>
+                    </>
+                  )}
+                  {uploadResult === 'fail' && (
+                    <>
+                      <ErrorOutlined />
+                      <Box>Ошибка при загрузке файла</Box>
+                    </>
+                  )}
+                </Box>
               </Box>
             </label>
           </Grid>
