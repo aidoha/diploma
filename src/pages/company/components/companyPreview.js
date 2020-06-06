@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-import { useStyles } from '../style';
+import { useStyles, ImageBackground } from '../style';
 import { routes } from '../../../constants';
 
 const CompanyPreview = ({
@@ -20,10 +20,7 @@ const CompanyPreview = ({
   const servicesCount = !businessCompanyService
     ? 0
     : businessCompanyService.length;
-
-  if (companyLoading) {
-    return <div />;
-  }
+  const images = companyData?.getBusinessCompany?.businessCompanyImages;
 
   return (
     <Grid
@@ -36,10 +33,24 @@ const CompanyPreview = ({
       className={classes.company_preview_container}
     >
       <Grid container item lg={8} md={8} spacing={2}>
-        <Grid item>
-          <Skeleton variant='rect' width={110} height={110} animation='wave' />
+        <Grid item container lg={4} md={4}>
+          {companyLoading && (
+            <Skeleton
+              variant='rect'
+              width={110}
+              height={110}
+              animation='wave'
+            />
+          )}
+          {!companyLoading && (
+            <ImageBackground
+              src={images?.[images?.length - 1]?.imagePath}
+              width='100%'
+              height='100px'
+            />
+          )}
         </Grid>
-        <Grid item>
+        <Grid item container lg={4} md={4} alignItems='center'>
           <Typography
             variant='h3'
             onClick={() => push(`${routes.companyView}/${businessCompanyID}`)}

@@ -1,4 +1,16 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
+
+export const ImageBackground = styled(Box)((props) => {
+  return {
+    background: `url(${props.src}) no-repeat`,
+    backgroundSize: 'cover',
+    width: `${props.width || '25%'}`,
+    height: `${props.height || '150px'}`,
+    margin: '20px',
+    borderRadius: '10px',
+  };
+});
 
 export const useStyles = makeStyles({
   company_preview_container: {

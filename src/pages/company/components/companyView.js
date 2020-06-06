@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Grid, Box, Button } from '@material-ui/core';
+import { Grid, Box, Button, CardMedia } from '@material-ui/core';
 import { CheckCircle, ErrorOutlined } from '@material-ui/icons';
 import {
   MainLayout,
@@ -31,7 +31,7 @@ import {
   handleSuccessStatus,
 } from '../../../redux/statuses/actions';
 import { errors, succeses } from '../../../constants/statuses';
-import { useStyles } from '../style';
+import { useStyles, ImageBackground } from '../style';
 
 const CompanyView = memo((props) => {
   const classes = useStyles();
@@ -244,22 +244,12 @@ const CompanyView = memo((props) => {
           </Grid>
 
           <Grid item lg={6} md={6} xs={12}>
-            <Box display='flex' justifyContent='space-between'>
-              {/* {companyData?.getBusinessCompany?.businessCompanyImages.map(
-                (image) => (
-                  <img
-                    // src={require(image.imagePath)}
-                    src={require('/home/doha/images/17/coding-2.jpg')}
-                    alt={image.imagePath}
-                    key={image.imageID}
-                    style={{
-                      width: '200px',
-                      height: '150px',
-                      borderRadius: '5px',
-                    }}
-                  />
+            <Box display='flex' justifyContent='center' flexWrap='wrap'>
+              {companyData?.getBusinessCompany?.businessCompanyImages.map(
+                ({ imageID, imagePath }) => (
+                  <ImageBackground src={imagePath} key={imageID} />
                 )
-              )} */}
+              )}
             </Box>
             <Box fontWeight={600} fontSize='20px' marginTop='65px'>
               Загрузите фотографии вашей компании
@@ -289,7 +279,7 @@ const CompanyView = memo((props) => {
                 <Box margin='0 20px'>
                   {uploadLoading && <Loader size={20} />}
                 </Box>
-                <Box display='flex' alignItems='center' margin='25px 0'>
+                <Box display='flex' alignItems='center' marginTop='25px'>
                   {uploadResult === 'success' && (
                     <>
                       <CheckCircle />
