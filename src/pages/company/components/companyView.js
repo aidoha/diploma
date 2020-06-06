@@ -218,10 +218,7 @@ const CompanyView = memo((props) => {
     }
   };
 
-  console.log(
-    'companyData',
-    companyData?.getBusinessCompany?.businessCompanyImages
-  );
+  console.log('process', process.cwd());
 
   return (
     <MainLayout padding='25px' section='company' hasBackArrow>
@@ -247,7 +244,12 @@ const CompanyView = memo((props) => {
             {companyData?.getBusinessCompany?.businessCompanyImages.map(
               (image) => (
                 <div key={image.imageID}>
-                  <img src={image.imagePath} alt={image.imagePath} />
+                  <img
+                    src={require('/home/doha/images/5/a.png')}
+                    alt={image.imagePath}
+                    width={200}
+                    height={200}
+                  />
                 </div>
               )
             )}
