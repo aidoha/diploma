@@ -246,7 +246,7 @@ const CompanyView = memo((props) => {
               {companyData?.getBusinessCompany?.businessCompanyImages.map(
                 (image) => (
                   <img
-                    src={require('/home/doha/images/17/coding-2.jpg')}
+                    src={require(`${image.imagePath}`)}
                     alt={image.imagePath}
                     key={image.imageID}
                     style={{
