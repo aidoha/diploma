@@ -240,6 +240,9 @@ const CompanyView = memo((props) => {
               onChange={onChangeCompanyName}
             />
           </Grid>
+          {/* 
+            before eject
+          */}
           <Grid item lg={6} md={6} xs={12}>
             {companyData?.getBusinessCompany?.businessCompanyImages.map(
               (image) => (
