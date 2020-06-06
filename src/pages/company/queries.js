@@ -4,6 +4,11 @@ export const GET_BUSINESS_COMPANY = gql`
   query getBusinessCompany($businessCompanyID: ID!) {
     getBusinessCompany(input: { businessCompanyID: $businessCompanyID }) {
       businessCompanyName
+      businessCompanyImages {
+        imageID
+        imagePath
+      }
+      businessCompanyAddress
     }
   }
 `;
@@ -107,10 +112,7 @@ export const DELETE_COMPANY_OPERATION_HOURS = gql`
 `;
 
 export const UPLOAD_COMPANY_IMAGES = gql`
-  mutation uploadCompanyImages(
-    $bussinessCompanyID: ID!
-    $file: Upload!
-  ) {
+  mutation uploadCompanyImages($bussinessCompanyID: ID!, $file: Upload!) {
     BusinessCompanyImageUpload(
       input: { bussinessCompanyID: $bussinessCompanyID, file: $file }
     ) {

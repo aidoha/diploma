@@ -218,6 +218,11 @@ const CompanyView = memo((props) => {
     }
   };
 
+  console.log(
+    'companyData',
+    companyData?.getBusinessCompany?.businessCompanyImages
+  );
+
   return (
     <MainLayout padding='25px' section='company' hasBackArrow>
       {companyLoading || companyOperationHoursLoading ? (
@@ -239,6 +244,13 @@ const CompanyView = memo((props) => {
             />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
+            {companyData?.getBusinessCompany?.businessCompanyImages.map(
+              (image) => (
+                <div key={image.imageID}>
+                  <img src={image.imagePath} alt={image.imagePath} />
+                </div>
+              )
+            )}
             <Box fontWeight={600} fontSize='20px' marginTop='15px'>
               Загрузите фотографии вашей компании
             </Box>
