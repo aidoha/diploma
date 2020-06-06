@@ -64,7 +64,9 @@ const CompanyView = memo((props) => {
   const [deleteCompanyOperationHours] = useMutation(
     DELETE_COMPANY_OPERATION_HOURS
   );
-  const [uploadImages] = useMutation(UPLOAD_COMPANY_IMAGES);
+  const [uploadImages, { loading: uploadLoading }] = useMutation(
+    UPLOAD_COMPANY_IMAGES
+  );
 
   useEffect(() => {
     setCompanyName(companyData?.getBusinessCompany?.businessCompanyName);
@@ -218,8 +220,6 @@ const CompanyView = memo((props) => {
     }
   };
 
-  console.log('process', process.cwd());
-
   return (
     <MainLayout padding='25px' section='company' hasBackArrow>
       {companyLoading || companyOperationHoursLoading ? (
@@ -240,9 +240,7 @@ const CompanyView = memo((props) => {
               onChange={onChangeCompanyName}
             />
           </Grid>
-          {/* 
-            before eject
-          */}
+
           <Grid item lg={6} md={6} xs={12}>
             <Box display='flex' justifyContent='space-between'>
               {companyData?.getBusinessCompany?.businessCompanyImages.map(
@@ -285,6 +283,7 @@ const CompanyView = memo((props) => {
                 style={{ cursor: 'pointer' }}
               >
                 Загрузить фото
+                {uploadLoading && <Loader />}
               </Box>
             </label>
           </Grid>
