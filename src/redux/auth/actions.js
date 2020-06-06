@@ -1,5 +1,6 @@
 import {
   UPDATE_COMPANY_NAME,
+  UPDATE_COMPANY_ADDRESS,
   UPDATE_COMPANY_ID,
   UPDATE_BUSINESS_CATEGORY,
   UPDATE_BUSINESS_CATEGORIES,
@@ -19,6 +20,12 @@ export const handleCompanyName = (companyName = '') => {
   return {
     type: UPDATE_COMPANY_NAME,
     payload: companyName,
+  };
+};
+export const handleCompanyAddress = (address = '') => {
+  return {
+    type: UPDATE_COMPANY_ADDRESS,
+    payload: address,
   };
 };
 export const handleCompanyId = (companyId = null) => {

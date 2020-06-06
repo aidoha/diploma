@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Button, MenuItem } from '@material-ui/core';
 import {
   handleCompanyName,
+  handleCompanyAddress,
   handleCompanyId,
   handleBusinessCategory,
   handleSteps,
@@ -27,6 +28,7 @@ const FirstStep = () => {
   const dispatch = useDispatch();
   const {
     companyName,
+    address,
     businessCategory,
     businessCategoryId,
     categories,
@@ -41,6 +43,7 @@ const FirstStep = () => {
       variables: {
         businessCompanyName: companyName,
         businessCompanyCategoryID: businessCategoryId,
+        businessCompanyAddress: address
       },
     })
       .then((res) => {
@@ -65,6 +68,10 @@ const FirstStep = () => {
 
   const onChangeCompanyName = (value) => {
     dispatch(handleCompanyName(value));
+  };
+
+  const onChangeAddress = (value) => {
+    dispatch(handleCompanyAddress(value));
   };
 
   const onChangeBusinessCategory = (value) => {
@@ -96,6 +103,17 @@ const FirstStep = () => {
         error={touched.companyName && companyName === ''}
         onBlur={(e) => onChangeCompanyName(e.target.value)}
         onChange={(e) => onChangeCompanyName(e.target.value)}
+      />
+      <CssTextField
+        variant='outlined'
+        margin='normal'
+        fullWidth
+        label='Адрес компании'
+        name='address'
+        value={address}
+        error={touched.address && address === ''}
+        onBlur={(e) => onChangeAddress(e.target.value)}
+        onChange={(e) => onChangeAddress(e.target.value)}
       />
       <CssTextField
         fullWidth

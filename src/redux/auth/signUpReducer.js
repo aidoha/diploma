@@ -10,6 +10,7 @@ import {
   SHOW_PASSWORD,
   SET_AUTHORIZED,
   UPDATE_COMPANY_ID,
+  UPDATE_COMPANY_ADDRESS,
 } from './types';
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   showPassword: false,
   phone: '',
   isLoggedIn: localStorage.getItem('isLoggedIn') || null,
+  address: '',
   touched: {
     companyName: false,
     businessCategory: false,
@@ -33,6 +35,7 @@ const initialState = {
     email: false,
     password: false,
     phone: false,
+    address: false,
   },
 };
 
@@ -45,6 +48,15 @@ const signUpReducer = (state = initialState, action) => {
         touched: {
           ...state.touched,
           companyName: true,
+        },
+      };
+    case UPDATE_COMPANY_ADDRESS:
+      return {
+        ...state,
+        address: action.payload,
+        touched: {
+          ...state.touched,
+          address: true,
         },
       };
     case UPDATE_COMPANY_ID:

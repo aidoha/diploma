@@ -20,6 +20,7 @@ import { CREATE_BUSINESS_OWNER } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
 import { succeses, errors } from '../../../../constants/statuses';
+import { parsePhone } from '../../../../utils';
 
 const SecondStep = () => {
   const classes = useStyles();
@@ -34,7 +35,7 @@ const SecondStep = () => {
     companyId,
     touched,
   } = signUpState;
-  const [register, { loading, error }] = useMutation(CREATE_BUSINESS_OWNER);
+  const [register, { loading }] = useMutation(CREATE_BUSINESS_OWNER);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -43,7 +44,7 @@ const SecondStep = () => {
       businessCompanyID: companyId,
       businessOwnerEmail: email,
       businessOwnerPassword: password,
-      businessOwnerPhoneNumber: phone,
+      businessOwnerPhoneNumber: parsePhone(phone),
       businessOwnerPhoneNumberPrefix: '+7',
     };
     register({ variables: businessOwner })
@@ -66,10 +67,6 @@ const SecondStep = () => {
         dispatch(handleErrorStatus({ value: true, message: errors.general }))
       );
   };
-
-  // if (error) {
-  //   return <div />;
-  // }
 
   return (
     <form noValidate onSubmit={onSubmit}>
@@ -96,20 +93,24 @@ const SecondStep = () => {
         onBlur={(e) => dispatch(handleCustomerEmail(e.target.value))}
         onChange={(e) => dispatch(handleCustomerEmail(e.target.value))}
       />
-      <CssTextField
-        variant='outlined'
-        fullWidth
-        margin='normal'
-        label='Номер телефона'
-        name='phone'
-        type='text'
+      <InputMask
+        mask='+7 999 999 99 99'
         value={phone}
-        error={touched.phone && phone === ''}
-        onBlur={(e) => dispatch(handleCustomerPhone(e.target.value))}
         onChange={(e) => dispatch(handleCustomerPhone(e.target.value))}
+        disabled={false}
+        maskChar=' '
       >
-        <InputMask mask='+7 (999) 999 99 99' maskChar=' ' />
-      </CssTextField>
+        {() => (
+          <CssTextField
+            variant='outlined'
+            fullWidth
+            margin='normal'
+            label='Номер телефона'
+            name='phone'
+            type='text'
+          />
+        )}
+      </InputMask>
       <CssTextField
         type={showPassword ? 'text' : 'password'}
         variant='outlined'

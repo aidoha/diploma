@@ -13,11 +13,13 @@ export const CREATE_BUSINESS_COMPANY = gql`
   mutation createBusinessCompany(
     $businessCompanyName: String!
     $businessCompanyCategoryID: ID!
+    $businessCompanyAddress: String!
   ) {
     createBusinessCompany(
       input: {
         businessCompanyName: $businessCompanyName
         businessCompanyCategoryID: $businessCompanyCategoryID
+        businessCompanyAddress: $businessCompanyAddress
       }
     ) {
       businessCompanyID
