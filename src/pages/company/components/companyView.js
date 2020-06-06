@@ -244,19 +244,23 @@ const CompanyView = memo((props) => {
             before eject
           */}
           <Grid item lg={6} md={6} xs={12}>
-            {companyData?.getBusinessCompany?.businessCompanyImages.map(
-              (image) => (
-                <div key={image.imageID}>
+            <Box display='flex' justifyContent='space-between'>
+              {companyData?.getBusinessCompany?.businessCompanyImages.map(
+                (image) => (
                   <img
-                    src={require('/home/doha/images/5/a.png')}
+                    src={require(image.imagePath)}
                     alt={image.imagePath}
-                    width={200}
-                    height={200}
+                    key={image.imageID}
+                    style={{
+                      width: '200px',
+                      height: '150px',
+                      borderRadius: '5px',
+                    }}
                   />
-                </div>
-              )
-            )}
-            <Box fontWeight={600} fontSize='20px' marginTop='15px'>
+                )
+              )}
+            </Box>
+            <Box fontWeight={600} fontSize='20px' marginTop='65px'>
               Загрузите фотографии вашей компании
             </Box>
             <Box fontSize='16px' color='#999' marginTop='15px'>
