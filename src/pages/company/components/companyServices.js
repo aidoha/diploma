@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Grid, Typography, Box } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
-import { Loader, Statuses } from '../../../components';
+import { Loader, Statuses, NoServiceBlock } from '../../../components';
 import ServiceItem from './serviceItem';
 import { routes } from '../../../constants';
 import {
@@ -13,6 +14,7 @@ import { useStyles } from '../style';
 
 const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
   const classes = useStyles();
+  const { push } = useHistory();
   const dispatch = useDispatch();
   const companyState = useSelector((state) => state.company);
   const { companyServices } = companyState;
@@ -93,6 +95,19 @@ const CompanyServices = ({ companyServicesData, companyServicesLoading }) => {
             <ServiceItem key={index} item={item} index={index} />
           ))}
       </Grid>
+      {companyServices?.length === 0 && (
+        <Grid
+          item
+          container
+          justifyContent='center'
+          onClick={() => push('/service/add')}
+          lg={12}
+          md={12}
+          xs={12}
+        >
+          <NoServiceBlock />
+        </Grid>
+      )}
       <Statuses />
     </Grid>
   );

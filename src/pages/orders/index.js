@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Grid, Box } from '@material-ui/core';
-import { MainLayout, Loader, Statuses } from '../../components';
+import { MainLayout, Loader, Statuses, NoServiceBlock } from '../../components';
 import ServiceItem from './components/serviceItem';
 import OrdersCalendar from './components/orders-calendar';
 import withCurrentUser from '../../hoc/currentUser';
@@ -18,8 +18,11 @@ import {
   GET_BUSINESS_SERVICE_ORDERS,
   DELETE_BUSINESS_SERVICE_ORDER,
 } from './queries';
+import { useStyles } from './style';
 
 const Orders = (props) => {
+  const classes = useStyles();
+  const { push } = useHistory();
   const { id: serviceID } = useParams();
   const businessCompanyID =
     props &&
@@ -94,6 +97,13 @@ const Orders = (props) => {
             ))}
         </Grid>
       )}
+      <Box
+        display='flex'
+        justifyContent='center'
+        onClick={() => push('/company')}
+      >
+        {orderList?.length === 0 && <NoServiceBlock />}
+      </Box>
       {!companyServicesLoading && !ordersLoading && serviceID && ordersData && (
         <OrdersCalendar
           ordersData={orderList}

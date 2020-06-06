@@ -9,6 +9,7 @@ import Loader from './loader';
 import Statuses from './statuses';
 import InputField from './input-field';
 import ScheduleItem from './schedule-item';
+import NoServiceBlock from './no-service';
 
 export {
   Topbar,
@@ -22,4 +23,5 @@ export {
   Statuses,
   InputField,
   ScheduleItem,
+  NoServiceBlock,
 };
