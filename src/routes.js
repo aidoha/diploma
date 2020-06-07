@@ -8,6 +8,7 @@ import {
   Service,
   Orders,
   ForgotPassword,
+  ResetPassword,
 } from './pages';
 import CompanyView from './pages/company/components/companyView';
 import { useSelector } from 'react-redux';
@@ -29,6 +30,7 @@ export default withRouter(() => {
       <Route path='/signin' exact component={SignIn} />
       <Route path='/signup' exact component={SignUp} />
       <Route path='/forgot-password' exact component={ForgotPassword} />
+      <Route path='/reset' exact component={ResetPassword} />
       <PrivateRoute path='/company' exact Component={Company} />
       <PrivateRoute path='/company/edit/:id' exact Component={CompanyView} />
       <PrivateRoute path='/service/:slug/:id?' Component={Service} />

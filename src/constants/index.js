@@ -28,6 +28,7 @@ export const routes = {
   signIn: '/signin',
   signUp: '/signup',
   forgotPassword: '/forgot-password',
+  resetPassword: '/reset',
   company: '/company',
   companyView: '/company/edit',
   service: {

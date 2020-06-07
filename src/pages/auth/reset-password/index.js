@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Box, Container, Button, FormControl } from '@material-ui/core';
 import { Topbar } from '../../../components';
 import { CssTextField } from '../../../globalStyle';
 import { useStyles, Spinner } from '../style';
-import { validateEmail } from '../../../utils/index';
-import { FORGOT_PASSWORD } from '../queries';
+import { RESET_PASSWORD } from '../queries';
 import withApollo from '../../../hoc/withApollo';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [forgotPasswordMutate, { loading }] = useMutation(FORGOT_PASSWORD);
+  const [password, setPassword] = useState('');
+  const { search } = useLocation();
+  const queryEmail = search.slice(7, search.length);
+  const [resetPasswordMutate, { loading }] = useMutation(RESET_PASSWORD);
 
   const onSubmit = () => {
-    if (validateEmail(email)) {
-      forgotPasswordMutate({
-        variables: { businessOwnerEmail: email },
-      }).then(() => alert('Проверьте свою почту'));
-    }
+    resetPasswordMutate({
+      variables: {
+        businessOwnerEmail: queryEmail,
+        businessOwnerPassword: password,
+      },
+    }).then(() => alert('Ваш пароль успешно изменен!'));
   };
 
   return (
@@ -30,9 +33,10 @@ const ForgotPassword = () => {
             <CssTextField
               variant='outlined'
               required
-              placeholder={'E-mail'}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type='password'
+              placeholder={'Новый пароль'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
         </Box>
@@ -45,9 +49,9 @@ const ForgotPassword = () => {
             className={classes.btn_auth}
             onClick={onSubmit}
             startIcon={loading && <Spinner width='20px' height='20px' />}
-            disabled={email === ''}
+            disabled={password === ''}
           >
-            Отправить
+            Восстановить
           </Button>
         </Box>
       </Container>
@@ -55,4 +59,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default withApollo(ForgotPassword);
+export default withApollo(ResetPassword);

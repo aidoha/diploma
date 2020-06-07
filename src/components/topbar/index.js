@@ -13,7 +13,7 @@ import { routes } from '../../constants';
 import { useStyles } from './style';
 import logo from '../../images/icon.png';
 
-const { main, signIn, signUp, forgotPassword } = routes;
+const { main, signIn, signUp, forgotPassword, resetPassword } = routes;
 
 const TopBar = () => {
   const classes = useStyles();
@@ -26,7 +26,8 @@ const TopBar = () => {
     (pathname === '/signup' && 'Регистрация') ||
     (pathname === '/signin' && 'Вход') ||
     (pathname === '/' && 'Cactus') ||
-    (pathname === '/forgot-password' && 'Забыли пароль?');
+    (pathname === '/forgot-password' && 'Забыли пароль?') ||
+    (pathname === '/reset' && 'Восстановление пароля');
 
   useEffect(() => {
     document.title = title;
@@ -40,7 +41,9 @@ const TopBar = () => {
 
   return (
     <>
-      {(pathname === main || pathname === forgotPassword) && (
+      {(pathname === main ||
+        pathname === forgotPassword ||
+        pathname === resetPassword) && (
         <AppBar position='static' className={classes.main_bar}>
           <Box
             display='flex'

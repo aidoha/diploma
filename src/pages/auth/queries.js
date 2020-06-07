@@ -66,3 +66,33 @@ export const GENERATE_TOKEN = gql`
     }
   }
 `;
+
+export const FORGOT_PASSWORD = gql`
+  mutation passwordForgot($businessOwnerEmail: String!) {
+    BusinessOwnerPasswordForgot(
+      input: { businessOwnerEmail: $businessOwnerEmail }
+    ) {
+      success
+    }
+  }
+`;
+
+export const RESET_PASSWORD = gql`
+  mutation resetPassword(
+    $businessOwnerEmail: String!
+    $businessOwnerPassword: String!
+  ) {
+    ResetBusinessOwnerPassword(
+      input: {
+        businessOwnerEmail: $businessOwnerEmail
+        businessOwnerPassword: $businessOwnerPassword
+      }
+    ) {
+      businessOwner {
+        businessOwnerID
+        businessOwnerName
+        businessOwnerEmail
+      }
+    }
+  }
+`;
