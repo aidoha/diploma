@@ -9,6 +9,7 @@ import {
   Comment,
   Person,
   Schedule,
+  Phone,
 } from '@material-ui/icons';
 import { format } from 'date-fns';
 import { convertUTCDateToLocalDate } from '../../../utils';
@@ -86,6 +87,12 @@ export const Content = ({ appointmentData }) => (
       <Person color='action' />
       <span className={classes().order_info}>
         {appointmentData.clientFirstName}
+      </span>
+    </Box>
+    <Box display='flex' alignItems='center' margin='10px'>
+      <Phone color='action' />
+      <span className={classes().order_info}>
+        {appointmentData.clientPhoneNumber}
       </span>
     </Box>
     <Box display='flex' alignItems='center' margin='10px'>
