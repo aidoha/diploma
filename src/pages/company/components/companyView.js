@@ -1,8 +1,8 @@
 import React, { useEffect, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Grid, Box, Button, CardMedia } from '@material-ui/core';
-import { CheckCircle, ErrorOutlined } from '@material-ui/icons';
+import { Grid, Box, Button } from '@material-ui/core';
+import { CheckCircle, ErrorOutlined, HighlightOff } from '@material-ui/icons';
 import {
   MainLayout,
   Loader,
@@ -19,6 +19,7 @@ import {
   UPDATE_COMPANY_OPERATION_HOURS,
   DELETE_COMPANY_OPERATION_HOURS,
   UPLOAD_COMPANY_IMAGES,
+  DELETE_IMAGE,
 } from '../queries';
 import {
   handleWeekArray,
@@ -30,6 +31,10 @@ import {
   handleErrorStatus,
   handleSuccessStatus,
 } from '../../../redux/statuses/actions';
+import {
+  handleImages,
+  handleDeleteImage,
+} from '../../../redux/company/actions';
 import { errors, succeses } from '../../../constants/statuses';
 import { useStyles, ImageBackground } from '../style';
 
@@ -44,6 +49,7 @@ const CompanyView = memo((props) => {
   const [uploadResult, setUploadResult] = useState(null);
   const dispatch = useDispatch();
   const scheduleState = useSelector((state) => state.companySchedule);
+  const companyState = useSelector((state) => state.company);
 
   const { data: companyData, loading: companyLoading } = useQuery(
     GET_BUSINESS_COMPANY,
@@ -69,6 +75,7 @@ const CompanyView = memo((props) => {
   const [uploadImages, { loading: uploadLoading }] = useMutation(
     UPLOAD_COMPANY_IMAGES
   );
+  const [deleteImageMutate] = useMutation(DELETE_IMAGE);
 
   useEffect(() => {
     setCompanyName(companyData?.getBusinessCompany?.businessCompanyName);
@@ -80,6 +87,12 @@ const CompanyView = memo((props) => {
     );
     dispatch(handleWeekArray(sortedWeek));
   }, [companyOperationHours, dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      handleImages(companyData?.getBusinessCompany?.businessCompanyImages)
+    );
+  }, [dispatch, companyData]);
 
   const onChangeCompanyName = (name, value) => {
     setCompanyName(value);
@@ -222,6 +235,12 @@ const CompanyView = memo((props) => {
     }
   };
 
+  const deleteImageHandler = async (imageID) => {
+    deleteImageMutate({ variables: { imageID } }).then(() =>
+      dispatch(handleDeleteImage(imageID))
+    );
+  };
+
   return (
     <MainLayout padding='25px' section='company' hasBackArrow>
       {companyLoading || companyOperationHoursLoading ? (
@@ -245,11 +264,14 @@ const CompanyView = memo((props) => {
 
           <Grid item lg={6} md={6} xs={12}>
             <Box display='flex' justifyContent='center' flexWrap='wrap'>
-              {companyData?.getBusinessCompany?.businessCompanyImages.map(
-                ({ imageID, imagePath }) => (
-                  <ImageBackground src={imagePath} key={imageID} />
-                )
-              )}
+              {companyState?.images.map(({ imageID, imagePath }) => (
+                <ImageBackground src={imagePath} key={imageID}>
+                  <HighlightOff
+                    style={{ color: '#fff', cursor: 'pointer' }}
+                    onClick={() => deleteImageHandler(imageID)}
+                  />
+                </ImageBackground>
+              ))}
             </Box>
             <Box fontWeight={600} fontSize='20px' marginTop='65px'>
               Загрузите фотографии вашей компании

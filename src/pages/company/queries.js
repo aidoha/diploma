@@ -123,3 +123,13 @@ export const UPLOAD_COMPANY_IMAGES = gql`
     }
   }
 `;
+
+export const DELETE_IMAGE = gql`
+  mutation deleteImage($imageID: ID!) {
+    BusinessCompanyImageDelete(input: { imageID: $imageID }) {
+      image {
+        imageID
+      }
+    }
+  }
+`;
