@@ -97,13 +97,17 @@ const Orders = (props) => {
             ))}
         </Grid>
       )}
-      <Box
-        display='flex'
-        justifyContent='center'
-        onClick={() => push('/company')}
-      >
-        {orderList?.length === 0 && <NoServiceBlock />}
-      </Box>
+
+      {!orderList && (
+        <Box
+          display='flex'
+          justifyContent='center'
+          onClick={() => push('/company')}
+        >
+          <NoServiceBlock />
+        </Box>
+      )}
+
       {!companyServicesLoading && !ordersLoading && serviceID && ordersData && (
         <OrdersCalendar
           ordersData={orderList}

@@ -86,19 +86,8 @@ const ServiceScheduleList = (props) => {
       openTime: item.openTime,
       closeTime: item.closeTime,
     };
-    const existDay = scheduleState.week.find(
-      (item) => item.dayOfWeek === obj.dayOfWeek
-    );
-
-    console.log('obj', obj);
-    if (existDay) {
-      dispatch(
-        handleErrorStatus({
-          value: true,
-          message: errors.company.operation_hours.exists,
-        })
-      );
-    } else if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
+    
+    if (obj.dayOfWeek === null || !obj.openTime || !obj.closeTime) {
       dispatch(
         handleErrorStatus({
           value: true,
