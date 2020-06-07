@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
 
 const cache = new InMemoryCache();
-const link = createUploadLink({ uri: 'https://46.101.138.224:8080/query' });
+const link = createUploadLink({ uri: 'http://46.101.138.224:8080/query' });
 const client = new ApolloClient({
   link,
   cache,
