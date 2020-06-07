@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Button, InputAdornment, IconButton } from '@material-ui/core';
+import { Button, InputAdornment, IconButton, Box } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import {
   handleCustomerEmail,
@@ -18,10 +19,14 @@ import { GENERATE_TOKEN } from '../../queries';
 import { useStyles, Spinner } from '../../style';
 import { CssTextField } from '../../../../globalStyle';
 import { validateEmail } from '../../../../utils';
+import { routes } from '../../../../constants';
 import { errors, succeses } from '../../../../constants/statuses';
+
+const { forgotPassword } = routes;
 
 const AuthForm = () => {
   const classes = useStyles();
+  const { push } = useHistory();
   // const [errorLabel, setErrorLabel] = useState(null);
   const signInState = useSelector((state) => state.signIn);
   const { email, password, showPassword, touched, validated } = signInState;
@@ -97,6 +102,16 @@ const AuthForm = () => {
           ),
         }}
       />
+      <Box
+        display='flex'
+        justifyContent='flex-end'
+        color='#7654ff'
+        marginBottom='20px'
+        style={{ cursor: 'pointer' }}
+        onClick={() => push(forgotPassword)}
+      >
+        Забыли пароль?
+      </Box>
       <Button
         type='submit'
         fullWidth
@@ -108,6 +123,7 @@ const AuthForm = () => {
       >
         Войти
       </Button>
+
       {/* <div>{validated.email === false && 'ERROR EMAIL'}</div> */}
       {/* <div>{errorLabel}</div> */}
     </form>
